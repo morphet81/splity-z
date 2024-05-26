@@ -31,6 +31,10 @@ class App extends StatelessWidget {
         initialLocation: '/split',
         routes: [
           GoRoute(
+            path: '/error',
+            builder: (context, state) => const ErrorPage(),
+          ),
+          GoRoute(
             path: '/split',
             builder: (context, state) => const SplitsPage(),
           ),
