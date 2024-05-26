@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splity_z/splits/bloc/split_bloc.dart';
 import 'package:splity_z/splits/splits.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SplitsPage extends StatefulWidget {
   const SplitsPage({super.key});
@@ -14,6 +15,9 @@ class _SplitsListState extends State<SplitsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.helloWorld),
+        ),
         body: BlocProvider(
             create: (_) => SplitBloc(), child: const SplitsList()));
   }
