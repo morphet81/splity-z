@@ -21,8 +21,9 @@ class _SplitsListState extends State<SplitsList> {
           child: ListView.builder(
             itemBuilder: (context, index) {
               return SplitsListItem(
-                  isInEditMode: widget.isInEditMode,
-                  split: state.splits[index]);
+                isInEditMode: widget.isInEditMode,
+                split: state.splits[index],
+              );
             },
             itemCount: state.splits.length,
           ),

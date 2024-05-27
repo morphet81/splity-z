@@ -6,5 +6,16 @@ part 'split_event.dart';
 part 'split_state.dart';
 
 class SplitBloc extends Bloc<SplitEvent, SplitState> {
-  SplitBloc() : super(SplitState.initialState);
+  SplitBloc() : super(SplitState.initialState) {
+    on<DeleteSplit>(_onDeleteSplit);
+  }
+
+  Future<void> _onDeleteSplit(
+      DeleteSplit event, Emitter<SplitState> emit) async {
+    List<Split> newSplitsList = List.from(state.splits);
+
+    newSplitsList.removeWhere((split) => split.id == event.splitId);
+
+    emit(state.copyWith(splits: newSplitsList));
+  }
 }

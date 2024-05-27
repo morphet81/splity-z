@@ -5,4 +5,8 @@ sealed class SplitEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class InitialState extends SplitEvent {}
+final class DeleteSplit extends SplitEvent {
+  DeleteSplit({required this.splitId});
+
+  final int splitId;
+}

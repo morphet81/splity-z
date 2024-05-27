@@ -12,8 +12,7 @@ class SplitDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: BlocProvider(
-          create: (_) => SplitBloc(), child: SplitDetails(splitId: splitId)),
+      body: BlocProvider(create: (_) => SplitBloc(), child: SplitDetails(splitId: splitId)),
     );
   }
 }

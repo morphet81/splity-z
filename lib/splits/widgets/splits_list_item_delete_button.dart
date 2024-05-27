@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:splity_z/splits/bloc/split_bloc.dart';
 import 'package:splity_z/splits/models/models.dart' as splitz;
 
 const slideValuePixels = 50.0;
@@ -17,7 +19,7 @@ class SplitsListItemDeleteButton extends StatelessWidget {
       width: 50.0,
       child: IconButton(
         onPressed: () {
-          debugPrint('Delete');
+          context.read<SplitBloc>().add(DeleteSplit(splitId: split.id));
         },
         icon: const Icon(
           Icons.delete,
