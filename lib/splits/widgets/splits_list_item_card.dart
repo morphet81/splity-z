@@ -23,6 +23,12 @@ class _SplitsListItemCardState extends State<SplitsListItemCard>
   );
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final slideValue = slideValuePixels / MediaQuery.of(context).size.width;
 

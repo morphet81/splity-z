@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:splity_z/shared/widgets/splityz_app_bar.dart';
 import 'package:splity_z/splits/bloc/split_bloc.dart';
 import 'package:splity_z/splits/splits.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -23,23 +24,18 @@ class _SplitsListState extends State<SplitsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.appName,
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                )),
-        backgroundColor: Theme.of(context).primaryColor,
+      appBar: SplityzAppBar(
+        title: AppLocalizations.of(context)!.appName,
         actions: [
           IconButton(
             icon: Icon(
               _isInEditMode ? Icons.done : Icons.edit,
-              color: Theme.of(context).colorScheme.onPrimary,
             ),
-            tooltip: 'Edit',
+            tooltip: AppLocalizations.of(context)!.edit,
             onPressed: onEditButtonPressed,
           )
         ],
-      ),
+      ).build(context),
       body: BlocProvider(
         create: (_) => SplitBloc(),
         child: SplitsList(

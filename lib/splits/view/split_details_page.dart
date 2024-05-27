@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:splity_z/shared/widgets/splityz_app_bar.dart';
 import 'package:splity_z/splits/view/split_details.dart';
 import 'package:splity_z/splits/bloc/split_bloc.dart';
 
@@ -10,9 +12,53 @@ class SplitDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: BlocProvider(create: (_) => SplitBloc(), child: SplitDetails(splitId: splitId)),
+    return BlocProvider<SplitBloc>(
+      create: (_) => SplitBloc(),
+      child: BlocBuilder<SplitBloc, SplitState>(
+        builder: (context, state) {
+          final split = state.splits
+              .where(
+                (element) => element.id == splitId,
+              )
+              .firstOrNull;
+
+          if (split == null) {
+            GoRouter.of(context).replace('/error');
+          }
+
+          return Scaffold(
+            appBar: SplityzAppBar(
+              title: split!.name,
+            ).build(context),
+            body: SplitDetails(splitId: splitId),
+          );
+        },
+      ),
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return BlocBuilder<SplitBloc, SplitState>(builder: (context, state) {
+  //     final split = state.splits
+  //         .where(
+  //           (element) => element.id == splitId,
+  //         )
+  //         .firstOrNull;
+
+  //     if (split == null) {
+  //       GoRouter.of(context).replace('/error');
+  //     }
+
+  //     return Scaffold(
+  //       appBar: SplityzAppBar(
+  //         title: split!.name,
+  //       ).build(context),
+  //       body: BlocProvider(
+  //         create: (_) => SplitBloc(),
+  //         child: SplitDetails(splitId: splitId),
+  //       ),
+  //     );
+  //   });
+  // }
 }

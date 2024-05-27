@@ -12,6 +12,11 @@ class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: Colors.green.shade800,
+      // brightness: Brightness.dark,
+    );
+
     return MaterialApp.router(
       title: 'Flutter Demo',
       localizationsDelegates: const [
@@ -25,11 +30,11 @@ class App extends StatelessWidget {
         Locale('fr'),
       ],
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green.shade800,
-          // brightness: Brightness.dark,
-        ),
+        colorScheme: colorScheme,
         useMaterial3: true,
+        appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: colorScheme.onPrimary),
+        ),
         textTheme: TextTheme(
           displayLarge: const TextStyle(
             fontSize: 72,
