@@ -25,7 +25,10 @@ class App extends StatelessWidget {
         Locale('fr'),
       ],
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.green.shade800,
+          // brightness: Brightness.dark,
+        ),
         useMaterial3: true,
         textTheme: TextTheme(
           displayLarge: const TextStyle(
@@ -55,7 +58,8 @@ class App extends StatelessWidget {
             path: '/split/:splitId',
             builder: (context, state) {
               String? paramSplitId = state.pathParameters['splitId'];
-              int? splitId = paramSplitId != null ? int.parse(paramSplitId) : null;
+              int? splitId =
+                  paramSplitId != null ? int.parse(paramSplitId) : null;
 
               if (splitId == null) {
                 return const ErrorPage();

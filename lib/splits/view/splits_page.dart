@@ -24,10 +24,17 @@ class _SplitsListState extends State<SplitsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.appName),
+        title: Text(AppLocalizations.of(context)!.appName,
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                )),
+        backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
-            icon: Icon(_isInEditMode ? Icons.done : Icons.edit),
+            icon: Icon(
+              _isInEditMode ? Icons.done : Icons.edit,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
             tooltip: 'Edit',
             onPressed: onEditButtonPressed,
           )

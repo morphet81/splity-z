@@ -18,12 +18,15 @@ class _SplitsListState extends State<SplitsList> {
     return BlocBuilder<SplitBloc, SplitState>(
       builder: (context, state) {
         return Center(
-          child: ListView.builder(
+          child: ListView.separated(
             itemBuilder: (context, index) {
               return SplitsListItem(
                 isInEditMode: widget.isInEditMode,
                 split: state.splits[index],
               );
+            },
+            separatorBuilder: (context, index) {
+              return Divider();
             },
             itemCount: state.splits.length,
           ),
