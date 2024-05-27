@@ -4,7 +4,9 @@ import 'package:splity_z/splits/bloc/split_bloc.dart';
 import 'package:splity_z/splits/widgets/splits_list_item.dart';
 
 class SplitsList extends StatefulWidget {
-  const SplitsList({super.key});
+  const SplitsList({required this.isInEditMode, super.key});
+
+  final bool isInEditMode;
 
   @override
   State<SplitsList> createState() => _SplitsListState();
@@ -16,12 +18,15 @@ class _SplitsListState extends State<SplitsList> {
     return BlocBuilder<SplitBloc, SplitState>(
       builder: (context, state) {
         return Center(
-            child: ListView.builder(
-          itemBuilder: (context, index) {
-            return SplitsListItem(split: state.splits[index]);
-          },
-          itemCount: state.splits.length,
-        ));
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return SplitsListItem(
+                  isInEditMode: widget.isInEditMode,
+                  split: state.splits[index]);
+            },
+            itemCount: state.splits.length,
+          ),
+        );
       },
     );
   }

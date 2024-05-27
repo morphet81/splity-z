@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:splity_z/splits/bloc/split_bloc.dart';
+import 'package:splity_z/splits/widgets/splitees_list.dart';
 
 class SplitDetails extends StatefulWidget {
   const SplitDetails({required this.splitId, super.key});
@@ -26,8 +27,10 @@ class _SplitDetailsState extends State<SplitDetails> {
         GoRouter.of(context).replace('/error');
       }
 
-      return Center(
-        child: Text(split!.name),
+      return Column(
+        children: [
+          SpliteesList(splitees: split!.splitees),
+        ],
       );
     });
   }

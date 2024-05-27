@@ -12,13 +12,33 @@ class SplitsPage extends StatefulWidget {
 }
 
 class _SplitsListState extends State<SplitsPage> {
+  bool _isInEditMode = false;
+
+  void onEditButtonPressed() {
+    setState(() {
+      _isInEditMode = !_isInEditMode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.helloWorld),
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.appName),
+        actions: [
+          IconButton(
+            icon: Icon(_isInEditMode ? Icons.done : Icons.edit),
+            tooltip: 'Edit',
+            onPressed: onEditButtonPressed,
+          )
+        ],
+      ),
+      body: BlocProvider(
+        create: (_) => SplitBloc(),
+        child: SplitsList(
+          isInEditMode: _isInEditMode,
         ),
-        body: BlocProvider(
-            create: (_) => SplitBloc(), child: const SplitsList()));
+      ),
+    );
   }
 }
