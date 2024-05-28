@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:splity_z/splits/bloc/split_bloc.dart';
-import 'package:splity_z/splits/widgets/splits_list_item.dart';
+import 'package:splity_z/shared/bloc/split_bloc.dart';
+import 'package:splity_z/splits_list/widgets/splits_list_item.dart';
 
 class SplitsList extends StatefulWidget {
   const SplitsList({required this.isInEditMode, super.key});

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:splity_z/shared/view/view.dart';
-import 'package:splity_z/splits/view/view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:splity_z/splits_list/view/splits_page.dart';
+import 'package:splity_z/split_details/view/split_details_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -49,7 +50,8 @@ class App extends StatelessWidget {
         ),
       ),
       routerConfig: GoRouter(
-        initialLocation: '/split',
+        initialLocation: '/split/1',
+        // initialLocation: '/split',
         routes: [
           GoRoute(
             path: '/error',

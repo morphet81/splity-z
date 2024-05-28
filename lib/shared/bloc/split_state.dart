@@ -7,9 +7,15 @@ final class SplitState extends Equatable {
 
   final List<Split> splits;
 
-  SplitState copyWith({
-    List<Split>? splits,
-  }) {
+  Split? findSplitWithId(int splitId) {
+    return splits
+        .where(
+          (element) => element.id == splitId,
+        )
+        .firstOrNull;
+  }
+
+  SplitState copyWith({List<Split>? splits}) {
     return SplitState(
       splits: splits ?? this.splits,
     );
@@ -19,9 +25,9 @@ final class SplitState extends Equatable {
   List<Object?> get props => [splits];
 
   static SplitState get initialState {
-    const splitee1 = Splitee(name: "John Doe");
-    const splitee2 = Splitee(name: "Jane Doe");
-    const splitee3 = Splitee(name: "Mister X");
+    const splitee1 = Splitee(name: 'John Doe');
+    const splitee2 = Splitee(name: 'Jane Doe');
+    const splitee3 = Splitee(name: 'Mister X');
 
     return const SplitState(splits: <Split>[
       Split(

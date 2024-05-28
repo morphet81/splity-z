@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Split;
 import 'package:provider/provider.dart';
-import 'package:splity_z/splits/bloc/split_bloc.dart';
-import 'package:splity_z/splits/models/models.dart' as splitz;
-import 'package:splity_z/splits/widgets/splits_list_item_card.dart';
-import 'package:splity_z/splits/widgets/splits_list_item_delete_button.dart';
+import 'package:splity_z/shared/bloc/split_bloc.dart';
+import 'package:splity_z/shared/models/models.dart';
+import 'package:splity_z/splits_list/widgets/splits_list_item_card.dart';
+import 'package:splity_z/splits_list/widgets/splits_list_item_delete_button.dart';
 
 class SplitsListItem extends StatefulWidget {
   const SplitsListItem(
       {required this.isInEditMode, required this.split, super.key});
 
-  final splitz.Split split;
+  final Split split;
   final bool isInEditMode;
 
   @override

@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Split;
 import 'package:provider/provider.dart';
-import 'package:splity_z/splits/bloc/split_bloc.dart';
-import 'package:splity_z/splits/models/models.dart' as splitz;
+import 'package:splity_z/shared/bloc/split_bloc.dart';
+import 'package:splity_z/shared/models/models.dart';
 
 const slideValuePixels = 50.0;
 
 class SplitsListItemDeleteButton extends StatelessWidget {
   const SplitsListItemDeleteButton({required this.split, super.key});
 
-  final splitz.Split split;
+  final Split split;
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:splity_z/splits/models/models.dart';
+import 'package:splity_z/shared/models/models.dart';
 
 final class Split extends Equatable {
   const Split({

@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Split;
 import 'package:go_router/go_router.dart';
-import 'package:splity_z/splits/models/models.dart' as splitz;
+import 'package:splity_z/shared/models/models.dart';
 
 const slideValuePixels = 50.0;
 
@@ -8,7 +8,7 @@ class SplitsListItemCard extends StatefulWidget {
   const SplitsListItemCard(
       {required this.split, required this.isInEditMode, super.key});
 
-  final splitz.Split split;
+  final Split split;
   final bool isInEditMode;
 
   @override
