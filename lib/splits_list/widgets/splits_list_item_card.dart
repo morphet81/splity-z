@@ -7,7 +7,7 @@ const slideValuePixels = 50.0;
 class SplitsListItemCard extends StatefulWidget {
   const SplitsListItemCard({required this.split, required this.isInEditMode, super.key});
 
-  final SplitImpl split;
+  final Split split;
   final bool isInEditMode;
 
   @override

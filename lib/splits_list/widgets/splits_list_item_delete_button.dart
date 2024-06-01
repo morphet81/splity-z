@@ -8,7 +8,7 @@ const slideValuePixels = 50.0;
 class SplitsListItemDeleteButton extends StatelessWidget {
   const SplitsListItemDeleteButton({required this.split, super.key});
 
-  final SplitImpl split;
+  final Split split;
 
   @override
   Widget build(BuildContext context) {

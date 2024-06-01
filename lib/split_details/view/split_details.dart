@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
+import 'package:splity_z/split_details/widgets/shares_list.dart';
 import 'package:splity_z/split_details/widgets/splitees_list.dart';
 
 class SplitDetails extends StatefulWidget {
@@ -26,6 +27,7 @@ class _SplitDetailsState extends State<SplitDetails> {
       return Column(
         children: [
           SpliteesList(splitees: split!.splitees),
+          SharesList(split: split),
         ],
       );
     });
