@@ -6,10 +6,9 @@ import 'package:splity_z/splits_list/widgets/splits_list_item_card.dart';
 import 'package:splity_z/splits_list/widgets/splits_list_item_delete_button.dart';
 
 class SplitsListItem extends StatefulWidget {
-  const SplitsListItem(
-      {required this.isInEditMode, required this.split, super.key});
+  const SplitsListItem({required this.isInEditMode, required this.split, super.key});
 
-  final Split split;
+  final SplitImpl split;
   final bool isInEditMode;
 
   @override
@@ -26,8 +25,7 @@ class _SplitsListItemState extends State<SplitsListItem> {
         ),
         child: Stack(children: [
           SplitsListItemDeleteButton(split: widget.split),
-          SplitsListItemCard(
-              split: widget.split, isInEditMode: widget.isInEditMode),
+          SplitsListItemCard(split: widget.split, isInEditMode: widget.isInEditMode),
         ]),
         onDismissed: (direction) {
           context.read<SplitBloc>().add(DeleteSplit(splitId: widget.split.id));

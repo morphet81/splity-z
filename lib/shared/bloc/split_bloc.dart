@@ -10,9 +10,8 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<DeleteSplit>(_onDeleteSplit);
   }
 
-  Future<void> _onDeleteSplit(
-      DeleteSplit event, Emitter<SplitState> emit) async {
-    List<Split> newSplitsList = List.from(state.splits);
+  Future<void> _onDeleteSplit(DeleteSplit event, Emitter<SplitState> emit) async {
+    List<SplitImpl> newSplitsList = List.from(state.splits);
 
     newSplitsList.removeWhere((split) => split.id == event.splitId);
 

@@ -2,12 +2,12 @@ part of 'split_bloc.dart';
 
 final class SplitState extends Equatable {
   const SplitState({
-    this.splits = const <Split>[],
+    this.splits = const <SplitImpl>[],
   });
 
-  final List<Split> splits;
+  final List<SplitImpl> splits;
 
-  Split? findSplitWithId(int splitId) {
+  SplitImpl? findSplitWithId(int splitId) {
     return splits
         .where(
           (element) => element.id == splitId,
@@ -15,7 +15,7 @@ final class SplitState extends Equatable {
         .firstOrNull;
   }
 
-  SplitState copyWith({List<Split>? splits}) {
+  SplitState copyWith({List<SplitImpl>? splits}) {
     return SplitState(
       splits: splits ?? this.splits,
     );
@@ -29,8 +29,8 @@ final class SplitState extends Equatable {
     const splitee2 = Splitee(name: 'Jane Doe');
     const splitee3 = Splitee(name: 'Mister X');
 
-    return const SplitState(splits: <Split>[
-      Split(
+    return SplitState(splits: <SplitImpl>[
+      SplitImpl(
         id: 1,
         name: 'Diner at the end of the world',
         splitees: <Splitee>[
@@ -50,7 +50,7 @@ final class SplitState extends Equatable {
           ),
         ],
       ),
-      Split(
+      SplitImpl(
         id: 2,
         name: 'Cinema',
         splitees: <Splitee>[
