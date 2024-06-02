@@ -27,7 +27,8 @@ final class SplitState extends Equatable {
   static SplitState get initialState {
     const splitee1 = Splitee(name: 'John Doe');
     const splitee2 = Splitee(name: 'Jane Doe');
-    const splitee3 = Splitee(name: 'Mister X');
+    const splitee3 = Splitee(name: 'Jack Downson');
+    const splitee4 = Splitee(name: 'Andre Pourlov Droupinov Kasparov');
 
     return SplitState(splits: <Split>[
       SplitImpl(
@@ -74,6 +75,38 @@ final class SplitState extends Equatable {
             paidBy: splitee2,
             paidFor: [splitee1, splitee2],
           ),
+        ],
+      ),
+      SplitImpl(
+        id: 3,
+        name: 'Diner at the end of the world',
+        splitees: <Splitee>[
+          splitee1,
+          splitee2,
+          splitee3,
+          splitee4,
+        ],
+        expenses: <Expense>[
+          Expense(
+            amount: 56,
+            paidBy: splitee1,
+            paidFor: [splitee1, splitee2, splitee3, splitee4],
+          ), // 14 per pax
+          Expense(
+            amount: 37,
+            paidBy: splitee1,
+            paidFor: [splitee2, splitee3],
+          ), // 18.5 per pax
+          Expense(
+            amount: 15,
+            paidBy: splitee4,
+            paidFor: [splitee1, splitee2, splitee3],
+          ), // 5 per pax
+          Expense(
+            amount: 18,
+            paidBy: splitee4,
+            paidFor: [splitee4, splitee2],
+          ), // 9 per pax
         ],
       )
     ]);

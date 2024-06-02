@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:splity_z/shared/models/models.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:splity_z/split_details/widgets/splitee_list_item.dart';
 
 class SpliteesList extends StatelessWidget {
   const SpliteesList({required this.splitees, super.key});
@@ -16,17 +18,14 @@ class SpliteesList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              'Splitees',
+              AppLocalizations.of(context)!.spliteeListTitle,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
           ListView.builder(
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return Text(
-                splitees[index].name,
-                style: Theme.of(context).textTheme.bodyMedium,
-              );
+              return SpliteeListItem(splitee: splitees[index]);
             },
             itemCount: splitees.length,
           ),

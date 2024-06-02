@@ -1,5 +1,7 @@
 {
   "appName": "SplityZ",
   "edit": "Edit",
-  "helloWorld": "Hello World!"
+  "helloWorld": "Hello World!",
+  "sharesListTitle": "Shares",
+  "spliteeListTitle": "Splitees"
 }
