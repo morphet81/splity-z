@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'dart:math';
-
 import 'package:equatable/equatable.dart';
 import 'package:splity_z/shared/models/models.dart';
+import 'package:splity_z/shared/extension/ListExtension.dart';
 
 abstract class Split extends Equatable {
   Split({
@@ -30,38 +28,13 @@ final class SplitImpl extends Split {
 
   @override
   List<Share> getShares() {
-    List<Share> finalShares = [];
-    List<Share> shares = _getRawShares();
+    List<Share> finalShares = _getRawShares();
 
-    for (int i = 0; i < splitees.length; i++) {
-      for (int j = i + 1; j < splitees.length; j++) {
-        final Splitee splitee1 = splitees[i];
-        final Splitee splitee2 = splitees[j];
+    finalShares = _reduceTransactions(finalShares);
 
-        List<(Splitee, double)> debts = [
-          (splitee1, 0.0),
-          (splitee2, 0.0),
-        ];
+    finalShares.sort(Share.compareShares);
 
-        shares.where(_isShareBetweenSplitees(splitee1, splitee2)).forEach(_computeDebtsBetweenSplitees(debts));
-
-        final debtsShares = debts.map((debt) {
-          if (debt.$2 > 0) {
-            return Share(
-              from: debt.$1,
-              to: debt.$1 == splitee1 ? splitee2 : splitee1,
-              amount: debt.$2,
-            );
-          }
-        }).nonNulls;
-
-        finalShares.addAll(debtsShares);
-      }
-    }
-
-    _reduceTransactions(finalShares);
-
-    finalShares.forEach((share) => debugPrint(share.toString()));
+    finalShares = _superReduceTransactions(finalShares);
 
     return finalShares;
   }
@@ -70,121 +43,146 @@ final class SplitImpl extends Split {
     List<Share> shares = [];
 
     expenses.forEach((expense) {
-      expense.paidFor.where(_spliteeIsNotExpensePayer(expense)).forEach(_addOrUpdateSpliteeShare(expense, shares));
+      expense.paidFor
+          .where(
+            _spliteeIsNotTheExpensePayer(expense),
+          )
+          .forEach(
+            _addOrUpdateSpliteeShare(expense, shares),
+          );
     });
 
     return shares;
   }
 
-  void _reduceTransactions(List<Share> finalShares) {
+  List<Share> _reduceTransactions(List<Share> finalShares) {
+    Map<Splitee, List<Share>> spliteesShares = Map();
+    List<Share> updatedFinalShares = [];
+
     splitees.forEach((splitee) {
-      final spliteeShares = finalShares.where((share) => share.from == splitee).toList();
-
-      spliteeShares.forEach((spliteeShareToPayee) {
-        final payee = spliteeShareToPayee.to;
-
-        splitees.where((otherSplitee) => otherSplitee != splitee && otherSplitee != payee).forEach((otherSplitee) {
-          final otherSpliteeShareWithSplitee = _shareBetweenSpliteesInList(splitee, otherSplitee, finalShares);
-          final otherSpliteeShareToPayee = _shareFromSpliteeToPayeeInList(otherSplitee, payee, finalShares);
-
-          if (otherSpliteeShareToPayee != null && otherSpliteeShareWithSplitee != null) {
-            if (otherSpliteeShareWithSplitee.from == splitee && otherSpliteeShareToPayee.amount <= spliteeShareToPayee.amount) {
-              _updateShareAmountInList(otherSpliteeShareWithSplitee, otherSpliteeShareWithSplitee.amount - otherSpliteeShareToPayee.amount, finalShares);
-              _updateShareAmountInList(spliteeShareToPayee, spliteeShareToPayee.amount + otherSpliteeShareToPayee.amount, finalShares);
-              finalShares.remove(otherSpliteeShareToPayee);
-            } else if (otherSpliteeShareWithSplitee.from == otherSplitee && spliteeShareToPayee.amount <= otherSpliteeShareToPayee.amount) {
-              _updateShareAmountInList(otherSpliteeShareWithSplitee, otherSpliteeShareToPayee.amount - spliteeShareToPayee.amount, finalShares);
-              _updateShareAmountInList(otherSpliteeShareToPayee, otherSpliteeShareToPayee.amount + spliteeShareToPayee.amount, finalShares);
-              finalShares.remove(spliteeShareToPayee);
-            }
-          }
-        });
-      });
+      spliteesShares.putIfAbsent(splitee, () => finalShares.where((share) => share.from == splitee).toList());
     });
+
+    spliteesShares.removeWhere((splitee, shares) => shares.length == 0);
+
+    for (int i = 0; i < splitees.length; i++) {
+      for (int j = i + 1; j < splitees.length; j++) {
+        final firstSplitee = splitees[i];
+        final secondSplitee = splitees[j];
+
+        final firstSpliteeSharesToSecondSplitee = finalShares
+            .where(
+              (share) => share.from == firstSplitee && share.to == secondSplitee,
+            )
+            .toList();
+
+        final secondSpliteeSharesToFirstSplitee = finalShares
+            .where(
+              (share) => share.from == secondSplitee && share.to == firstSplitee,
+            )
+            .toList();
+
+        final double firstSpliteeOwesSecondAmount = firstSpliteeSharesToSecondSplitee.length > 0 ? firstSpliteeSharesToSecondSplitee.reduce(Share.sharesListReducer).amount : 0;
+        final double secondSpliteeOwesFirstAmount = secondSpliteeSharesToFirstSplitee.length > 0 ? secondSpliteeSharesToFirstSplitee.reduce(Share.sharesListReducer).amount : 0;
+
+        final finalBalance = firstSpliteeOwesSecondAmount - secondSpliteeOwesFirstAmount;
+
+        if (finalBalance == 0) {
+          continue;
+        }
+
+        final payer = finalBalance > 0 ? firstSplitee : secondSplitee;
+        final payee = finalBalance > 0 ? secondSplitee : firstSplitee;
+
+        updatedFinalShares.add(
+          Share(from: payer, to: payee, amount: finalBalance.abs()),
+        );
+      }
+    }
+
+    return updatedFinalShares;
+  }
+
+  List<Share> _superReduceTransactions(List<Share> finalShares) {
+    Map<Splitee, List<Share>> spliteesShares = Map();
+    List<Share> updatedFinalShares = List.from(finalShares);
+
+    splitees.forEach((splitee) {
+      spliteesShares.putIfAbsent(splitee, () => updatedFinalShares.where((share) => share.from == splitee).toList());
+    });
+
+    for (int i = 0; i < splitees.length; i++) {
+      for (int j = i + 1; j < splitees.length; j++) {
+        final List<Splitee> comparedSplitees = Splitee.ascendingSortList([
+          splitees[i],
+          splitees[j],
+        ]);
+
+        final firstSharesItems = spliteesShares[comparedSplitees[0]];
+        final secondSharesItems = spliteesShares[comparedSplitees[1]];
+
+        final firstShares = Share.unionOnTo(firstSharesItems!, secondSharesItems!);
+        final secondShares = Share.unionOnTo(secondSharesItems, firstSharesItems);
+
+        if (firstShares.length == 2 && secondShares.length == 2) {
+          Share.ascendingSortList(firstShares);
+          Share.ascendingSortList(secondShares);
+
+          if (_sharesHaveSameAmountAndDifferentPayees(firstShares.first, secondShares.first)) {
+            updatedFinalShares.removeAll([
+              ...firstShares,
+              ...secondShares,
+            ]);
+
+            updatedFinalShares.add(firstShares.last.coppyWith(amount: firstShares.last.amount + firstShares.first.amount));
+            updatedFinalShares.add(secondShares.last.coppyWith(amount: secondShares.last.amount + secondShares.first.amount));
+          } else {
+            final shareThatsGettingCoveredFor = firstShares.first.amount <= secondShares.first.amount ? firstShares.first : secondShares.first;
+
+            final isCoveredShareForFirstSplitee = shareThatsGettingCoveredFor == firstShares.first;
+
+            final shareThatWillCover = isCoveredShareForFirstSplitee ? secondShares.first : firstShares.first;
+            final shareThatWillDecreaseAmount = isCoveredShareForFirstSplitee ? secondShares.last : firstShares.last;
+            final shareThatWillIncreaseAmount = isCoveredShareForFirstSplitee ? firstShares.last : secondShares.last;
+
+            updatedFinalShares.removeAll([
+              ...firstShares,
+              ...secondShares,
+            ]);
+
+            updatedFinalShares.add(shareThatWillCover.coppyWith(amount: shareThatWillCover.amount + shareThatsGettingCoveredFor.amount));
+            updatedFinalShares.add(shareThatWillDecreaseAmount.coppyWith(amount: shareThatWillDecreaseAmount.amount - shareThatsGettingCoveredFor.amount));
+            updatedFinalShares.add(shareThatWillIncreaseAmount.coppyWith(amount: shareThatWillIncreaseAmount.amount + shareThatsGettingCoveredFor.amount));
+          }
+        }
+      }
+    }
+
+    return updatedFinalShares;
   }
 
   void Function(Splitee) _addOrUpdateSpliteeShare(Expense expense, List<Share> shares) {
     final amountPerPayee = expense.amount / expense.paidFor.length;
 
     return (splitee) {
-      Share share = shares.firstWhere(
-        _spliteeOwesPayer(splitee, expense),
-        orElse: _spliteeToPayerShare(splitee, expense),
+      shares.add(
+        Share(
+          from: splitee,
+          to: expense.paidBy,
+          amount: amountPerPayee,
+        ),
       );
-
-      shares.remove(share);
-      shares.add(share.coppyWith(amount: share.amount + amountPerPayee));
     };
   }
 
-  void Function(Share) _computeDebtsBetweenSplitees(List<(Splitee, double)> debts) {
-    if (debts.length != 2) {
-      throw Exception('debts must contain 2 items only');
-    }
-
-    return (share) {
-      final index = share.from == debts[0].$1 ? 0 : 1;
-      debts[index] = (debts[index].$1, debts[index].$2 + share.amount);
-
-      final double splitee1Debt = max(debts[0].$2 - debts[1].$2, 0);
-      final double splitee2Debt = max(debts[1].$2 - debts[0].$2, 0);
-
-      debts[0] = (debts[0].$1, splitee1Debt);
-      debts[1] = (debts[1].$1, splitee2Debt);
-    };
-  }
-
-  bool Function(Splitee) _spliteeIsNotExpensePayer(Expense expense) {
+  bool Function(Splitee) _spliteeIsNotTheExpensePayer(Expense expense) {
     return (splitee) => splitee != expense.paidBy;
   }
 
-  bool Function(Share) _spliteeOwesPayer(Splitee splitee, Expense expense) {
-    return (share) => share.from == splitee && share.to == expense.paidBy;
-  }
-
-  Share Function() _spliteeToPayerShare(Splitee splitee, Expense expense) {
-    return () => Share(from: splitee, to: expense.paidBy, amount: 0.0);
-  }
-
-  bool Function(Share) _isShareBetweenSplitees(Splitee splitee1, Splitee splitee2) {
-    return (share) {
-      return share.from == splitee1 && share.to == splitee2 || share.from == splitee2 && share.to == splitee1;
-    };
-  }
-
-  Share? _shareBetweenSpliteesInList(Splitee splitee1, Splitee splitee2, List<Share> shares) {
-    return shares.where(_isShareBetweenSplitees(splitee1, splitee2)).firstOrNull;
-  }
-
-  Share? _shareFromSpliteeToPayeeInList(Splitee splitee, Splitee payee, List<Share> shares) {
-    return shares.where((share) => share.from == splitee && share.to == payee).firstOrNull;
-  }
-
-  void _updateShareAmountInList(Share share, double amount, List<Share> shares) {
-    shares.remove(share);
-    shares.add(share.coppyWith(amount: amount));
+  bool _sharesHaveSameAmountAndDifferentPayees(Share firstShare, Share secondShare) {
+    return firstShare.amount == secondShare.amount && firstShare.to != secondShare.to;
   }
 
   @override
   List<Object?> get props => [id, name, splitees, expenses];
 }
-
-/*
-  Algorithm used to spread the shares and minimize transactions
-
-  For each other splitee Jane owes money to, referred as the payee
-    For each other splitee who is not jane or the payee
-      Get all shares where this other splitee owes money to any one
-      If this other splitee owes money to the payee
-        If this other splitee has a share with Jane
-          If Jane owes this other splitee
-            If what this other splitee owes the payee is inferior or equal to what Jane owes this other splitee
-              Decrease what Jane owes to the other splitee of the amount the other splitee owes to the payee
-              Increase what Jane owes to the payee by the amount the other splitee owes to the payee
-              Delete the share between this other splitee and the payee
-          If this other splitee owes Jane
-            If what Jane owes the payee is inferior or equal to what this other splitee owes Jane
-              Decrease what this other splitee owes to Jane of the amount Jane owes to the payee
-              Increase what this other splitee owes to the payee by the amount Jane owes to the payee
-              Delete the share between Jane and the payee
-  */

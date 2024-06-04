@@ -107,6 +107,11 @@ final class SplitState extends Equatable {
             paidBy: splitee4,
             paidFor: [splitee4, splitee2],
           ), // 9 per pax
+          Expense(
+            amount: 4,
+            paidBy: splitee4,
+            paidFor: [splitee3],
+          ),
         ],
       )
     ]);
