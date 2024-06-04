@@ -43,20 +43,4 @@ final class Share extends Equatable {
   static Share sharesListReducer(Share value, Share element) {
     return value.coppyWith(amount: value.amount + element.amount);
   }
-
-  static List<Share> unionOnTo(List<Share> first, List<Share> second) {
-    return first.where((share) {
-      return second.where((s) => s.to == share.to).firstOrNull != null;
-    }).toList();
-  }
-
-  static void ascendingSortList(List<Share> shares) {
-    shares.sort((a, b) {
-      if (a.amount == b.amount) {
-        return a.from.name.compareTo(b.from.name);
-      }
-
-      return (a.amount - b.amount).toInt();
-    });
-  }
 }

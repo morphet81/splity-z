@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:splity_z/shared/models/models.dart';
-import 'package:splity_z/shared/extension/ListExtension.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 abstract class Split extends Equatable {
   Split({
@@ -70,17 +70,8 @@ final class SplitImpl extends Split {
         final firstSplitee = splitees[i];
         final secondSplitee = splitees[j];
 
-        final firstSpliteeSharesToSecondSplitee = finalShares
-            .where(
-              (share) => share.from == firstSplitee && share.to == secondSplitee,
-            )
-            .toList();
-
-        final secondSpliteeSharesToFirstSplitee = finalShares
-            .where(
-              (share) => share.from == secondSplitee && share.to == firstSplitee,
-            )
-            .toList();
+        final firstSpliteeSharesToSecondSplitee = finalShares.whereFromTo(firstSplitee, secondSplitee);
+        final secondSpliteeSharesToFirstSplitee = finalShares.whereFromTo(secondSplitee, firstSplitee);
 
         final double firstSpliteeOwesSecondAmount = firstSpliteeSharesToSecondSplitee.length > 0 ? firstSpliteeSharesToSecondSplitee.reduce(Share.sharesListReducer).amount : 0;
         final double secondSpliteeOwesFirstAmount = secondSpliteeSharesToFirstSplitee.length > 0 ? secondSpliteeSharesToFirstSplitee.reduce(Share.sharesListReducer).amount : 0;
@@ -113,20 +104,20 @@ final class SplitImpl extends Split {
 
     for (int i = 0; i < splitees.length; i++) {
       for (int j = i + 1; j < splitees.length; j++) {
-        final List<Splitee> comparedSplitees = Splitee.ascendingSortList([
+        final List<Splitee> comparedSplitees = [
           splitees[i],
           splitees[j],
-        ]);
+        ].ascendingSortList();
 
         final firstSharesItems = spliteesShares[comparedSplitees[0]];
         final secondSharesItems = spliteesShares[comparedSplitees[1]];
 
-        final firstShares = Share.unionOnTo(firstSharesItems!, secondSharesItems!);
-        final secondShares = Share.unionOnTo(secondSharesItems, firstSharesItems);
+        final firstShares = firstSharesItems!.unionWithListOnPayee(secondSharesItems!);
+        final secondShares = secondSharesItems.unionWithListOnPayee(firstSharesItems);
 
         if (firstShares.length == 2 && secondShares.length == 2) {
-          Share.ascendingSortList(firstShares);
-          Share.ascendingSortList(secondShares);
+          firstShares.ascendingSort();
+          secondShares.ascendingSort();
 
           if (_sharesHaveSameAmountAndDifferentPayees(firstShares.first, secondShares.first)) {
             updatedFinalShares.removeAll([
