@@ -4,6 +4,11 @@ extension Listextension on List {
   void removeAll(List items) {
     items.toList().forEach((item) => this.remove(item));
   }
+
+  void replace(dynamic item, dynamic newItem) {
+    this.remove(item);
+    this.add(newItem);
+  }
 }
 
 extension SharesListExtension on List<Share> {

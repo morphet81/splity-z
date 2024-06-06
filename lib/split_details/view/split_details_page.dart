@@ -36,29 +36,4 @@ class SplitDetailsPage extends StatelessWidget {
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return BlocBuilder<SplitBloc, SplitState>(builder: (context, state) {
-  //     final split = state.splits
-  //         .where(
-  //           (element) => element.id == splitId,
-  //         )
-  //         .firstOrNull;
-
-  //     if (split == null) {
-  //       GoRouter.of(context).replace('/error');
-  //     }
-
-  //     return Scaffold(
-  //       appBar: SplityzAppBar(
-  //         title: split!.name,
-  //       ).build(context),
-  //       body: BlocProvider(
-  //         create: (_) => SplitBloc(),
-  //         child: SplitDetails(splitId: splitId),
-  //       ),
-  //     );
-  //   });
-  // }
 }

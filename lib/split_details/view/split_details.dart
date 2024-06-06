@@ -17,19 +17,21 @@ class SplitDetails extends StatefulWidget {
 class _SplitDetailsState extends State<SplitDetails> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SplitBloc, SplitState>(builder: (context, state) {
-      final split = state.findSplitWithId(widget.splitId);
+    return BlocBuilder<SplitBloc, SplitState>(
+      builder: (context, state) {
+        final split = state.findSplitWithId(widget.splitId);
 
-      if (split == null) {
-        GoRouter.of(context).replace('/error');
-      }
+        if (split == null) {
+          GoRouter.of(context).replace('/error');
+        }
 
-      return Column(
-        children: [
-          SpliteesList(splitees: split!.splitees),
-          SharesList(split: split),
-        ],
-      );
-    });
+        return Column(
+          children: [
+            SpliteesList(split: split!),
+            SharesList(split: split),
+          ],
+        );
+      },
+    );
   }
 }

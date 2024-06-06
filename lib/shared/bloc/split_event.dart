@@ -10,3 +10,10 @@ final class DeleteSplit extends SplitEvent {
 
   final int splitId;
 }
+
+final class DeleteSplitee extends SplitEvent {
+  DeleteSplitee({required this.splitId, required this.splitee});
+
+  final int splitId;
+  final Splitee splitee;
+}

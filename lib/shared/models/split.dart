@@ -16,6 +16,8 @@ abstract class Split extends Equatable {
   final List<Expense> expenses;
 
   List<Share> getShares();
+
+  Split copyWith({int? id, String? name, List<Splitee>? splitees, List<Expense>? expenses});
 }
 
 final class SplitImpl extends Split {
@@ -176,4 +178,14 @@ final class SplitImpl extends Split {
 
   @override
   List<Object?> get props => [id, name, splitees, expenses];
+
+  @override
+  Split copyWith({int? id, String? name, List<Splitee>? splitees, List<Expense>? expenses}) {
+    return SplitImpl(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      splitees: splitees ?? this.splitees,
+      expenses: expenses ?? this.expenses,
+    );
+  }
 }

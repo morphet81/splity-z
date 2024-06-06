@@ -15,7 +15,7 @@ final class SplitState extends Equatable {
         .firstOrNull;
   }
 
-  SplitState copyWith({List<Split>? splits}) {
+  SplitState copyWith({List<Split>? splits, bool? myTest}) {
     return SplitState(
       splits: splits ?? this.splits,
     );
