@@ -23,10 +23,12 @@ class _SplitsListItemState extends State<SplitsListItem> {
         background: Container(
           color: Colors.red,
         ),
-        child: Stack(children: [
-          SplitsListItemDeleteButton(split: widget.split),
-          SplitsListItemCard(split: widget.split, isInEditMode: widget.isInEditMode),
-        ]),
+        child: Stack(
+          children: [
+            SplitsListItemDeleteButton(split: widget.split),
+            SplitsListItemCard(split: widget.split, isInEditMode: widget.isInEditMode),
+          ],
+        ),
         onDismissed: (direction) {
           context.read<SplitBloc>().add(DeleteSplit(splitId: widget.split.id));
         });

@@ -4,11 +4,25 @@ import 'package:go_router/go_router.dart';
 import 'package:splity_z/shared/widgets/splityz_app_bar.dart';
 import 'package:splity_z/split_details/view/split_details.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SplitDetailsPage extends StatelessWidget {
+class SplitDetailsPage extends StatefulWidget {
   const SplitDetailsPage({required this.splitId, super.key});
 
   final int splitId;
+
+  @override
+  State<SplitDetailsPage> createState() => _SplitDetailsPageState();
+}
+
+class _SplitDetailsPageState extends State<SplitDetailsPage> {
+  bool _isInEditMode = false;
+
+  void onEditButtonPressed() {
+    setState(() {
+      _isInEditMode = !_isInEditMode;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +32,7 @@ class SplitDetailsPage extends StatelessWidget {
         builder: (context, state) {
           final split = state.splits
               .where(
-                (element) => element.id == splitId,
+                (element) => element.id == widget.splitId,
               )
               .firstOrNull;
 
@@ -29,8 +43,20 @@ class SplitDetailsPage extends StatelessWidget {
           return Scaffold(
             appBar: SplityzAppBar(
               title: split!.name,
+              actions: [
+                IconButton(
+                  icon: Icon(
+                    _isInEditMode ? Icons.done : Icons.edit,
+                  ),
+                  tooltip: AppLocalizations.of(context)!.edit,
+                  onPressed: onEditButtonPressed,
+                )
+              ],
             ).build(context),
-            body: SplitDetails(splitId: splitId),
+            body: SplitDetails(
+              split: split,
+              isInEditMode: _isInEditMode,
+            ),
           );
         },
       ),

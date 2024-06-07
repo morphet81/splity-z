@@ -13,7 +13,9 @@ class SpliteeListItemDeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Positioned(
+      top: 0.0,
+      left: 0.0,
       width: 40.0,
       child: IconButton(
         onPressed: () {

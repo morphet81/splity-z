@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart' hide Split;
+import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
-import 'package:splity_z/split_details/widgets/splitee_list_item_delete_button.dart';
+import 'package:splity_z/shared/widgets/deletable_list_item_card.dart';
+import 'package:provider/provider.dart';
 
 class SpliteeListItem extends StatelessWidget {
-  const SpliteeListItem({required this.split, required this.splitee, super.key});
+  const SpliteeListItem({required this.split, required this.splitee, required this.isInEditMode, super.key});
 
   final Split split;
   final Splitee splitee;
+  final bool isInEditMode;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Row(
+    return DeletableListItemCard(
+      slideValuePixels: 40.0,
+      isInEditMode: isInEditMode,
+      child: Flex(
+        direction: Axis.horizontal,
         children: [
           Expanded(
             child: Card.filled(
@@ -26,12 +31,12 @@ class SpliteeListItem extends StatelessWidget {
               ),
             ),
           ),
-          SpliteeListItemDeleteButton(
-            split: split,
-            splitee: splitee,
-          ),
         ],
       ),
+      onTap: () => debugPrint('Tap the item'),
+      onDelete: () {
+        context.read<SplitBloc>().add(DeleteSplitee(splitId: split.id, splitee: splitee));
+      },
     );
   }
 }
