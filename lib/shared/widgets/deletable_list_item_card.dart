@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:splity_z/shared/widgets/list_item_delete_button.dart';
 
 class DeletableListItemCard extends StatefulWidget {
-  const DeletableListItemCard({required this.child, required this.onTap, required this.onDelete, required this.slideValuePixels, required this.isInEditMode, super.key});
+  const DeletableListItemCard({required this.child, required this.onTap, required this.onDelete, required this.isInEditMode, super.key});
 
   final Widget child;
   final void Function() onTap;
   final void Function() onDelete;
-  final slideValuePixels;
   final bool isInEditMode;
 
   @override

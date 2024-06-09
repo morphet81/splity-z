@@ -14,7 +14,6 @@ class SpliteeListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DeletableListItemCard(
-      slideValuePixels: 40.0,
       isInEditMode: isInEditMode,
       child: Flex(
         direction: Axis.horizontal,
