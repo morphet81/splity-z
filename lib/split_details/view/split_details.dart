@@ -11,14 +11,16 @@ class SplitDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SpliteesList(
-          split: split,
-          isInEditMode: isInEditMode,
-        ),
-        SharesList(split: split),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SpliteesList(
+            split: split,
+            isInEditMode: isInEditMode,
+          ),
+          SharesList(split: split),
+        ],
+      ),
     );
   }
 }

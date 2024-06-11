@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/models/models.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:splity_z/shared/widgets/deletable_list_item_card.dart';
 import 'package:splity_z/split_details/widgets/splitee_list_item.dart';
 
 class SpliteesList extends StatelessWidget {
@@ -27,25 +26,13 @@ class SpliteesList extends StatelessWidget {
           Center(
             child: ListView.builder(
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                // if (index == split.splitees.length) {
-                //   return Padding(
-                //     padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0),
-                //     child: TextField(
-                //       obscureText: true,
-                //       decoration: InputDecoration(
-                //         border: OutlineInputBorder(),
-                //         labelText: 'Password',
-                //       ),
-                //     ),
-                //   );
-                // } else {
                 return SpliteeListItem(
                   split: split,
                   splitee: split.splitees[index],
-                  isInEditMode: isInEditMode,
+                  isParentInEditMode: isInEditMode,
                 );
-                // }
               },
               itemCount: split.splitees.length,
             ),
