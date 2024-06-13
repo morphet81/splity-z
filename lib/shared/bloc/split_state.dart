@@ -10,7 +10,7 @@ final class SplitState extends Equatable {
   Split? findSplitWithId(int splitId) {
     return splits
         .where(
-          (element) => element.id == splitId,
+          (split) => split.id == splitId,
         )
         .firstOrNull;
   }
@@ -25,10 +25,10 @@ final class SplitState extends Equatable {
   List<Object?> get props => [splits];
 
   static SplitState get initialState {
-    const splitee1 = Splitee(name: 'John Doe');
-    const splitee2 = Splitee(name: 'Jane Doe');
-    const splitee3 = Splitee(name: 'Jack Downson');
-    const splitee4 = Splitee(name: 'Andre Pourlov Droupinov Kasparov');
+    const splitee1 = SpliteeImpl(name: 'John Doe', expensesTypes: [...ExpenseType.values]);
+    const splitee2 = SpliteeImpl(name: 'Jane Doe', expensesTypes: [ExpenseType.Food, ExpenseType.Soft]);
+    const splitee3 = SpliteeImpl(name: 'Jack Downson', expensesTypes: [...ExpenseType.values]);
+    const splitee4 = SpliteeImpl(name: 'Andre Pourlov Droupinov Kasparov', expensesTypes: [ExpenseType.Alcohol, ExpenseType.Food, ExpenseType.Taxi]);
 
     return SplitState(splits: <Split>[
       SplitImpl(

@@ -2,16 +2,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:splity_z/shared/models/models.dart';
 
 void main() {
-  const john = Splitee(name: 'John Doe');
-  const jane = Splitee(name: 'Jane Doe');
-  const jack = Splitee(name: 'Jack Reacher');
-  const andre = Splitee(name: 'André Rieu');
+  const john = SpliteeImpl(name: 'John Doe', expensesTypes: []);
+  const jane = SpliteeImpl(name: 'Jane Doe', expensesTypes: []);
+  const jack = SpliteeImpl(name: 'Jack Reacher', expensesTypes: []);
+  const andre = SpliteeImpl(name: 'André Rieu', expensesTypes: []);
 
   group('Test getShares with a simple split between 3 splitees', () {
     final split = SplitImpl(
       id: 1,
       name: 'Diner at the end of the world',
-      splitees: <Splitee>[
+      splitees: <SpliteeImpl>[
         john,
         jane,
         jack,
@@ -73,7 +73,7 @@ void main() {
     final split = SplitImpl(
       id: 1,
       name: 'Diner at the end of the world',
-      splitees: <Splitee>[
+      splitees: <SpliteeImpl>[
         john,
         jane,
         jack,

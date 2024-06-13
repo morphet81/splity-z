@@ -6,8 +6,9 @@ extension Listextension on List {
   }
 
   void replace(dynamic item, dynamic newItem) {
-    this.remove(item);
-    this.add(newItem);
+    final index = this.indexOf(item);
+    this.removeAt(index);
+    this.insert(index, newItem);
   }
 }
 

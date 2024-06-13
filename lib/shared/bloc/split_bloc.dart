@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart' hide Split;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:splity_z/shared/models/models.dart';
+import 'package:splity_z/shared/extensions/ListExtension.dart';
 
 part 'split_event.dart';
 part 'split_state.dart';
@@ -9,6 +11,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
   SplitBloc() : super(SplitState.initialState) {
     on<DeleteSplit>(_onDeleteSplit);
     on<DeleteSplitee>(_onDeleteSplitee);
+    on<UpdateSpliteeExpenseType>(_onUpdateSpliteeExpenseType);
   }
 
   Future<void> _onDeleteSplit(DeleteSplit event, Emitter<SplitState> emit) async {
@@ -20,7 +23,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
   }
 
   Future<void> _onDeleteSplitee(DeleteSplitee event, Emitter<SplitState> emit) async {
-    final split = state.splits.where((split) => split.id == event.splitId).firstOrNull;
+    final split = state.findSplitWithId(event.splitId);
 
     if (split != null) {
       final newSplit = split.copyWith(
@@ -32,6 +35,35 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
       )..add(newSplit);
 
       emit(state.copyWith(splits: newSplitsList));
+    }
+  }
+
+  Future<void> _onUpdateSpliteeExpenseType(UpdateSpliteeExpenseType event, Emitter<SplitState> emit) async {
+    final split = state.findSplitWithId(event.splitId);
+
+    if (split != null) {
+      List<ExpenseType> newExpenseTypes = event.splitee.expensesTypes.toList();
+
+      if (event.isSelected && !newExpenseTypes.contains(event.expenseType)) {
+        newExpenseTypes.add(event.expenseType);
+      } else if (!event.isSelected && newExpenseTypes.contains((event.expenseType))) {
+        newExpenseTypes.remove(event.expenseType);
+      }
+
+      final splitee = split.splitees.where((splitee) => splitee == event.splitee).firstOrNull;
+
+      if (splitee != null) {
+        final newSplitee = splitee.copyWith(expensesTypes: newExpenseTypes);
+
+        final newSplit = split.copyWith(
+          splitees: split.splitees.toList()..replace(splitee, newSplitee),
+        );
+
+        final newState = state.copyWith(
+          splits: state.splits.toList()..replace(split, newSplit),
+        );
+        emit(newState);
+      }
     }
   }
 }

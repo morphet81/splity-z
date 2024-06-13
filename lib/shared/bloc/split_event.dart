@@ -17,3 +17,12 @@ final class DeleteSplitee extends SplitEvent {
   final int splitId;
   final Splitee splitee;
 }
+
+final class UpdateSpliteeExpenseType extends SplitEvent {
+  UpdateSpliteeExpenseType({required this.splitId, required this.splitee, required this.expenseType, required this.isSelected});
+
+  final int splitId;
+  final Splitee splitee;
+  final ExpenseType expenseType;
+  final bool isSelected;
+}
