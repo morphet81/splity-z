@@ -15,20 +15,20 @@ final class SplitState extends Equatable {
         .firstOrNull;
   }
 
-  SplitState copyWith({List<Split>? splits, bool? myTest}) {
+  SplitState copyWith({List<Split>? splits}) {
     return SplitState(
       splits: splits ?? this.splits,
     );
   }
 
   @override
-  List<Object?> get props => [splits];
+  List<Object?> get props => [splits, splits.length];
 
   static SplitState get initialState {
-    const splitee1 = SpliteeImpl(name: 'John Doe', expensesTypes: [...ExpenseType.values]);
-    const splitee2 = SpliteeImpl(name: 'Jane Doe', expensesTypes: [ExpenseType.Food, ExpenseType.Soft]);
-    const splitee3 = SpliteeImpl(name: 'Jack Downson', expensesTypes: [...ExpenseType.values]);
-    const splitee4 = SpliteeImpl(name: 'Andre Pourlov Droupinov Kasparov', expensesTypes: [ExpenseType.Alcohol, ExpenseType.Food, ExpenseType.Taxi]);
+    final splitee1 = SpliteeImpl(name: 'John Doe', expensesTypes: [...ExpenseType.values]);
+    final splitee2 = SpliteeImpl(name: 'Jane Doe', expensesTypes: [ExpenseType.Food, ExpenseType.Soft]);
+    final splitee3 = SpliteeImpl(name: 'Jack Downson', expensesTypes: [...ExpenseType.values]);
+    final splitee4 = SpliteeImpl(name: 'Andre Pourlov Droupinov Kasparov', expensesTypes: [ExpenseType.Alcohol, ExpenseType.Food, ExpenseType.Taxi]);
 
     return SplitState(splits: <Split>[
       SplitImpl(

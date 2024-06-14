@@ -4,7 +4,6 @@ import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/deletable_list_item_card.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/split_details/widgets/splitee_list_item_edit.dart';
-import 'package:splity_z/split_details/widgets/splitee_list_item_locked.dart';
 
 class SpliteeListItem extends StatefulWidget {
   const SpliteeListItem({required this.split, required this.splitee, required this.isParentInEditMode, required this.isInEditMode, required this.onEnterEditMode, super.key});
@@ -57,6 +56,7 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
         });
       },
       onDelete: () {
+        debugPrint('Delete splitee ${widget.splitee.name}');
         context.read<SplitBloc>().add(DeleteSplitee(splitId: widget.split.id, splitee: widget.splitee));
       },
     );

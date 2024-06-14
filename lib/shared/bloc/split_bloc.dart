@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart' hide Split;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:splity_z/shared/models/models.dart';
@@ -27,14 +26,14 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
     if (split != null) {
       final newSplit = split.copyWith(
-        splitees: split.splitees..remove(event.splitee),
+        splitees: List.from(split.splitees)..remove(event.splitee),
       );
 
-      List<Split> newSplitsList = List.from(
-        state.splits..remove(split),
-      )..add(newSplit);
+      final newState = state.copyWith(
+        splits: List.from(state.splits)..replace(split, newSplit),
+      );
 
-      emit(state.copyWith(splits: newSplitsList));
+      emit(newState);
     }
   }
 
@@ -62,6 +61,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
         final newState = state.copyWith(
           splits: state.splits.toList()..replace(split, newSplit),
         );
+
         emit(newState);
       }
     }

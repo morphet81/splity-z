@@ -1,9 +1,13 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:splity_z/shared/models/models.dart';
 
 abstract class Splitee extends Equatable {
-  const Splitee({required this.name, required this.expensesTypes});
+  Splitee({required this.id, required this.name, required this.expensesTypes});
 
+  Splitee.withoutId({required String name, required List<ExpenseType> expensesTypes}) : this(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
+
+  final UniqueKey id;
   final String name;
   final List<ExpenseType> expensesTypes;
 
@@ -11,10 +15,9 @@ abstract class Splitee extends Equatable {
 }
 
 final class SpliteeImpl extends Splitee {
-  const SpliteeImpl({required this.name, required this.expensesTypes}) : super(name: name, expensesTypes: expensesTypes);
+  SpliteeImpl({required name, required expensesTypes}) : super.withoutId(name: name, expensesTypes: expensesTypes);
 
-  final String name;
-  final List<ExpenseType> expensesTypes;
+  SpliteeImpl.withId({required UniqueKey id, required String name, required List<ExpenseType> expensesTypes}) : super(id: id, name: name, expensesTypes: expensesTypes);
 
   @override
   SpliteeImpl copyWith({String? name, List<ExpenseType>? expensesTypes}) {
@@ -22,5 +25,5 @@ final class SpliteeImpl extends Splitee {
   }
 
   @override
-  List<Object?> get props => [name, expensesTypes];
+  List<Object?> get props => [id, name, expensesTypes];
 }

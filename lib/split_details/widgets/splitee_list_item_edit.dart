@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/expanded_selectable_icon.dart';
@@ -37,6 +38,7 @@ class _SpliteeListItemEditState extends State<SpliteeListItemEdit> {
             children: [
               Expanded(
                 child: TextFormField(
+                  key: Key(widget.splitee.id.toString()),
                   autocorrect: false,
                   autofocus: true,
                   textAlign: TextAlign.center,
@@ -56,6 +58,7 @@ class _SpliteeListItemEditState extends State<SpliteeListItemEdit> {
               // )
             ],
           ),
+          Text(widget.splitee.name),
           Row(
             children: [
               ExpandedSelectableIcon(
