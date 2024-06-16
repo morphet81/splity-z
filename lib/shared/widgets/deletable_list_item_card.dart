@@ -40,19 +40,22 @@ class _DeletableListItemCardState extends State<DeletableListItemCard> with Sing
       _controller.reverse();
     }
 
-    return Stack(
-      children: [
-        ListItemDeleteButton(
-          onPressed: widget.onDelete,
-        ),
-        SlideTransition(
-          position: offsetAnimation,
-          child: GestureDetector(
-            child: widget.child,
-            onTap: widget.onTap,
+    return Padding(
+      padding: EdgeInsets.only(bottom: 16.0, left: 8.0, right: 8.0),
+      child: Stack(
+        children: [
+          ListItemDeleteButton(
+            onPressed: widget.onDelete,
           ),
-        ),
-      ],
+          SlideTransition(
+            position: offsetAnimation,
+            child: GestureDetector(
+              child: widget.child,
+              onTap: widget.onTap,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

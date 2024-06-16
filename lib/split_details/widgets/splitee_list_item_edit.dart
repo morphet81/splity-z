@@ -50,15 +50,8 @@ class _SpliteeListItemEditState extends State<SpliteeListItemEdit> {
                   ),
                 ),
               ),
-              // IconButton(
-              //   onPressed: () {
-              //     debugPrint('Confirm edit');
-              //   },
-              //   icon: Icon(Icons.check),
-              // )
             ],
           ),
-          Text(widget.splitee.name),
           Row(
             children: [
               ExpandedSelectableIcon(

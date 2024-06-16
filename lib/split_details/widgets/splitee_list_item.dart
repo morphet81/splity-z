@@ -35,15 +35,11 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
         direction: Axis.horizontal,
         children: [
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 16.0, right: 8.0, left: 8.0),
-              child: Card.filled(
-                elevation: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SpliteeListItemEdit(splitId: widget.split.id, splitee: widget.splitee),
-                  // child: _isInEditMode ? SpliteeListItemEdit(splitee: widget.splitee) : SpliteeListItemLocked(splitee: widget.splitee),
-                ),
+            child: Card.filled(
+              elevation: 1,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SpliteeListItemEdit(splitId: widget.split.id, splitee: widget.splitee),
               ),
             ),
           ),

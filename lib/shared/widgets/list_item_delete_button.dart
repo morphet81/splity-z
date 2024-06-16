@@ -9,15 +9,15 @@ class ListItemDeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 0.0,
-      left: 0.0,
-      width: ListItemDeleteButton.DELETE_BUTTON_WIDTH,
-      child: IconButton(
-        onPressed: onPressed,
-        icon: const Icon(
-          Icons.delete,
-          color: Colors.red,
+    return Positioned.fill(
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: IconButton(
+          onPressed: onPressed,
+          icon: const Icon(
+            Icons.delete,
+            color: Colors.red,
+          ),
         ),
       ),
     );
