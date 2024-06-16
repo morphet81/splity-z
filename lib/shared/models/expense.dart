@@ -8,6 +8,14 @@ final class Expense extends Equatable {
   final Splitee paidBy;
   final List<Splitee> paidFor;
 
+  Expense copyWith({double? amount, Splitee? paidBy, List<Splitee>? paidFor}) {
+    return Expense(
+      amount: amount ?? this.amount,
+      paidBy: paidBy ?? this.paidBy,
+      paidFor: paidFor ?? this.paidFor,
+    );
+  }
+
   @override
   List<Object?> get props => [amount, paidBy, paidFor];
 }

@@ -54,8 +54,21 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
       if (splitee != null) {
         final newSplitee = splitee.copyWith(expensesTypes: newExpenseTypes);
 
+        final newExpenses = split.expenses.map((expense) {
+          if (expense.paidBy == event.splitee) {
+            return expense.copyWith(paidBy: newSplitee);
+          } else if (expense.paidFor.contains(event.splitee)) {
+            return expense.copyWith(
+              paidFor: expense.paidFor.toList()..replace(event.splitee, newSplitee),
+            );
+          }
+
+          return expense;
+        }).toList();
+
         final Split newSplit = split.copyWith(
           splitees: split.splitees.toList()..replace(splitee, newSplitee),
+          expenses: newExpenses,
         );
 
         final newState = state.copyWith(
