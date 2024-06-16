@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 import 'package:splity_z/shared/models/models.dart';
-import 'package:splity_z/shared/extensions/ListExtension.dart';
 
 part 'split_event.dart';
 part 'split_state.dart';
@@ -43,28 +43,14 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     if (split != null) {
       List<ExpenseType> newExpenseTypes = event.splitee.expensesTypes.toList();
 
-      if (event.isSelected && !newExpenseTypes.contains(event.expenseType)) {
-        newExpenseTypes.add(event.expenseType);
-      } else if (!event.isSelected && newExpenseTypes.contains((event.expenseType))) {
-        newExpenseTypes.remove(event.expenseType);
-      }
+      newExpenseTypes.updateForExpenseType(event.expenseType, event.isSelected);
 
       final splitee = split.splitees.where((splitee) => splitee == event.splitee).firstOrNull;
 
       if (splitee != null) {
         final newSplitee = splitee.copyWith(expensesTypes: newExpenseTypes);
 
-        final newExpenses = split.expenses.map((expense) {
-          if (expense.paidBy == event.splitee) {
-            return expense.copyWith(paidBy: newSplitee);
-          } else if (expense.paidFor.contains(event.splitee)) {
-            return expense.copyWith(
-              paidFor: expense.paidFor.toList()..replace(event.splitee, newSplitee),
-            );
-          }
-
-          return expense;
-        }).toList();
+        final newExpenses = split.expenses.copyWithNewSplitee(newSplitee);
 
         final Split newSplit = split.copyWith(
           splitees: split.splitees.toList()..replace(splitee, newSplitee),

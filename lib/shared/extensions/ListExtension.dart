@@ -1,5 +1,3 @@
-import 'package:splity_z/shared/models/models.dart';
-
 extension Listextension on List {
   void removeAll(List items) {
     items.toList().forEach((item) => this.remove(item));

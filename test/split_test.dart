@@ -2,10 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:splity_z/shared/models/models.dart';
 
 void main() {
-  const john = SpliteeImpl(name: 'John Doe', expensesTypes: []);
-  const jane = SpliteeImpl(name: 'Jane Doe', expensesTypes: []);
-  const jack = SpliteeImpl(name: 'Jack Reacher', expensesTypes: []);
-  const andre = SpliteeImpl(name: 'André Rieu', expensesTypes: []);
+  final john = SpliteeImpl(name: 'John Doe', expensesTypes: []);
+  final jane = SpliteeImpl(name: 'Jane Doe', expensesTypes: []);
+  final jack = SpliteeImpl(name: 'Jack Reacher', expensesTypes: []);
+  final andre = SpliteeImpl(name: 'André Rieu', expensesTypes: []);
 
   group('Test getShares', () {
     group('Test getShares with a simple split between 3 splitees', () {
