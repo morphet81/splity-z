@@ -54,7 +54,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
       if (splitee != null) {
         final newSplitee = splitee.copyWith(expensesTypes: newExpenseTypes);
 
-        final newSplit = split.copyWith(
+        final Split newSplit = split.copyWith(
           splitees: split.splitees.toList()..replace(splitee, newSplitee),
         );
 

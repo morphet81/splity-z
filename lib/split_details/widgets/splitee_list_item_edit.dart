@@ -20,7 +20,6 @@ class _SpliteeListItemEditState extends State<SpliteeListItemEdit> {
   Widget build(BuildContext context) {
     void Function(bool) onSelectableIconChange(ExpenseType expenseType) {
       return (bool isSelected) {
-        debugPrint('Expense $expenseType is ${isSelected ? 'selected' : 'unselected'}');
         context.read<SplitBloc>().add(UpdateSpliteeExpenseType(
               splitId: widget.splitId,
               splitee: widget.splitee,

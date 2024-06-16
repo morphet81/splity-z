@@ -12,6 +12,9 @@ abstract class Splitee extends Equatable {
   final List<ExpenseType> expensesTypes;
 
   Splitee copyWith({String? name, List<ExpenseType>? expensesTypes});
+
+  @override
+  List<Object?> get props => [id, name, expensesTypes];
 }
 
 final class SpliteeImpl extends Splitee {
@@ -21,9 +24,6 @@ final class SpliteeImpl extends Splitee {
 
   @override
   SpliteeImpl copyWith({String? name, List<ExpenseType>? expensesTypes}) {
-    return SpliteeImpl(name: name ?? this.name, expensesTypes: expensesTypes ?? this.expensesTypes);
+    return SpliteeImpl.withId(id: this.id, name: name ?? this.name, expensesTypes: expensesTypes ?? this.expensesTypes);
   }
-
-  @override
-  List<Object?> get props => [id, name, expensesTypes];
 }
