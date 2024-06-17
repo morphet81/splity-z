@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart' hide Split;
+import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/deletable_list_item_card.dart';
 import 'package:splity_z/split_details/widgets/expense_list_item_edit.dart';
+import 'package:provider/provider.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({required this.split, required this.expense, required this.isParentInEditMode, super.key});
@@ -23,7 +25,6 @@ class ExpenseListItem extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ExpenseListItemEdit(splitId: split.id, expense: expense),
-                // child: SpliteeListItemEdit(splitId: widget.split.id, splitee: widget.expense),
               ),
             ),
           ),
@@ -32,7 +33,7 @@ class ExpenseListItem extends StatelessWidget {
       onTap: () {},
       onDelete: () {
         debugPrint('Delete expense ${expense.name}');
-        // context.read<SplitBloc>().add(DeleteSplitee(splitId: widget.split.id, splitee: widget.expense));
+        context.read<SplitBloc>().add(DeleteExpense(splitId: split.id, expense: expense));
       },
     );
   }

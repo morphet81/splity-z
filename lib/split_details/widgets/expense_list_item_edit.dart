@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:provider/provider.dart';
@@ -22,12 +21,12 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
     void Function(bool) handleSelectableIconChange(ExpenseType expenseType) {
       return (bool isSelected) {
         debugPrint('Change seleciton for ${expenseType}');
-        // context.read<SplitBloc>().add(UpdateSpliteeExpenseType(
-        //       splitId: widget.splitId,
-        //       splitee: widget.expense,
-        //       expenseType: expenseType,
-        //       isSelected: isSelected,
-        //     ));
+        context.read<SplitBloc>().add(UpdateExpenseExpenseType(
+              splitId: widget.splitId,
+              expense: widget.expense,
+              expenseType: expenseType,
+              isSelected: isSelected,
+            ));
       };
     }
 

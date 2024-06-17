@@ -26,3 +26,19 @@ final class UpdateSpliteeExpenseType extends SplitEvent {
   final ExpenseType expenseType;
   final bool isSelected;
 }
+
+final class DeleteExpense extends SplitEvent {
+  DeleteExpense({required this.splitId, required this.expense});
+
+  final int splitId;
+  final Expense expense;
+}
+
+final class UpdateExpenseExpenseType extends SplitEvent {
+  UpdateExpenseExpenseType({required this.splitId, required this.expense, required this.expenseType, required this.isSelected});
+
+  final int splitId;
+  final Expense expense;
+  final ExpenseType expenseType;
+  final bool isSelected;
+}

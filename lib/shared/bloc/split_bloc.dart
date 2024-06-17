@@ -11,6 +11,8 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<DeleteSplit>(_onDeleteSplit);
     on<DeleteSplitee>(_onDeleteSplitee);
     on<UpdateSpliteeExpenseType>(_onUpdateSpliteeExpenseType);
+    on<DeleteExpense>(_onDeleteExpense);
+    on<UpdateExpenseExpenseType>(_onUpdateExpenseExpenseType);
   }
 
   Future<void> _onDeleteSplit(DeleteSplit event, Emitter<SplitState> emit) async {
@@ -55,6 +57,48 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
         final Split newSplit = split.copyWith(
           splitees: split.splitees.toList()..replace(splitee, newSplitee),
           expenses: newExpenses,
+        );
+
+        final newState = state.copyWith(
+          splits: state.splits.toList()..replace(split, newSplit),
+        );
+
+        emit(newState);
+      }
+    }
+  }
+
+  Future<void> _onDeleteExpense(DeleteExpense event, Emitter<SplitState> emit) async {
+    final split = state.findSplitWithId(event.splitId);
+
+    if (split != null) {
+      final newSplit = split.copyWith(
+        expenses: List.from(split.expenses)..remove(event.expense),
+      );
+
+      final newState = state.copyWith(
+        splits: List.from(state.splits)..replace(split, newSplit),
+      );
+
+      emit(newState);
+    }
+  }
+
+  Future<void> _onUpdateExpenseExpenseType(UpdateExpenseExpenseType event, Emitter<SplitState> emit) async {
+    final split = state.findSplitWithId(event.splitId);
+
+    if (split != null) {
+      List<ExpenseType> newExpenseTypes = event.expense.expensesTypes.toList();
+
+      newExpenseTypes.updateForExpenseType(event.expenseType, event.isSelected);
+
+      final expense = split.expenses.where((expense) => expense == event.expense).firstOrNull;
+
+      if (expense != null) {
+        final newExpense = expense.copyWith(expensesTypes: newExpenseTypes);
+
+        final Split newSplit = split.copyWith(
+          expenses: split.expenses.toList()..replace(expense, newExpense),
         );
 
         final newState = state.copyWith(
