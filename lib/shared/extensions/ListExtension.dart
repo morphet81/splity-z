@@ -8,4 +8,16 @@ extension Listextension on List {
     this.removeAt(index);
     this.insert(index, newItem);
   }
+
+  bool containsAny(List<dynamic> elements) {
+    bool containsAny = false;
+
+    this.forEach((el) {
+      if (elements.contains(el)) {
+        containsAny = true;
+      }
+    });
+
+    return containsAny;
+  }
 }

@@ -18,9 +18,9 @@ void main() {
           jack,
         ],
         expenses: <Expense>[
-          Expense(amount: 30, paidBy: john, paidFor: [john, jane, jack]),
-          Expense(amount: 20, paidBy: john, paidFor: [john]),
-          Expense(amount: 15, paidBy: jack, paidFor: [john]),
+          Expense.withPaidForList(name: 'First expense', amount: 30, paidBy: john, paidFor: [john, jane, jack]),
+          Expense.withPaidForList(name: 'Second expense', amount: 20, paidBy: john, paidFor: [john]),
+          Expense.withPaidForList(name: 'Third expense', amount: 15, paidBy: jack, paidFor: [john]),
         ],
       );
 
@@ -76,11 +76,11 @@ void main() {
         name: 'Diner at the end of the world',
         splitees: <SpliteeImpl>[john, jane, jack, andre],
         expenses: <Expense>[
-          Expense(amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
-          Expense(amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
-          Expense(amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
-          Expense(amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
-          Expense(amount: 4, paidBy: andre, paidFor: [jack]), // 4 per pax
+          Expense.withPaidForList(name: 'First expense', amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
+          Expense.withPaidForList(name: 'Second expense', amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
+          Expense.withPaidForList(name: 'Third expense', amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
+          Expense.withPaidForList(name: 'Fourth expense', amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
+          Expense.withPaidForList(name: 'Fifth expense', amount: 4, paidBy: andre, paidFor: [jack]), // 4 per pax
         ],
       );
 
@@ -168,11 +168,11 @@ void main() {
         name: 'Diner at the end of the world',
         splitees: <SpliteeImpl>[john, jane, jack, andre],
         expenses: <Expense>[
-          Expense(amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
-          Expense(amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
-          Expense(amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
-          Expense(amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
-          Expense(amount: 9, paidBy: andre, paidFor: [jack]), // 9 per pax
+          Expense.withPaidForList(name: 'First expense', amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
+          Expense.withPaidForList(name: 'Second expense', amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
+          Expense.withPaidForList(name: 'Third expense', amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
+          Expense.withPaidForList(name: 'Fourth expense', amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
+          Expense.withPaidForList(name: 'Fifth expense', amount: 9, paidBy: andre, paidFor: [jack]), // 9 per pax
         ],
       );
 
@@ -260,11 +260,11 @@ void main() {
         name: 'Diner at the end of the world',
         splitees: <SpliteeImpl>[john, jane, jack, andre],
         expenses: <Expense>[
-          Expense(amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
-          Expense(amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
-          Expense(amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
-          Expense(amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
-          Expense(amount: 10, paidBy: andre, paidFor: [jack]), // 10 per pax
+          Expense.withPaidForList(name: 'First expense', amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
+          Expense.withPaidForList(name: 'Second expense', amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
+          Expense.withPaidForList(name: 'Third expense', amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
+          Expense.withPaidForList(name: 'Fourth expense', amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
+          Expense.withPaidForList(name: 'Fifth expense', amount: 10, paidBy: andre, paidFor: [jack]), // 10 per pax
         ],
       );
 
@@ -352,13 +352,13 @@ void main() {
         name: 'Diner at the end of the world',
         splitees: <SpliteeImpl>[john, jane, jack, andre],
         expenses: <Expense>[
-          Expense(amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
-          Expense(amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
-          Expense(amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
-          Expense(amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
-          Expense(amount: 20, paidBy: andre, paidFor: [jane]), // 20 per pax
-          Expense(amount: 27.5, paidBy: andre, paidFor: [jack]), // 20 per pax
-          Expense(amount: 10, paidBy: john, paidFor: [jack]), // 10 per pax
+          Expense.withPaidForList(name: 'First expense', amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
+          Expense.withPaidForList(name: 'Second expense', amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
+          Expense.withPaidForList(name: 'Third expense', amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
+          Expense.withPaidForList(name: 'Fourth expense', amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
+          Expense.withPaidForList(name: 'Fifth expense', amount: 20, paidBy: andre, paidFor: [jane]), // 20 per pax
+          Expense.withPaidForList(name: 'Sixth expense', amount: 27.5, paidBy: andre, paidFor: [jack]), // 20 per pax
+          Expense.withPaidForList(name: 'Seventh expense', amount: 10, paidBy: john, paidFor: [jack]), // 10 per pax
         ],
       );
 

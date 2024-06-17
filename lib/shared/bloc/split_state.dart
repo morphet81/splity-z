@@ -39,12 +39,14 @@ final class SplitState extends Equatable {
           splitee2,
         ],
         expenses: <Expense>[
-          Expense(
+          Expense.withPaidForList(
+            name: 'First expense',
             amount: 23.4,
             paidBy: splitee1,
             paidFor: [splitee1, splitee2],
           ),
-          Expense(
+          Expense.withPaidForList(
+            name: 'Second expense',
             amount: 10.5,
             paidBy: splitee1,
             paidFor: [splitee1],
@@ -60,17 +62,20 @@ final class SplitState extends Equatable {
           splitee3,
         ],
         expenses: <Expense>[
-          Expense(
+          Expense.withPaidForList(
+            name: 'First expense',
             amount: 23.4,
             paidBy: splitee3,
             paidFor: [splitee1, splitee2],
           ),
-          Expense(
+          Expense.withPaidForList(
+            name: 'Second expense',
             amount: 10.5,
             paidBy: splitee3,
             paidFor: [splitee1, splitee3],
           ),
-          Expense(
+          Expense.withPaidForList(
+            name: 'Third expense',
             amount: 10.5,
             paidBy: splitee2,
             paidFor: [splitee1, splitee2],
@@ -87,27 +92,32 @@ final class SplitState extends Equatable {
           splitee4,
         ],
         expenses: <Expense>[
-          Expense(
+          Expense.withPaidForList(
+            name: 'First expense',
             amount: 56,
             paidBy: splitee1,
             paidFor: [splitee1, splitee2, splitee3, splitee4],
           ), // 14 per pax
-          Expense(
+          Expense.withPaidForList(
+            name: 'Second expense',
             amount: 37,
             paidBy: splitee1,
             paidFor: [splitee2, splitee3],
           ), // 18.5 per pax
-          Expense(
+          Expense.withPaidForList(
+            name: 'Third expense',
             amount: 15,
             paidBy: splitee4,
             paidFor: [splitee1, splitee2, splitee3],
           ), // 5 per pax
-          Expense(
+          Expense.withPaidForList(
+            name: 'Fourth expense',
             amount: 18,
             paidBy: splitee4,
             paidFor: [splitee4, splitee2],
           ), // 9 per pax
-          Expense(
+          Expense.withPaidForList(
+            name: 'Fifth expense',
             amount: 4,
             paidBy: splitee4,
             paidFor: [splitee3],

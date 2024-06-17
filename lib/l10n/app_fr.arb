@@ -1,6 +1,7 @@
 {
   "appName": "SplityZ",
   "edit": "Modifier",
+  "expensesListTitle": "Dépenses",
   "helloWorld": "Bonjour Monde!",
   "sharesListTitle": "Parts",
   "spliteeListTitle": "Participants"
