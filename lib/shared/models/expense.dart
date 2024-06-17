@@ -11,6 +11,11 @@ final class Expense extends Equatable {
         expensesTypes = [],
         automaticSharing = false;
 
+  Expense.withAutomaticSharing({required this.name, required this.amount, required this.paidBy, required this.expensesTypes, required List<Splitee> allSplitees})
+      : id = UniqueKey(),
+        paidFor = allSplitees.where((splitee) => expensesTypes.containsAny(splitee.expensesTypes)).toList(),
+        automaticSharing = true;
+
   final UniqueKey id;
   final String name;
   final double amount;

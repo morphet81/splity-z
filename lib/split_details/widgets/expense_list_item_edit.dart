@@ -16,6 +16,14 @@ class ExpenseListItemEdit extends StatefulWidget {
 }
 
 class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
+  bool isAutoSharingEnabled = false;
+
+  @override
+  void initState() {
+    isAutoSharingEnabled = widget.expense.automaticSharing;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     void Function(bool) handleSelectableIconChange(ExpenseType expenseType) {
@@ -40,7 +48,16 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                 child: InlineTextField(
                   key: widget.expense.id,
                   initialValue: widget.expense.name,
+                  textAlign: TextAlign.start,
                 ),
+              ),
+              Switch(
+                value: isAutoSharingEnabled,
+                onChanged: (value) {
+                  setState(() {
+                    isAutoSharingEnabled = value;
+                  });
+                },
               ),
             ],
           ),

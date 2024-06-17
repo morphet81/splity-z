@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class InlineTextField extends StatelessWidget {
-  const InlineTextField({required this.initialValue, super.key});
+  const InlineTextField({required this.initialValue, this.textAlign = TextAlign.center, super.key});
 
   final String initialValue;
+  final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class InlineTextField extends StatelessWidget {
       key: Key(key.toString()),
       autocorrect: false,
       autofocus: true,
-      textAlign: TextAlign.center,
+      textAlign: textAlign,
       initialValue: initialValue,
       style: Theme.of(context).textTheme.titleMedium,
       decoration: InputDecoration(

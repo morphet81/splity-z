@@ -30,6 +30,8 @@ final class SplitState extends Equatable {
     final splitee3 = SpliteeImpl(name: 'Jack Downson', expensesTypes: [...ExpenseType.values]);
     final splitee4 = SpliteeImpl(name: 'Andre Pourlov Droupinov Kasparov', expensesTypes: [ExpenseType.Alcohol, ExpenseType.Food, ExpenseType.Taxi]);
 
+    final allSplitees = [splitee1, splitee2, splitee3, splitee4];
+
     return SplitState(splits: <Split>[
       SplitImpl(
         id: 1,
@@ -92,11 +94,12 @@ final class SplitState extends Equatable {
           splitee4,
         ],
         expenses: <Expense>[
-          Expense.withPaidForList(
+          Expense.withAutomaticSharing(
             name: 'First expense',
             amount: 56,
             paidBy: splitee1,
-            paidFor: [splitee1, splitee2, splitee3, splitee4],
+            expensesTypes: [ExpenseType.Alcohol, ExpenseType.Soft],
+            allSplitees: allSplitees,
           ), // 14 per pax
           Expense.withPaidForList(
             name: 'Second expense',
