@@ -4,6 +4,7 @@ import 'package:splity_z/shared/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/inline_text_field.dart';
 import 'package:splity_z/split_details/widgets/expenses_types.dart';
+import 'package:splity_z/split_details/widgets/selectable_splitees_list.dart';
 
 class ExpenseListItemEdit extends StatefulWidget {
   const ExpenseListItemEdit({required this.splitId, required this.expense, super.key});
@@ -28,7 +29,6 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
   Widget build(BuildContext context) {
     void Function(bool) handleSelectableIconChange(ExpenseType expenseType) {
       return (bool isSelected) {
-        debugPrint('Change seleciton for ${expenseType}');
         context.read<SplitBloc>().add(UpdateExpenseExpenseType(
               splitId: widget.splitId,
               expense: widget.expense,
@@ -36,6 +36,18 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
               isSelected: isSelected,
             ));
       };
+    }
+
+    void handleAutoSharingSwitchChange(bool value) {
+      context.read<SplitBloc>().add(UpdateExpenseSharingMode(
+            splitId: widget.splitId,
+            expense: widget.expense,
+            isAutoSharingEnabled: value,
+          ));
+
+      setState(() {
+        isAutoSharingEnabled = value;
+      });
     }
 
     return Container(
@@ -53,18 +65,20 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
               ),
               Switch(
                 value: isAutoSharingEnabled,
-                onChanged: (value) {
-                  setState(() {
-                    isAutoSharingEnabled = value;
-                  });
-                },
+                onChanged: handleAutoSharingSwitchChange,
               ),
             ],
           ),
-          ExpensesTypes(
-            expensesTypes: widget.expense.expensesTypes,
-            onSelectableIconChange: handleSelectableIconChange,
-          ),
+          widget.expense.automaticSharing
+              ? ExpensesTypes(
+                  expensesTypes: widget.expense.expensesTypes,
+                  onSelectableIconChange: handleSelectableIconChange,
+                )
+              : SelectableSpliteesList(
+                  splitId: widget.splitId,
+                  expense: widget.expense,
+                  selectedSplitees: widget.expense.paidFor,
+                ),
         ],
       ),
     );

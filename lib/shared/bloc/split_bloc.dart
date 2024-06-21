@@ -13,6 +13,8 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<UpdateSpliteeExpenseType>(_onUpdateSpliteeExpenseType);
     on<DeleteExpense>(_onDeleteExpense);
     on<UpdateExpenseExpenseType>(_onUpdateExpenseExpenseType);
+    on<UpdateExpenseSharingMode>(_onUpdateExpenseSharingMode);
+    on<UpdateExpensePaidForSplitee>(_onUpdateExpensePaidForSplitee);
   }
 
   Future<void> _onDeleteSplit(DeleteSplit event, Emitter<SplitState> emit) async {
@@ -96,17 +98,60 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
       if (expense != null) {
         final newExpense = expense.copyWith(expensesTypes: newExpenseTypes);
-
-        final Split newSplit = split.copyWith(
-          expenses: split.expenses.toList()..replace(expense, newExpense),
-        );
-
-        final newState = state.copyWith(
-          splits: state.splits.toList()..replace(split, newSplit),
-        );
+        final newState = _updateExpense(split, expense, newExpense);
 
         emit(newState);
       }
     }
+  }
+
+  Future<void> _onUpdateExpenseSharingMode(UpdateExpenseSharingMode event, Emitter<SplitState> emit) async {
+    final split = state.findSplitWithId(event.splitId);
+
+    if (split != null) {
+      final expense = split.expenses.where((expense) => expense == event.expense).firstOrNull;
+
+      if (expense != null) {
+        final newExpense = expense.copyWith(automaticSharing: event.isAutoSharingEnabled);
+        final newState = _updateExpense(split, expense, newExpense);
+
+        emit(newState);
+      }
+    }
+  }
+
+  Future<void> _onUpdateExpensePaidForSplitee(UpdateExpensePaidForSplitee event, Emitter<SplitState> emit) async {
+    final split = state.findSplitWithId(event.splitId);
+
+    if (split != null) {
+      final expense = split.expenses.where((expense) => expense == event.expense).firstOrNull;
+
+      if (expense != null) {
+        List<Splitee> newPaidFor = expense.paidFor.toList();
+
+        if (event.isSelected) {
+          newPaidFor.remove(event.splitee);
+        } else {
+          newPaidFor.add(event.splitee);
+        }
+
+        final newExpense = expense.copyWith(paidFor: newPaidFor);
+        final newState = _updateExpense(split, expense, newExpense);
+
+        emit(newState);
+      }
+    }
+  }
+
+  SplitState _updateExpense(Split split, Expense oldExpense, Expense newExpense) {
+    final Split newSplit = split.copyWith(
+      expenses: split.expenses.toList()..replace(oldExpense, newExpense),
+    );
+
+    final newState = state.copyWith(
+      splits: state.splits.toList()..replace(split, newSplit),
+    );
+
+    return newState;
   }
 }
