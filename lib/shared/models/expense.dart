@@ -4,48 +4,85 @@ import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 final class Expense extends Equatable {
-  Expense({required this.id, required this.name, required this.amount, required this.paidBy, required this.paidFor, required this.expensesTypes, required this.automaticSharing});
+  Expense({
+    required this.id,
+    required this.name,
+    required this.amount,
+    required this.paidBy,
+    required this.paidFor,
+    required this.expensesTypes,
+    required this.automaticSharing,
+    List<Splitee>? manualPaidFor,
+    List<ExpenseType>? manualExpenseType,
+  })  : manualPaidFor = manualPaidFor ?? [],
+        manualExpenseType = manualExpenseType ?? [];
 
   Expense.withPaidForList({required this.name, required this.amount, required this.paidBy, required this.paidFor})
       : id = UniqueKey(),
         expensesTypes = [],
-        automaticSharing = false;
+        automaticSharing = false,
+        manualPaidFor = null,
+        manualExpenseType = null;
 
   Expense.withAutomaticSharing({required this.name, required this.amount, required this.paidBy, required this.expensesTypes, required List<Splitee> allSplitees})
       : id = UniqueKey(),
         paidFor = allSplitees.where((splitee) => expensesTypes.containsAny(splitee.expensesTypes)).toList(),
-        automaticSharing = true;
+        automaticSharing = true,
+        manualPaidFor = null,
+        manualExpenseType = null;
 
   final UniqueKey id;
   final String name;
   final double amount;
   final Splitee paidBy;
   final List<Splitee> paidFor;
+  final List<Splitee>? manualPaidFor;
   final List<ExpenseType> expensesTypes;
+  final List<ExpenseType>? manualExpenseType;
   final bool automaticSharing;
 
-  Expense copyWith({UniqueKey? id, String? name, double? amount, Splitee? paidBy, List<Splitee>? paidFor, List<ExpenseType>? expensesTypes, bool? automaticSharing}) {
+  Expense copyWith({
+    UniqueKey? id,
+    String? name,
+    double? amount,
+    Splitee? paidBy,
+    List<Splitee>? paidFor,
+    List<Splitee>? manualPaidFor,
+    List<ExpenseType>? expensesTypes,
+    List<ExpenseType>? manualExpensesTypes,
+    bool? automaticSharing,
+  }) {
     return Expense(
       id: id ?? this.id,
       name: name ?? this.name,
       amount: amount ?? this.amount,
       paidBy: paidBy ?? this.paidBy,
       paidFor: paidFor ?? this.paidFor,
+      manualPaidFor: manualPaidFor ?? this.manualPaidFor,
       expensesTypes: expensesTypes ?? this.expensesTypes,
+      manualExpenseType: manualExpensesTypes ?? this.manualExpenseType,
       automaticSharing: automaticSharing ?? this.automaticSharing,
     );
   }
 
-  Expense copyWithAutomaticSharing(List<Splitee> allSplitees) {
-    List<Splitee> paidFor = allSplitees
-        .where(
-          (splitee) => this.expensesTypes.containsAny(splitee.expensesTypes),
-        )
-        .toList();
+  Expense copyWithAutomaticSharing() {
+    return this.copyWith(
+      expensesTypes: this.manualExpenseType?.toList(),
+      manualPaidFor: this.paidFor.toList(),
+      paidFor: [],
+      automaticSharing: true,
+    );
+  }
 
-    return this.copyWith(paidFor: paidFor, automaticSharing: true);
+  Expense copyWithoutAutomaticSharing() {
+    return this.copyWith(
+      paidFor: this.manualPaidFor?.toList(),
+      manualExpensesTypes: this.expensesTypes.toList(),
+      expensesTypes: [],
+      automaticSharing: false,
+    );
   }
 
   @override
-  List<Object?> get props => [id, name, amount, paidBy, paidFor, expensesTypes, automaticSharing];
+  List<Object?> get props => [id, name, amount, paidBy, paidFor, manualPaidFor, expensesTypes, automaticSharing];
 }

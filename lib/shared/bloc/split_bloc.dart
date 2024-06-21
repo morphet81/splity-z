@@ -88,33 +88,32 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
   }
 
   Future<void> _onUpdateExpenseExpenseType(UpdateExpenseExpenseType event, Emitter<SplitState> emit) async {
-    final split = state.findSplitWithId(event.splitId);
+    List<ExpenseType> newExpenseTypes = event.expense.expensesTypes.toList();
 
-    if (split != null) {
-      List<ExpenseType> newExpenseTypes = event.expense.expensesTypes.toList();
+    newExpenseTypes.updateForExpenseType(event.expenseType, event.isSelected);
 
-      newExpenseTypes.updateForExpenseType(event.expenseType, event.isSelected);
-
-      final expense = split.expenses.where((expense) => expense == event.expense).firstOrNull;
-
-      if (expense != null) {
-        final newExpense = expense.copyWith(expensesTypes: newExpenseTypes);
-        final newState = _updateExpense(split, expense, newExpense);
-
-        emit(newState);
-      }
-    }
-  }
-
-  Future<void> _onUpdateExpenseSharingMode(UpdateExpenseSharingMode event, Emitter<SplitState> emit) async {
     final expense = event.split.expenses.where((expense) => expense == event.expense).firstOrNull;
 
     if (expense != null) {
-      final newExpense = expense.copyWith(automaticSharing: event.isAutoSharingEnabled);
+      final newExpense = expense.copyWith(expensesTypes: newExpenseTypes);
       final newState = _updateExpense(event.split, expense, newExpense);
 
       emit(newState);
     }
+  }
+
+  Future<void> _onUpdateExpenseSharingMode(UpdateExpenseSharingMode event, Emitter<SplitState> emit) async {
+    Expense newExpense;
+
+    if (event.isAutoSharingEnabled) {
+      newExpense = event.expense.copyWithAutomaticSharing();
+    } else {
+      newExpense = event.expense.copyWithoutAutomaticSharing();
+    }
+
+    final newState = _updateExpense(event.split, event.expense, newExpense);
+
+    emit(newState);
   }
 
   Future<void> _onUpdateExpensePaidForSplitee(UpdateExpensePaidForSplitee event, Emitter<SplitState> emit) async {

@@ -31,7 +31,7 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
     void Function(bool) handleSelectableIconChange(ExpenseType expenseType) {
       return (bool isSelected) {
         context.read<SplitBloc>().add(UpdateExpenseExpenseType(
-              splitId: widget.split.id,
+              split: widget.split,
               expense: widget.expense,
               expenseType: expenseType,
               isSelected: isSelected,
