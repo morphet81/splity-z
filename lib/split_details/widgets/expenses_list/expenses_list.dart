@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/models/models.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:splity_z/split_details/widgets/expense_list_item.dart';
+import 'package:splity_z/split_details/widgets/expenses_list/expense_list_item.dart';
 
 class ExpensesList extends StatelessWidget {
   const ExpensesList({required this.split, required this.isInEditMode, super.key});

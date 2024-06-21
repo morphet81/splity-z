@@ -3,8 +3,9 @@ import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/inline_text_field.dart';
-import 'package:splity_z/split_details/widgets/expenses_types.dart';
-import 'package:splity_z/split_details/widgets/selectable_splitees_list.dart';
+import 'package:splity_z/split_details/widgets/expenses_list/expense_list_item_paid_by_line.dart';
+import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
+import 'package:splity_z/split_details/widgets/expenses_list/selectable_splitees_list.dart';
 
 class ExpenseListItemEdit extends StatefulWidget {
   const ExpenseListItemEdit({required this.split, required this.expense, super.key});
@@ -69,37 +70,9 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
               ),
             ],
           ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 12.0),
-                child: Text('Paid by: '),
-              ),
-              Expanded(
-                child: DropdownButton<Splitee>(
-                  isExpanded: true,
-                  value: widget.expense.paidBy,
-                  items: widget.split.splitees.map<DropdownMenuItem<Splitee>>((Splitee splitee) {
-                    return DropdownMenuItem<Splitee>(
-                      value: splitee,
-                      child: Text(
-                        splitee.name,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (Splitee? splitee) {
-                    if (splitee != null) {
-                      context.read<SplitBloc>().add(UpdateExpensePaidBy(
-                            split: widget.split,
-                            expense: widget.expense,
-                            splitee: splitee,
-                          ));
-                    }
-                  },
-                ),
-              ),
-            ],
+          ExpenseListItemPaidByLine(
+            split: widget.split,
+            expense: widget.expense,
           ),
           widget.expense.automaticSharing
               ? ExpensesTypes(

@@ -4,7 +4,7 @@ import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/inline_text_field.dart';
-import 'package:splity_z/split_details/widgets/expenses_types.dart';
+import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
 
 class SpliteeListItemEdit extends StatefulWidget {
   const SpliteeListItemEdit({required this.splitId, required this.splitee, super.key});

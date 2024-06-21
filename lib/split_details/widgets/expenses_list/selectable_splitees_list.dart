@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart' hide Split;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
-import 'package:splity_z/split_details/widgets/selectable_splitees_list_item.dart';
+import 'package:splity_z/split_details/widgets/expenses_list/selectable_splitees_list_item.dart';
 
-import '../../shared/models/models.dart';
+import '../../../shared/models/models.dart';
 
 class SelectableSpliteesList extends StatelessWidget {
   const SelectableSpliteesList({required this.split, required this.expense, required this.selectedSplitees, super.key});

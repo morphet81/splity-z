@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/deletable_list_item_card.dart';
-import 'package:splity_z/split_details/widgets/expense_list_item_edit.dart';
+import 'package:splity_z/split_details/widgets/expenses_list/expense_list_item_edit.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseListItem extends StatelessWidget {

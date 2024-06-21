@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:splity_z/shared/models/models.dart';
-import 'package:splity_z/split_details/widgets/share_arrow.dart';
+import 'package:splity_z/split_details/widgets/shares_list/share_arrow.dart';
 
 class SharesListItem extends StatelessWidget {
   const SharesListItem({required Share this.share, super.key});
