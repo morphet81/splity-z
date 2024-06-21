@@ -26,6 +26,7 @@ class SharesList extends StatelessWidget {
           ),
           ListView.builder(
             shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return SharesListItem(share: splitShares[index]);
             },

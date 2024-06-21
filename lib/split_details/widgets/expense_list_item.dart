@@ -24,7 +24,7 @@ class ExpenseListItem extends StatelessWidget {
               elevation: 1,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ExpenseListItemEdit(splitId: split.id, expense: expense),
+                child: ExpenseListItemEdit(split: split, expense: expense),
               ),
             ),
           ),
@@ -32,7 +32,6 @@ class ExpenseListItem extends StatelessWidget {
       ),
       onTap: () {},
       onDelete: () {
-        debugPrint('Delete expense ${expense.name}');
         context.read<SplitBloc>().add(DeleteExpense(splitId: split.id, expense: expense));
       },
     );
