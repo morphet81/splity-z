@@ -92,21 +92,19 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
     newExpenseTypes.updateForExpenseType(event.expenseType, event.isSelected);
 
-    final expense = event.split.expenses.where((expense) => expense == event.expense).firstOrNull;
+    final newPaidFor = event.split.splitees.containingExpenseTypes(newExpenseTypes);
 
-    if (expense != null) {
-      final newExpense = expense.copyWith(expensesTypes: newExpenseTypes);
-      final newState = _updateExpense(event.split, expense, newExpense);
+    final newExpense = event.expense.copyWith(expensesTypes: newExpenseTypes, paidFor: newPaidFor);
+    final newState = _updateExpense(event.split, event.expense, newExpense);
 
-      emit(newState);
-    }
+    emit(newState);
   }
 
   Future<void> _onUpdateExpenseSharingMode(UpdateExpenseSharingMode event, Emitter<SplitState> emit) async {
     Expense newExpense;
 
     if (event.isAutoSharingEnabled) {
-      newExpense = event.expense.copyWithAutomaticSharing();
+      newExpense = event.expense.copyWithAutomaticSharing(event.split.splitees);
     } else {
       newExpense = event.expense.copyWithoutAutomaticSharing();
     }

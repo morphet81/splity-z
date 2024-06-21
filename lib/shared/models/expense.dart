@@ -65,11 +65,12 @@ final class Expense extends Equatable {
     );
   }
 
-  Expense copyWithAutomaticSharing() {
+  Expense copyWithAutomaticSharing(List<Splitee> allSplitees) {
+    final newPaidFor = allSplitees.containingExpenseTypes(this.expensesTypes);
+
     return this.copyWith(
-      expensesTypes: this.manualExpenseType?.toList(),
       manualPaidFor: this.paidFor.toList(),
-      paidFor: [],
+      paidFor: newPaidFor,
       automaticSharing: true,
     );
   }
@@ -78,7 +79,6 @@ final class Expense extends Equatable {
     return this.copyWith(
       paidFor: this.manualPaidFor?.toList(),
       manualExpensesTypes: this.expensesTypes.toList(),
-      expensesTypes: [],
       automaticSharing: false,
     );
   }
