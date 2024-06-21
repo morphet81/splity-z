@@ -13,23 +13,19 @@ final class Expense extends Equatable {
     required this.expensesTypes,
     required this.automaticSharing,
     List<Splitee>? manualPaidFor,
-    List<ExpenseType>? manualExpenseType,
-  })  : manualPaidFor = manualPaidFor ?? [],
-        manualExpenseType = manualExpenseType ?? [];
+  }) : manualPaidFor = manualPaidFor ?? [];
 
   Expense.withPaidForList({required this.name, required this.amount, required this.paidBy, required this.paidFor})
       : id = UniqueKey(),
         expensesTypes = [],
         automaticSharing = false,
-        manualPaidFor = null,
-        manualExpenseType = null;
+        manualPaidFor = null;
 
   Expense.withAutomaticSharing({required this.name, required this.amount, required this.paidBy, required this.expensesTypes, required List<Splitee> allSplitees})
       : id = UniqueKey(),
         paidFor = allSplitees.where((splitee) => expensesTypes.containsAny(splitee.expensesTypes)).toList(),
         automaticSharing = true,
-        manualPaidFor = null,
-        manualExpenseType = null;
+        manualPaidFor = null;
 
   final UniqueKey id;
   final String name;
@@ -38,7 +34,6 @@ final class Expense extends Equatable {
   final List<Splitee> paidFor;
   final List<Splitee>? manualPaidFor;
   final List<ExpenseType> expensesTypes;
-  final List<ExpenseType>? manualExpenseType;
   final bool automaticSharing;
 
   Expense copyWith({
@@ -60,7 +55,6 @@ final class Expense extends Equatable {
       paidFor: paidFor ?? this.paidFor,
       manualPaidFor: manualPaidFor ?? this.manualPaidFor,
       expensesTypes: expensesTypes ?? this.expensesTypes,
-      manualExpenseType: manualExpensesTypes ?? this.manualExpenseType,
       automaticSharing: automaticSharing ?? this.automaticSharing,
     );
   }
