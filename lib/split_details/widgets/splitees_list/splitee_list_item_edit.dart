@@ -42,6 +42,11 @@ class _SpliteeListItemEditState extends State<SpliteeListItemEdit> {
                   initialValue: widget.splitee.name,
                   onChanged: (value) {
                     debugPrint('New splitee name: $value');
+                    context.read<SplitBloc>().add(UpdateSpliteeName(
+                          split: widget.split,
+                          splitee: widget.splitee,
+                          name: value,
+                        ));
                   },
                 ),
               ),

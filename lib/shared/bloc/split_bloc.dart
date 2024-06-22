@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
@@ -10,6 +11,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
   SplitBloc() : super(SplitState.initialState) {
     on<DeleteSplit>(_onDeleteSplit);
     on<DeleteSplitee>(_onDeleteSplitee);
+    on<UpdateSpliteeName>(_onUpdateSpliteeName);
     on<UpdateSpliteeExpenseType>(_onUpdateSpliteeExpenseType);
     on<DeleteExpense>(_onDeleteExpense);
     on<UpdateExpenseExpenseType>(_onUpdateExpenseExpenseType);
@@ -29,6 +31,37 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
   Future<void> _onDeleteSplitee(DeleteSplitee event, Emitter<SplitState> emit) async {
     final newSplit = event.split.copyWith(
       splitees: List.from(event.split.splitees)..remove(event.splitee),
+    );
+
+    final newState = state.copyWith(
+      splits: List.from(state.splits)..replace(event.split, newSplit),
+    );
+
+    emit(newState);
+  }
+
+  Future<void> _onUpdateSpliteeName(UpdateSpliteeName event, Emitter<SplitState> emit) async {
+    final newSplitee = event.splitee.copyWith(name: event.name);
+
+    final newSplitees = event.split.splitees.toList()..replace(event.splitee, newSplitee);
+
+    List<Expense> newExpenses = [];
+
+    event.split.expenses.forEach((expense) {
+      final newPaidBy = expense.paidBy == event.splitee ? newSplitee : expense.paidBy;
+      final newPaidFor = expense.paidFor.toList()..replace(event.splitee, newSplitee);
+      final newManualPaidFor = expense.manualPaidFor == null ? null : expense.manualPaidFor;
+
+      if (newManualPaidFor != null) {
+        newManualPaidFor.toList().replace(event.splitee, newSplitee);
+      }
+
+      newExpenses.add(expense.copyWith(paidBy: newPaidBy, paidFor: newPaidFor, manualPaidFor: newManualPaidFor));
+    });
+
+    final newSplit = event.split.copyWith(
+      splitees: newSplitees,
+      expenses: newExpenses,
     );
 
     final newState = state.copyWith(

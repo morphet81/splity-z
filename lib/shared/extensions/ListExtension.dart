@@ -5,8 +5,11 @@ extension Listextension on List {
 
   void replace(dynamic item, dynamic newItem) {
     final index = this.indexOf(item);
-    this.removeAt(index);
-    this.insert(index, newItem);
+
+    if (index >= 0) {
+      this.removeAt(index);
+      this.insert(index, newItem);
+    }
   }
 
   bool containsAny(List<dynamic> elements) {

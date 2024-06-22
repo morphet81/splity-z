@@ -2,10 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:splity_z/shared/models/models.dart';
 
 void main() {
-  const john = SpliteeImpl(name: 'John Doe', expensesTypes: []);
-  const jane = SpliteeImpl(name: 'Jane Doe', expensesTypes: []);
-  const jack = SpliteeImpl(name: 'Jack Reacher', expensesTypes: []);
-  const andre = SpliteeImpl(name: 'André Rieu', expensesTypes: []);
+  final john = SpliteeImpl(name: 'John Doe', expensesTypes: []);
+  final jane = SpliteeImpl(name: 'Jane Doe', expensesTypes: []);
+  final jack = SpliteeImpl(name: 'Jack Reacher', expensesTypes: []);
+  final andre = SpliteeImpl(name: 'André Rieu', expensesTypes: []);
 
   group('Test getShares with a simple split between 3 splitees', () {
     final split = SplitImpl(
@@ -17,9 +17,9 @@ void main() {
         jack,
       ],
       expenses: <Expense>[
-        Expense(amount: 30, paidBy: john, paidFor: [john, jane, jack]),
-        Expense(amount: 20, paidBy: john, paidFor: [john]),
-        Expense(amount: 15, paidBy: jack, paidFor: [john]),
+        Expense.withPaidForList(name: 'Expense 1', amount: 30, paidBy: john, paidFor: [john, jane, jack]),
+        Expense.withPaidForList(name: 'Expense 2', amount: 20, paidBy: john, paidFor: [john]),
+        Expense.withPaidForList(name: 'Expense 3', amount: 15, paidBy: jack, paidFor: [john]),
       ],
     );
 
@@ -80,22 +80,26 @@ void main() {
         andre,
       ],
       expenses: <Expense>[
-        Expense(
+        Expense.withPaidForList(
+          name: 'Expense 1',
           amount: 56,
           paidBy: john,
           paidFor: [john, jane, jack, andre],
         ), // 14 per pax
-        Expense(
+        Expense.withPaidForList(
+          name: 'Expense 2',
           amount: 37,
           paidBy: john,
           paidFor: [jane, jack],
         ), // 18.5 per pax
-        Expense(
+        Expense.withPaidForList(
+          name: 'Expense 3',
           amount: 15,
           paidBy: andre,
           paidFor: [john, jane, jack],
         ), // 5 per pax
-        Expense(
+        Expense.withPaidForList(
+          name: 'Expense 4',
           amount: 18,
           paidBy: andre,
           paidFor: [andre, jane],

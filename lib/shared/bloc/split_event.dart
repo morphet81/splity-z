@@ -18,6 +18,14 @@ final class DeleteSplitee extends SplitEvent {
   final Splitee splitee;
 }
 
+final class UpdateSpliteeName extends SplitEvent {
+  UpdateSpliteeName({required this.split, required this.splitee, required this.name});
+
+  final Split split;
+  final Splitee splitee;
+  final String name;
+}
+
 final class UpdateSpliteeExpenseType extends SplitEvent {
   UpdateSpliteeExpenseType({required this.split, required this.splitee, required this.expenseType, required this.isSelected});
 
