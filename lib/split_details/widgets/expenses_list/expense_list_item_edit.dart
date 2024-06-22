@@ -63,7 +63,11 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                   initialValue: widget.expense.name,
                   textAlign: TextAlign.start,
                   onChanged: (value) {
-                    debugPrint('New expense name: $value');
+                    context.read<SplitBloc>().add(UpdateExpenseName(
+                          split: widget.split,
+                          expense: widget.expense,
+                          name: value,
+                        ));
                   },
                 ),
               ),

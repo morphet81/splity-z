@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
@@ -14,6 +13,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<UpdateSpliteeName>(_onUpdateSpliteeName);
     on<UpdateSpliteeExpenseType>(_onUpdateSpliteeExpenseType);
     on<DeleteExpense>(_onDeleteExpense);
+    on<UpdateExpenseName>(_onUpdateExpenseName);
     on<UpdateExpenseExpenseType>(_onUpdateExpenseExpenseType);
     on<UpdateExpenseSharingMode>(_onUpdateExpenseSharingMode);
     on<UpdateExpensePaidForSplitee>(_onUpdateExpensePaidForSplitee);
@@ -99,6 +99,20 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
   Future<void> _onDeleteExpense(DeleteExpense event, Emitter<SplitState> emit) async {
     final newSplit = event.split.copyWith(
       expenses: List.from(event.split.expenses)..remove(event.expense),
+    );
+
+    final newState = state.copyWith(
+      splits: List.from(state.splits)..replace(event.split, newSplit),
+    );
+
+    emit(newState);
+  }
+
+  Future<void> _onUpdateExpenseName(UpdateExpenseName event, Emitter<SplitState> emit) async {
+    final newExpense = event.expense.copyWith(name: event.name);
+
+    final newSplit = event.split.copyWith(
+      expenses: List.from(event.split.expenses)..replace(event.expense, newExpense),
     );
 
     final newState = state.copyWith(
