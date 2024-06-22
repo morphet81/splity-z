@@ -62,6 +62,9 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                   key: widget.expense.id,
                   initialValue: widget.expense.name,
                   textAlign: TextAlign.start,
+                  onChanged: (value) {
+                    debugPrint('New expense name: $value');
+                  },
                 ),
               ),
               Switch(

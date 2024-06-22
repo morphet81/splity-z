@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class InlineTextField extends StatelessWidget {
-  const InlineTextField({required this.initialValue, this.textAlign = TextAlign.center, super.key});
+  const InlineTextField({required this.initialValue, required this.onChanged, this.textAlign = TextAlign.center, super.key});
 
   final String initialValue;
+  final Function(String) onChanged;
   final TextAlign textAlign;
 
   @override
@@ -19,6 +20,9 @@ class InlineTextField extends StatelessWidget {
         contentPadding: EdgeInsets.zero,
         border: InputBorder.none,
       ),
+      onChanged: (value) {
+        onChanged(value);
+      },
     );
   }
 }

@@ -39,7 +39,7 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
               elevation: 1,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SpliteeListItemEdit(splitId: widget.split.id, splitee: widget.splitee),
+                child: SpliteeListItemEdit(split: widget.split, splitee: widget.splitee),
               ),
             ),
           ),
@@ -53,7 +53,7 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
       },
       onDelete: () {
         debugPrint('Delete splitee ${widget.splitee.name}');
-        context.read<SplitBloc>().add(DeleteSplitee(splitId: widget.split.id, splitee: widget.splitee));
+        context.read<SplitBloc>().add(DeleteSplitee(split: widget.split, splitee: widget.splitee));
       },
     );
   }

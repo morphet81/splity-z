@@ -32,7 +32,7 @@ class ExpenseListItem extends StatelessWidget {
       ),
       onTap: () {},
       onDelete: () {
-        context.read<SplitBloc>().add(DeleteExpense(splitId: split.id, expense: expense));
+        context.read<SplitBloc>().add(DeleteExpense(split: split, expense: expense));
       },
     );
   }

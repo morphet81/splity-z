@@ -6,31 +6,31 @@ sealed class SplitEvent extends Equatable {
 }
 
 final class DeleteSplit extends SplitEvent {
-  DeleteSplit({required this.splitId});
+  DeleteSplit({required this.split});
 
-  final int splitId;
+  final Split split;
 }
 
 final class DeleteSplitee extends SplitEvent {
-  DeleteSplitee({required this.splitId, required this.splitee});
+  DeleteSplitee({required this.split, required this.splitee});
 
-  final int splitId;
+  final Split split;
   final Splitee splitee;
 }
 
 final class UpdateSpliteeExpenseType extends SplitEvent {
-  UpdateSpliteeExpenseType({required this.splitId, required this.splitee, required this.expenseType, required this.isSelected});
+  UpdateSpliteeExpenseType({required this.split, required this.splitee, required this.expenseType, required this.isSelected});
 
-  final int splitId;
+  final Split split;
   final Splitee splitee;
   final ExpenseType expenseType;
   final bool isSelected;
 }
 
 final class DeleteExpense extends SplitEvent {
-  DeleteExpense({required this.splitId, required this.expense});
+  DeleteExpense({required this.split, required this.expense});
 
-  final int splitId;
+  final Split split;
   final Expense expense;
 }
 

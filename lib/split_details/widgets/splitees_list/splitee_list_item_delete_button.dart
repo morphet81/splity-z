@@ -19,7 +19,7 @@ class SpliteeListItemDeleteButton extends StatelessWidget {
       width: 40.0,
       child: IconButton(
         onPressed: () {
-          context.read<SplitBloc>().add(DeleteSplitee(splitId: split.id, splitee: splitee));
+          context.read<SplitBloc>().add(DeleteSplitee(split: split, splitee: splitee));
         },
         icon: const Icon(
           Icons.delete,

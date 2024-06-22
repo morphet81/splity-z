@@ -40,7 +40,7 @@ class _SplitsListItemState extends State<SplitsListItem> {
           ],
         ),
         onDismissed: (direction) {
-          context.read<SplitBloc>().add(DeleteSplit(splitId: widget.split.id));
+          context.read<SplitBloc>().add(DeleteSplit(split: widget.split));
         });
   }
 }

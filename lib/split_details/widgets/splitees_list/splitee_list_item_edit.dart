@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Split;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
@@ -7,9 +7,9 @@ import 'package:splity_z/shared/widgets/inline_text_field.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
 
 class SpliteeListItemEdit extends StatefulWidget {
-  const SpliteeListItemEdit({required this.splitId, required this.splitee, super.key});
+  const SpliteeListItemEdit({required this.split, required this.splitee, super.key});
 
-  final int splitId;
+  final Split split;
   final Splitee splitee;
 
   @override
@@ -22,7 +22,7 @@ class _SpliteeListItemEditState extends State<SpliteeListItemEdit> {
     void Function(bool) handleSelectableIconChange(ExpenseType expenseType) {
       return (bool isSelected) {
         context.read<SplitBloc>().add(UpdateSpliteeExpenseType(
-              splitId: widget.splitId,
+              split: widget.split,
               splitee: widget.splitee,
               expenseType: expenseType,
               isSelected: isSelected,
@@ -40,6 +40,9 @@ class _SpliteeListItemEditState extends State<SpliteeListItemEdit> {
                 child: InlineTextField(
                   key: widget.splitee.id,
                   initialValue: widget.splitee.name,
+                  onChanged: (value) {
+                    debugPrint('New splitee name: $value');
+                  },
                 ),
               ),
             ],
