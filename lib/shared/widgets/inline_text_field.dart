@@ -12,7 +12,7 @@ class InlineTextField extends StatelessWidget {
     return TextFormField(
       key: Key(key.toString()),
       autocorrect: false,
-      autofocus: true,
+      // autofocus: true,
       textAlign: textAlign,
       initialValue: initialValue,
       style: Theme.of(context).textTheme.titleMedium,

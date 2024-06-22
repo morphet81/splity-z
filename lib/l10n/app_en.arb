@@ -1,5 +1,6 @@
 {
   "appName": "SplityZ",
+  "confirm": "Confirm",
   "edit": "Edit",
   "expensesListTitle": "Expenses",
   "helloWorld": "Hello World!",
