@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:splity_z/split_details/utils/name_change_dialog.dart';
+import 'package:splity_z/split_details/utils/editable_content_change_dialog.dart';
 
-class EditableContentPill extends StatelessWidget {
-  const EditableContentPill(
-      {required this.content, required this.onChanged, this.textAlign = Alignment.center, this.allowEllipsisOverflow = true, this.fixedSize = null, this.keyboardType = null, super.key});
+class EditableContentPill<T> extends StatelessWidget {
+  const EditableContentPill({
+    required this.content,
+    required this.onChanged,
+    this.textAlign = Alignment.center,
+    this.allowEllipsisOverflow = true,
+    this.options = null,
+    this.fixedSize = null,
+    this.keyboardType = null,
+    this.itemLabel = null,
+    super.key,
+  });
 
-  final String content;
-  final void Function(String) onChanged;
+  final T content;
+  final void Function(T) onChanged;
   final Alignment textAlign;
   final bool allowEllipsisOverflow;
+  final List<T>? options;
   final double? fixedSize;
   final TextInputType? keyboardType;
+  final String Function(T item)? itemLabel;
 
   @override
   Widget build(BuildContext context) {
-    Future<String?> Function(BuildContext) changeNameDialog = getChangeNameDialog(initialValue: content, keyboardType: keyboardType, key: key);
+    Future<T?> Function(BuildContext) changeNameDialog = getEditableContentChangeDialog<T>(initialValue: content, keyboardType: keyboardType, itemLabel: itemLabel, options: options, key: key);
+
+    if (T != String && itemLabel == null) {
+      throw new Exception('If the type handled by EditableContentPill isn\'t String, you must provide a itemLabel function');
+    }
 
     void handleNamePillPressed() {
       changeNameDialog(context).then((value) {
@@ -25,7 +40,7 @@ class EditableContentPill extends StatelessWidget {
     }
 
     Widget contentWidget = Text(
-      content,
+      T == String ? content as String : itemLabel!(content),
       overflow: TextOverflow.ellipsis,
       style: Theme.of(context).textTheme.titleMedium,
     );

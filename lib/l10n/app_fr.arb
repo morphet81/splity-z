@@ -1,5 +1,6 @@
 {
   "appName": "SplityZ",
+  "cancel": "Annuler",
   "confirm": "Confirmer",
   "edit": "Modifier",
   "expensesListTitle": "Dépenses",

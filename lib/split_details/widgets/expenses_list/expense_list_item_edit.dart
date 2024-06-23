@@ -47,6 +47,18 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
           ));
     }
 
+    String paidBySelectorLabel(Splitee splitee) {
+      return splitee.name;
+    }
+
+    void handledPaidByChanged(Splitee newPaidBy) {
+      context.read<SplitBloc>().add(UpdateExpensePaidBy(
+            split: widget.split,
+            expense: widget.expense,
+            splitee: newPaidBy,
+          ));
+    }
+
     void handleAmountChanged(String newAmount) {
       context.read<SplitBloc>().add(UpdateExpenseAmount(
             split: widget.split,
@@ -76,7 +88,7 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
               children: [
                 Expanded(
                   flex: 5,
-                  child: EditableContentPill(
+                  child: EditableContentPill<String>(
                     content: widget.expense.name,
                     textAlign: Alignment.centerLeft,
                     onChanged: handleNameChanged,
@@ -86,7 +98,7 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                   flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 12.0),
-                    child: EditableContentPill(
+                    child: EditableContentPill<String>(
                       content: widget.expense.amount.toString(),
                       allowEllipsisOverflow: false,
                       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -105,6 +117,20 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                 //     ),
                 //   ],
                 // )
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: EditableContentPill<Splitee>(
+                    content: widget.expense.paidBy,
+                    textAlign: Alignment.centerLeft,
+                    options: widget.split.splitees,
+                    itemLabel: paidBySelectorLabel,
+                    onChanged: handledPaidByChanged,
+                  ),
+                ),
               ],
             ),
             Column(
@@ -132,10 +158,10 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                 //     ),
                 //   ],
                 // ),
-                ExpenseListItemPaidByLine(
-                  split: widget.split,
-                  expense: widget.expense,
-                ),
+                // ExpenseListItemPaidByLine(
+                //   split: widget.split,
+                //   expense: widget.expense,
+                // ),
                 widget.expense.automaticSharing
                     ? ExpensesTypes(
                         expensesTypes: widget.expense.expensesTypes,
