@@ -50,6 +50,14 @@ final class UpdateExpenseName extends SplitEvent {
   final String name;
 }
 
+final class UpdateExpenseAmount extends SplitEvent {
+  UpdateExpenseAmount({required this.split, required this.expense, required this.amount});
+
+  final Split split;
+  final Expense expense;
+  final double amount;
+}
+
 final class UpdateExpenseExpenseType extends SplitEvent {
   UpdateExpenseExpenseType({required this.split, required this.expense, required this.expenseType, required this.isSelected});
 

@@ -14,6 +14,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<UpdateSpliteeExpenseType>(_onUpdateSpliteeExpenseType);
     on<DeleteExpense>(_onDeleteExpense);
     on<UpdateExpenseName>(_onUpdateExpenseName);
+    on<UpdateExpenseAmount>(_onUpdateExpenseAmount);
     on<UpdateExpenseExpenseType>(_onUpdateExpenseExpenseType);
     on<UpdateExpenseSharingMode>(_onUpdateExpenseSharingMode);
     on<UpdateExpensePaidForSplitee>(_onUpdateExpensePaidForSplitee);
@@ -110,6 +111,20 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
   Future<void> _onUpdateExpenseName(UpdateExpenseName event, Emitter<SplitState> emit) async {
     final newExpense = event.expense.copyWith(name: event.name);
+
+    final newSplit = event.split.copyWith(
+      expenses: List.from(event.split.expenses)..replace(event.expense, newExpense),
+    );
+
+    final newState = state.copyWith(
+      splits: List.from(state.splits)..replace(event.split, newSplit),
+    );
+
+    emit(newState);
+  }
+
+  Future<void> _onUpdateExpenseAmount(UpdateExpenseAmount event, Emitter<SplitState> emit) async {
+    final newExpense = event.expense.copyWith(amount: event.amount);
 
     final newSplit = event.split.copyWith(
       expenses: List.from(event.split.expenses)..replace(event.expense, newExpense),

@@ -47,12 +47,12 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
           ));
     }
 
-    void handleAmountChanged(String newName) {
-      // context.read<SplitBloc>().add(UpdateExpenseName(
-      //       split: widget.split,
-      //       expense: widget.expense,
-      //       name: newName,
-      //     ));
+    void handleAmountChanged(String newAmount) {
+      context.read<SplitBloc>().add(UpdateExpenseAmount(
+            split: widget.split,
+            expense: widget.expense,
+            amount: double.parse(newAmount),
+          ));
     }
 
     void handleAutoSharingSwitchChange(bool value) {
