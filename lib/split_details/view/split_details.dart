@@ -19,7 +19,10 @@ class SplitDetails extends StatelessWidget {
             split: split,
             isInEditMode: isInEditMode,
           ),
-          ExpensesList(split: split, isInEditMode: isInEditMode),
+          ExpensesList(
+            split: split,
+            isInEditMode: isInEditMode,
+          ),
           SharesList(split: split),
         ],
       ),

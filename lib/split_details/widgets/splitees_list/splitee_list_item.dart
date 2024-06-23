@@ -29,26 +29,6 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
       });
     }
 
-    final namePill = Container(
-      decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.red,
-          ),
-          color: Colors.red,
-          borderRadius: BorderRadius.all(Radius.circular(20))),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-        child: Container(
-          width: 100.0,
-          child: Text(
-            widget.splitee.name,
-            style: Theme.of(context).textTheme.titleMedium,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
-    );
-
     return DeletableListItemCard(
       isInEditMode: widget.isParentInEditMode,
       child: Flex(

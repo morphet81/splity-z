@@ -23,7 +23,7 @@ class ExpenseListItem extends StatelessWidget {
             child: Card.filled(
               elevation: 1,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.zero,
                 child: ExpenseListItemEdit(split: split, expense: expense),
               ),
             ),

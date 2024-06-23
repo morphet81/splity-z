@@ -42,8 +42,8 @@ final class SplitState extends Equatable {
         ],
         expenses: <Expense>[
           Expense.withPaidForList(
-            name: 'First expense',
-            amount: 23.4,
+            name: 'Reprehenderit duis do sit labore adipisicing reprehenderit nostrud proident proident officia sint et consequat est.',
+            amount: 9999.99,
             paidBy: splitee1,
             paidFor: [splitee1, splitee2],
           ),
