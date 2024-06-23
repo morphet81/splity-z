@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:splity_z/split_details/utils/editable_content_change_dialog.dart';
+import 'package:splity_z/split_details/utils/editable_content_change_dialog/editable_content_change_dialog.dart';
 
 class EditableContentPill<T> extends StatelessWidget {
   const EditableContentPill({
@@ -9,6 +9,7 @@ class EditableContentPill<T> extends StatelessWidget {
     this.allowEllipsisOverflow = true,
     this.options = null,
     this.fixedSize = null,
+    this.isRound = false,
     this.keyboardType = null,
     this.itemLabel = null,
     super.key,
@@ -20,6 +21,7 @@ class EditableContentPill<T> extends StatelessWidget {
   final bool allowEllipsisOverflow;
   final List<T>? options;
   final double? fixedSize;
+  final bool isRound;
   final TextInputType? keyboardType;
   final String Function(T item)? itemLabel;
 
@@ -52,11 +54,14 @@ class EditableContentPill<T> extends StatelessWidget {
       );
     }
 
+    final topBottomPadding = isRound ? 22.0 : 4.0;
+
     return OutlinedButton(
-      style: ButtonStyle(
-        backgroundColor: WidgetStatePropertyAll<Color>(Theme.of(context).primaryColorLight),
-        padding: WidgetStatePropertyAll<EdgeInsets>(EdgeInsets.only(left: 18.0, right: 18.0, top: 4.0, bottom: 4.0)),
-        minimumSize: fixedSize != null ? WidgetStatePropertyAll<Size>(Size(fixedSize!, 0)) : null,
+      style: OutlinedButton.styleFrom(
+        backgroundColor: Theme.of(context).primaryColorLight,
+        shape: isRound ? CircleBorder() : null,
+        padding: EdgeInsets.only(left: 18.0, right: 18.0, top: topBottomPadding, bottom: topBottomPadding),
+        minimumSize: fixedSize != null ? Size(fixedSize!, 0) : null,
         alignment: textAlign,
       ),
       child: contentWidget,

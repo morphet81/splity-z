@@ -3,7 +3,6 @@ import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/editable_content_pill.dart';
-import 'package:splity_z/split_details/widgets/expenses_list/expense_list_item_paid_by_line.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/selectable_splitees_list.dart';
 
@@ -88,10 +87,22 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
               children: [
                 Expanded(
                   flex: 5,
-                  child: EditableContentPill<String>(
-                    content: widget.expense.name,
-                    textAlign: Alignment.centerLeft,
-                    onChanged: handleNameChanged,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      EditableContentPill<String>(
+                        content: widget.expense.name,
+                        textAlign: Alignment.centerLeft,
+                        onChanged: handleNameChanged,
+                      ),
+                      EditableContentPill<Splitee>(
+                        content: widget.expense.paidBy,
+                        textAlign: Alignment.centerLeft,
+                        options: widget.split.splitees,
+                        itemLabel: paidBySelectorLabel,
+                        onChanged: handledPaidByChanged,
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
@@ -101,6 +112,7 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                     child: EditableContentPill<String>(
                       content: widget.expense.amount.toString(),
                       allowEllipsisOverflow: false,
+                      isRound: true,
                       keyboardType: TextInputType.numberWithOptions(decimal: true),
                       onChanged: handleAmountChanged,
                     ),
@@ -119,49 +131,9 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                 // )
               ],
             ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: EditableContentPill<Splitee>(
-                    content: widget.expense.paidBy,
-                    textAlign: Alignment.centerLeft,
-                    options: widget.split.splitees,
-                    itemLabel: paidBySelectorLabel,
-                    onChanged: handledPaidByChanged,
-                  ),
-                ),
-              ],
-            ),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: InlineTextField(
-                //         key: widget.expense.id,
-                //         initialValue: widget.expense.name,
-                //         textAlign: TextAlign.start,
-                //         onChanged: (value) {
-                //           context.read<SplitBloc>().add(UpdateExpenseName(
-                //                 split: widget.split,
-                //                 expense: widget.expense,
-                //                 name: value,
-                //               ));
-                //         },
-                //       ),
-                //     ),
-                //     Switch(
-                //       value: isAutoSharingEnabled,
-                //       onChanged: handleAutoSharingSwitchChange,
-                //     ),
-                //   ],
-                // ),
-                // ExpenseListItemPaidByLine(
-                //   split: widget.split,
-                //   expense: widget.expense,
-                // ),
                 widget.expense.automaticSharing
                     ? ExpensesTypes(
                         expensesTypes: widget.expense.expensesTypes,
