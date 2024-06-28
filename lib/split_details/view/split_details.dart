@@ -23,7 +23,7 @@ class SplitDetails extends StatelessWidget {
             split: split,
             isInEditMode: isInEditMode,
           ),
-          SharesList(split: split),
+          split.getShares().length > 0 ? SharesList(split: split) : Container(),
         ],
       ),
     );
