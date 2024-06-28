@@ -41,11 +41,12 @@ final class SplitState extends Equatable {
           splitee2,
         ],
         expenses: <Expense>[
-          Expense.withPaidForList(
+          Expense.withAutomaticSharing(
             name: 'Reprehenderit duis do sit labore adipisicing reprehenderit nostrud proident proident officia sint et consequat est.',
-            amount: 9999.99,
+            amount: 99.99,
             paidBy: splitee1,
-            paidFor: [splitee1, splitee2],
+            expensesTypes: [ExpenseType.Alcohol, ExpenseType.Soft],
+            allSplitees: [splitee1, splitee2],
           ),
           Expense.withPaidForList(
             name: 'Second expense',

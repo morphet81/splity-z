@@ -1,37 +1,28 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/editable_content_pill.dart';
+import 'package:splity_z/split_details/widgets/expenses_list/auto_manual_share_toggle.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/selectable_splitees_list.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ExpenseListItemEdit extends StatefulWidget {
+class ExpenseListItemEdit extends StatelessWidget {
   const ExpenseListItemEdit({required this.split, required this.expense, super.key});
 
   final Split split;
   final Expense expense;
 
   @override
-  State<ExpenseListItemEdit> createState() => _ExpenseListItemEditState();
-}
-
-class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
-  bool isAutoSharingEnabled = false;
-
-  @override
-  void initState() {
-    isAutoSharingEnabled = widget.expense.automaticSharing;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     void Function(bool) handleSelectableIconChange(ExpenseType expenseType) {
       return (bool isSelected) {
         context.read<SplitBloc>().add(UpdateExpenseExpenseType(
-              split: widget.split,
-              expense: widget.expense,
+              split: split,
+              expense: expense,
               expenseType: expenseType,
               isSelected: isSelected,
             ));
@@ -40,8 +31,8 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
 
     void handleNameChanged(String newName) {
       context.read<SplitBloc>().add(UpdateExpenseName(
-            split: widget.split,
-            expense: widget.expense,
+            split: split,
+            expense: expense,
             name: newName,
           ));
     }
@@ -52,30 +43,26 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
 
     void handledPaidByChanged(Splitee newPaidBy) {
       context.read<SplitBloc>().add(UpdateExpensePaidBy(
-            split: widget.split,
-            expense: widget.expense,
+            split: split,
+            expense: expense,
             splitee: newPaidBy,
           ));
     }
 
     void handleAmountChanged(String newAmount) {
       context.read<SplitBloc>().add(UpdateExpenseAmount(
-            split: widget.split,
-            expense: widget.expense,
+            split: split,
+            expense: expense,
             amount: double.parse(newAmount),
           ));
     }
 
-    void handleAutoSharingSwitchChange(bool value) {
+    void handleAutoSharingModeChanged(bool value) {
       context.read<SplitBloc>().add(UpdateExpenseSharingMode(
-            split: widget.split,
-            expense: widget.expense,
+            split: split,
+            expense: expense,
             isAutoSharingEnabled: value,
           ));
-
-      setState(() {
-        isAutoSharingEnabled = value;
-      });
     }
 
     return Container(
@@ -90,18 +77,37 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      EditableContentPill<String>(
-                        content: widget.expense.name,
-                        textAlign: Alignment.centerLeft,
-                        onChanged: handleNameChanged,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: EditableContentPill<String>(
+                              content: expense.name,
+                              textAlign: Alignment.centerLeft,
+                              onChanged: handleNameChanged,
+                            ),
+                          ),
+                        ],
                       ),
-                      EditableContentPill<Splitee>(
-                        content: widget.expense.paidBy,
-                        textAlign: Alignment.centerLeft,
-                        options: widget.split.splitees,
-                        itemLabel: paidBySelectorLabel,
-                        onChanged: handledPaidByChanged,
-                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Text(
+                              AppLocalizations.of(context)!.paidBy,
+                              style: Theme.of(context).textTheme.labelLarge,
+                            ),
+                          ),
+                          Expanded(
+                            child: EditableContentPill<Splitee>(
+                              content: expense.paidBy,
+                              textAlign: Alignment.centerLeft,
+                              options: split.splitees,
+                              itemLabel: paidBySelectorLabel,
+                              onChanged: handledPaidByChanged,
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -110,7 +116,7 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 12.0),
                     child: EditableContentPill<String>(
-                      content: widget.expense.amount.toString(),
+                      content: expense.amount.toString(),
                       allowEllipsisOverflow: false,
                       isRound: true,
                       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -118,32 +124,34 @@ class _ExpenseListItemEditState extends State<ExpenseListItemEdit> {
                     ),
                   ),
                 ),
-                // Flex(
-                //   direction: Axis.horizontal,
-                //   mainAxisSize: MainAxisSize.max,
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     Switch(
-                //       value: isAutoSharingEnabled,
-                //       onChanged: handleAutoSharingSwitchChange,
-                //     ),
-                //   ],
-                // )
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Divider(),
+            ),
             Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
-                widget.expense.automaticSharing
+                expense.automaticSharing
                     ? ExpensesTypes(
-                        expensesTypes: widget.expense.expensesTypes,
+                        expensesTypes: expense.expensesTypes,
                         onSelectableIconChange: handleSelectableIconChange,
                       )
                     : SelectableSpliteesList(
-                        split: widget.split,
-                        expense: widget.expense,
-                        selectedSplitees: widget.expense.paidFor,
+                        split: split,
+                        expense: expense,
+                        selectedSplitees: expense.paidFor,
                       ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Transform.scale(
+                    scale: 0.8,
+                    child: AutoManualShareToggle(
+                      isAuto: expense.automaticSharing,
+                      onChanged: handleAutoSharingModeChanged,
+                    ),
+                  ),
+                ),
               ],
             ),
           ],

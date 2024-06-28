@@ -1,10 +1,13 @@
 {
   "appName": "SplityZ",
+  "auto": "Auto",
   "cancel": "Annuler",
   "confirm": "Confirmer",
   "edit": "Modifier",
   "expensesListTitle": "Dépenses",
   "helloWorld": "Bonjour Monde!",
+  "manual": "Manuel",
+  "paidBy": "Payé par",
   "sharesListTitle": "Parts",
   "spliteeListTitle": "Participants"
 }
