@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
@@ -127,7 +125,7 @@ class ExpenseListItemEdit extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 12.0),
+              padding: const EdgeInsets.all(8.0),
               child: Divider(),
             ),
             Column(

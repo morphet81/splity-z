@@ -39,21 +39,24 @@ class _SpliteeListItemEditState extends State<SpliteeListItemEdit> {
     }
 
     return Container(
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          EditableContentPill(
-            content: widget.splitee.name,
-            onChanged: handleNameChange,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 22.0),
-            child: ExpensesTypes(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            EditableContentPill(
+              content: widget.splitee.name,
+              onChanged: handleNameChange,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Divider(),
+            ),
+            ExpensesTypes(
               expensesTypes: widget.splitee.expensesTypes,
               onSelectableIconChange: handleSelectableIconChange,
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

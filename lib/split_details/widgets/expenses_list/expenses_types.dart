@@ -11,7 +11,7 @@ class ExpensesTypes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+      padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
       child: Row(
         children: [
           ExpandedSelectableIcon(

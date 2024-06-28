@@ -8,6 +8,7 @@
   "helloWorld": "Hello World!",
   "manual": "Manual",
   "paidBy": "Paid by",
+  "paidFor": "Paid for",
   "sharesListTitle": "Shares",
   "spliteeListTitle": "Splitees"
 }
