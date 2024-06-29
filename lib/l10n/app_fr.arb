@@ -13,5 +13,7 @@
   "paidBy": "Payé par",
   "paidFor": "Payé pour",
   "sharesListTitle": "Parts",
-  "spliteeListTitle": "Participants"
+  "spliteeListTitle": "Participants",
+  "undo": "Annuler",
+  "undoLabel": "Annuler la suppresion"
 }

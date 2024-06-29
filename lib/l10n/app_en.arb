@@ -13,5 +13,7 @@
   "paidBy": "Paid by",
   "paidFor": "Paid for",
   "sharesListTitle": "Shares",
-  "spliteeListTitle": "Splitees"
+  "spliteeListTitle": "Splitees",
+  "undo": "Undo",
+  "undoLabel": "Undo deletion"
 }

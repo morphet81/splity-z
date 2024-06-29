@@ -3,6 +3,7 @@ import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/deletable_list_item_card.dart';
 import 'package:provider/provider.dart';
+import 'package:splity_z/shared/widgets/split_bloc_undo_snack_bar.dart';
 import 'package:splity_z/split_details/widgets/splitees_list/splitee_list_item_edit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -24,6 +25,8 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
 
   @override
   Widget build(BuildContext context) {
+    final snackBar = SplitBlocUndoSnackBar(context: context);
+
     if (widget.isInEditMode != _isInEditMode) {
       setState(() {
         _isInEditMode = widget.isInEditMode;
@@ -31,7 +34,13 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
     }
 
     void deleteSplitee() {
-      context.read<SplitBloc>().add(DeleteSplitee(split: widget.split, splitee: widget.splitee));
+      context.read<SplitBloc>().add(
+            DeleteSplitee(
+              split: widget.split,
+              splitee: widget.splitee,
+            ),
+          );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
     Future<void> _showMyDialog() async {

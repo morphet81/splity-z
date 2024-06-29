@@ -1,6 +1,6 @@
 part of 'split_bloc.dart';
 
-sealed class SplitEvent extends Equatable {
+sealed class SplitEvent extends Equatable implements ReplayEvent {
   @override
   List<Object?> get props => [];
 }
