@@ -36,18 +36,21 @@ class App extends StatelessWidget {
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(color: colorScheme.onPrimary),
         ),
-        textTheme: TextTheme(
-          displayLarge: const TextStyle(
-            fontSize: 72,
-            fontWeight: FontWeight.bold,
-          ),
-          // ···
-          titleLarge: GoogleFonts.roboto(
-            fontSize: 22,
-          ),
-          bodyMedium: GoogleFonts.merriweather(),
-          displaySmall: GoogleFonts.pacifico(),
-        ),
+        fontFamily: GoogleFonts.merriweatherSans().fontFamily,
+        // textTheme: TextTheme(
+        //   displayLarge: const TextStyle(
+        //     fontSize: 72,
+        //     fontWeight: FontWeight.bold,
+        //   ),
+        //   // ···
+        //   titleLarge: GoogleFonts.roboto(
+        //     fontSize: 22,
+        //   ),
+        //   bodyMedium: GoogleFonts.merriweather(),
+        //   bodyLarge: GoogleFonts.merriweather(),
+        //   bodySmall: GoogleFonts.merriweather(),
+        //   displaySmall: GoogleFonts.pacifico(),
+        // ),
       ),
       routerConfig: GoRouter(
         initialLocation: '/split/1',
