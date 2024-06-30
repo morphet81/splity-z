@@ -4,6 +4,7 @@ import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/deletable_list_item_card.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/split_bloc_undo_snack_bar.dart';
+import 'package:splity_z/shared/widgets/confirm_dialog.dart';
 import 'package:splity_z/split_details/widgets/splitees_list/splitee_list_item_edit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -43,44 +44,6 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
-    Future<void> _showMyDialog() async {
-      return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(AppLocalizations.of(context)!.deleteSpliteeDialogTitle),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text(AppLocalizations.of(context)!.deleteSpliteeDialogMessage1),
-                  Padding(
-                    padding: EdgeInsets.only(top: 8.0),
-                    child: Text(AppLocalizations.of(context)!.deleteSpliteeDialogMessage2),
-                  ),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(AppLocalizations.of(context)!.cancel),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: Text(AppLocalizations.of(context)!.confirm),
-                onPressed: () {
-                  deleteSplitee();
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-
     void handleTap() {
       widget.onEnterEditMode(widget.splitee);
       setState(() {
@@ -90,7 +53,15 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
 
     void handleDeleteClick() {
       if (widget.split.expenses.where((expense) => expense.paidBy == widget.splitee).length > 0) {
-        _showMyDialog();
+        showConfirmDialog(
+          context,
+          onConfirm: deleteSplitee,
+          title: AppLocalizations.of(context)!.deleteSpliteeDialogTitle,
+          message: [
+            AppLocalizations.of(context)!.deleteSpliteeDialogMessage1,
+            AppLocalizations.of(context)!.deleteSpliteeDialogMessage2,
+          ],
+        );
       } else {
         deleteSplitee();
       }
