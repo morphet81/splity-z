@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
-import 'package:splity_z/shared/widgets/deletable_list_item_card.dart';
+import 'package:splity_z/shared/widgets/deletable_list_item.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/split_bloc_undo_snack_bar.dart';
 import 'package:splity_z/shared/widgets/confirm_dialog.dart';
@@ -67,7 +67,7 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
       }
     }
 
-    return DeletableListItemCard(
+    return DeletableListItem(
       isInEditMode: widget.isParentInEditMode,
       child: Flex(
         direction: Axis.horizontal,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:splity_z/shared/widgets/list_item_delete_button.dart';
 
-class DeletableListItemCard extends StatefulWidget {
-  const DeletableListItemCard({required this.child, required this.onTap, required this.onDelete, required this.isInEditMode, super.key});
+class DeletableListItem extends StatefulWidget {
+  const DeletableListItem({required this.child, required this.onTap, required this.onDelete, required this.isInEditMode, super.key});
 
   final Widget child;
   final void Function() onTap;
@@ -10,10 +10,10 @@ class DeletableListItemCard extends StatefulWidget {
   final bool isInEditMode;
 
   @override
-  State<DeletableListItemCard> createState() => _DeletableListItemCardState();
+  State<DeletableListItem> createState() => _DeletableListItemState();
 }
 
-class _DeletableListItemCardState extends State<DeletableListItemCard> with SingleTickerProviderStateMixin {
+class _DeletableListItemState extends State<DeletableListItem> with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 350),
     vsync: this,
