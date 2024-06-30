@@ -54,7 +54,7 @@ class EditableContentPill<T> extends StatelessWidget {
       );
     }
 
-    final topBottomPadding = isRound ? 22.0 : 4.0;
+    final topBottomPadding = isRound ? 30.0 : 4.0;
 
     return OutlinedButton(
       style: OutlinedButton.styleFrom(

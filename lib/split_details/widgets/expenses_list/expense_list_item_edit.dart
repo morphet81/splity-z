@@ -4,6 +4,7 @@ import 'package:splity_z/shared/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/editable_content_pill.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/auto_manual_share_toggle.dart';
+import 'package:splity_z/split_details/widgets/expenses_list/expense_amount.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/selectable_splitees_list.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -112,14 +113,8 @@ class ExpenseListItemEdit extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: EditableContentPill<String>(
-                      content: expense.amount.toString(),
-                      allowEllipsisOverflow: false,
-                      isRound: true,
-                      keyboardType: TextInputType.numberWithOptions(decimal: true),
-                      onChanged: handleAmountChanged,
-                    ),
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: ExpenseAmount(expense: expense, onAmountChanged: handleAmountChanged),
                   ),
                 ),
               ],
