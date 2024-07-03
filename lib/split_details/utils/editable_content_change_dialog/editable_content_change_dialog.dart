@@ -44,6 +44,20 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
             }
           }
 
+          String? validateInput(String? value) {
+            var errorMessage = null;
+
+            if (value == null || value.isEmpty) {
+              errorMessage = AppLocalizations.of(context)!.enterStringValue;
+            }
+
+            return errorMessage;
+          }
+
+          bool isInputValid() {
+            return (newName is String && validateInput(newName as String) == null) || !(newName is String);
+          }
+
           final List<TextInputFormatter> inputFormatters = keyboardType == TextInputType.number
               ? [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
@@ -60,6 +74,8 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
               inputFormatters: inputFormatters,
               onChanged: handleTextFormFieldChange,
               onEditingComplete: handleEditingDone,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: validateInput,
             );
           } else {
             final optionsListHeight = options.length * Theme.of(context).textTheme.bodyMedium!.fontSize! * 3.5;
@@ -103,7 +119,7 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: Text(actionButtonText),
-              onPressed: handleEditingDone,
+              onPressed: isInputValid() ? handleEditingDone : null,
             ),
           ];
 
