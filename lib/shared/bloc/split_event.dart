@@ -11,6 +11,12 @@ final class DeleteSplit extends SplitEvent {
   final Split split;
 }
 
+final class AddSplitee extends SplitEvent {
+  AddSplitee({required this.split});
+
+  final Split split;
+}
+
 final class DeleteSplitee extends SplitEvent {
   DeleteSplitee({required this.split, required this.splitee});
 

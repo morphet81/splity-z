@@ -41,7 +41,7 @@ class _DeletableListItemState extends State<DeletableListItem> with SingleTicker
     }
 
     return Padding(
-      padding: EdgeInsets.only(bottom: 16.0, left: 8.0, right: 8.0),
+      padding: EdgeInsets.only(bottom: 16.0),
       child: Stack(
         children: [
           ListItemDeleteButton(

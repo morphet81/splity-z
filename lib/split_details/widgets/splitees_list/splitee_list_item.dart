@@ -75,10 +75,7 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
           Expanded(
             child: Card.filled(
               elevation: 1,
-              child: Padding(
-                padding: EdgeInsets.zero,
-                child: SpliteeListItemEdit(split: widget.split, splitee: widget.splitee),
-              ),
+              child: SpliteeListItemEdit(split: widget.split, splitee: widget.splitee),
             ),
           ),
         ],

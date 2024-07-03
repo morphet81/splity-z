@@ -9,6 +9,7 @@ part 'split_state.dart';
 class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
   SplitBloc() : super(SplitState.initialState) {
     on<DeleteSplit>(_onDeleteSplit);
+    on<AddSplitee>(_onAddSplitee);
     on<DeleteSplitee>(_onDeleteSplitee);
     on<UpdateSpliteeName>(_onUpdateSpliteeName);
     on<UpdateSpliteeExpenseType>(_onUpdateSpliteeExpenseType);
@@ -27,6 +28,20 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     newSplitsList.removeWhere((split) => split.id == event.split.id);
 
     emit(state.copyWith(splits: newSplitsList));
+  }
+
+  Future<void> _onAddSplitee(AddSplitee event, Emitter<SplitState> emit) async {
+    final newSplitee = SpliteeImpl.blank();
+
+    final newSplit = event.split.copyWith(
+      splitees: List.from(event.split.splitees)..add(newSplitee),
+    );
+
+    final newState = state.copyWith(
+      splits: List.from(state.splits)..replace(event.split, newSplit),
+    );
+
+    emit(newState);
   }
 
   Future<void> _onDeleteSplitee(DeleteSplitee event, Emitter<SplitState> emit) async {

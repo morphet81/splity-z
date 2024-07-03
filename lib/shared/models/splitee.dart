@@ -22,6 +22,8 @@ final class SpliteeImpl extends Splitee {
 
   SpliteeImpl.withId({required UniqueKey id, required String name, required List<ExpenseType> expensesTypes}) : super(id: id, name: name, expensesTypes: expensesTypes);
 
+  SpliteeImpl.blank() : this.withId(id: UniqueKey(), name: '', expensesTypes: []);
+
   @override
   SpliteeImpl copyWith({String? name, List<ExpenseType>? expensesTypes}) {
     return SpliteeImpl.withId(id: this.id, name: name ?? this.name, expensesTypes: expensesTypes ?? this.expensesTypes);

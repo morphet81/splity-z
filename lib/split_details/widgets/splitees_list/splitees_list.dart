@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart' hide Split;
+import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:splity_z/shared/widgets/add_item_button.dart';
 import 'package:splity_z/split_details/widgets/splitees_list/splitee_list_item.dart';
+import 'package:provider/provider.dart';
 
 class SpliteesList extends StatefulWidget {
   const SpliteesList({required this.split, required this.isInEditMode, super.key});
@@ -16,12 +19,16 @@ class SpliteesList extends StatefulWidget {
 class _SpliteesListState extends State<SpliteesList> {
   Splitee? _spliteeItemInEditMode;
 
-  void _onSpliteeItemEntersEditMode(Splitee splitee) {
+  void _handleSpliteeItemEntersEditMode(Splitee splitee) {
     _spliteeItemInEditMode = splitee;
   }
 
   @override
   Widget build(BuildContext context) {
+    void handleAddSpliteePressed() {
+      context.read<SplitBloc>().add(AddSplitee(split: widget.split));
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -35,21 +42,30 @@ class _SpliteesListState extends State<SpliteesList> {
             ),
           ),
           Center(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final splitee = widget.split.splitees[index];
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  if (index == widget.split.splitees.length) {
+                    return AddItemButton(
+                      onPressed: handleAddSpliteePressed,
+                    );
+                  }
 
-                return SpliteeListItem(
-                  split: widget.split,
-                  splitee: splitee,
-                  isParentInEditMode: widget.isInEditMode,
-                  isInEditMode: _spliteeItemInEditMode == splitee,
-                  onEnterEditMode: _onSpliteeItemEntersEditMode,
-                );
-              },
-              itemCount: widget.split.splitees.length,
+                  final splitee = widget.split.splitees[index];
+
+                  return SpliteeListItem(
+                    split: widget.split,
+                    splitee: splitee,
+                    isParentInEditMode: widget.isInEditMode,
+                    isInEditMode: _spliteeItemInEditMode == splitee,
+                    onEnterEditMode: _handleSpliteeItemEntersEditMode,
+                  );
+                },
+                itemCount: widget.split.splitees.length + 1,
+              ),
             ),
           ),
         ],
