@@ -6,17 +6,17 @@ import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/editable_content_pill.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
 
-class SpliteeListItemEdit extends StatefulWidget {
-  const SpliteeListItemEdit({required this.split, required this.splitee, super.key});
+class SpliteeListItemContent extends StatefulWidget {
+  const SpliteeListItemContent({required this.split, required this.splitee, super.key});
 
   final Split split;
   final Splitee splitee;
 
   @override
-  State<SpliteeListItemEdit> createState() => _SpliteeListItemEditState();
+  State<SpliteeListItemContent> createState() => _SpliteeListItemContentState();
 }
 
-class _SpliteeListItemEditState extends State<SpliteeListItemEdit> {
+class _SpliteeListItemContentState extends State<SpliteeListItemContent> {
   @override
   Widget build(BuildContext context) {
     void Function(bool) handleSelectableIconChange(ExpenseType expenseType) {
@@ -46,6 +46,7 @@ class _SpliteeListItemEditState extends State<SpliteeListItemEdit> {
             EditableContentPill(
               content: widget.splitee.name,
               onChanged: handleNameChange,
+              editOnRendered: true,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

@@ -5,7 +5,7 @@ import 'package:splity_z/shared/widgets/deletable_list_item.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/split_bloc_undo_snack_bar.dart';
 import 'package:splity_z/shared/widgets/confirm_dialog.dart';
-import 'package:splity_z/split_details/widgets/splitees_list/splitee_list_item_edit.dart';
+import 'package:splity_z/split_details/widgets/splitees_list/splitee_list_item_content.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SpliteeListItem extends StatefulWidget {
@@ -75,7 +75,7 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
           Expanded(
             child: Card.filled(
               elevation: 1,
-              child: SpliteeListItemEdit(split: widget.split, splitee: widget.splitee),
+              child: SpliteeListItemContent(split: widget.split, splitee: widget.splitee),
             ),
           ),
         ],
