@@ -13,6 +13,7 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     on<DeleteSplitee>(_onDeleteSplitee);
     on<UpdateSpliteeName>(_onUpdateSpliteeName);
     on<UpdateSpliteeExpenseType>(_onUpdateSpliteeExpenseType);
+    on<AddExpense>(_onAddExpense);
     on<DeleteExpense>(_onDeleteExpense);
     on<UpdateExpenseName>(_onUpdateExpenseName);
     on<UpdateExpenseAmount>(_onUpdateExpenseAmount);
@@ -106,6 +107,20 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
 
     final newState = state.copyWith(
       splits: state.splits.toList()..replace(event.split, newSplit),
+    );
+
+    emit(newState);
+  }
+
+  Future<void> _onAddExpense(AddExpense event, Emitter<SplitState> emit) async {
+    final newExpense = Expense.blank();
+
+    final newSplit = event.split.copyWith(
+      expenses: List.from(event.split.expenses)..add(newExpense),
+    );
+
+    final newState = state.copyWith(
+      splits: List.from(state.splits)..replace(event.split, newSplit),
     );
 
     emit(newState);

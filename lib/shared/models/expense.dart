@@ -27,6 +27,8 @@ final class Expense extends Equatable {
         automaticSharing = true,
         manualPaidFor = null;
 
+  Expense.blank() : this.withAutomaticSharing(name: '', amount: 0, paidBy: SpliteeImpl.blank(), expensesTypes: [], allSplitees: []);
+
   final UniqueKey id;
   final String name;
   final double amount;

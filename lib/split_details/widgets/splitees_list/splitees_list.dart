@@ -23,12 +23,12 @@ class _SpliteesListState extends State<SpliteesList> {
     _spliteeItemInEditMode = splitee;
   }
 
+  void handleAddSpliteePressed() {
+    context.read<SplitBloc>().add(AddSplitee(split: widget.split));
+  }
+
   @override
   Widget build(BuildContext context) {
-    void handleAddSpliteePressed() {
-      context.read<SplitBloc>().add(AddSplitee(split: widget.split));
-    }
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

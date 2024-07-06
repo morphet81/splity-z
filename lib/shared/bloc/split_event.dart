@@ -41,6 +41,12 @@ final class UpdateSpliteeExpenseType extends SplitEvent {
   final bool isSelected;
 }
 
+final class AddExpense extends SplitEvent {
+  AddExpense({required this.split});
+
+  final Split split;
+}
+
 final class DeleteExpense extends SplitEvent {
   DeleteExpense({required this.split, required this.expense});
 
