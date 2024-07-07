@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AddItemButton extends StatelessWidget {
   const AddItemButton({super.key, required this.onPressed});
 
-  final Function() onPressed;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {

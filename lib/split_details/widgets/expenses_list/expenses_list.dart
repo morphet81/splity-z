@@ -37,7 +37,7 @@ class ExpensesList extends StatelessWidget {
               itemBuilder: (context, index) {
                 if (index == split.expenses.length) {
                   return AddItemButton(
-                    onPressed: handleAddExpensePressed,
+                    onPressed: isInEditMode ? null : handleAddExpensePressed,
                   );
                 }
 

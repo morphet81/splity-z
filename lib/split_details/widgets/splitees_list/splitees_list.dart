@@ -50,7 +50,7 @@ class _SpliteesListState extends State<SpliteesList> {
                 itemBuilder: (context, index) {
                   if (index == widget.split.splitees.length) {
                     return AddItemButton(
-                      onPressed: handleAddSpliteePressed,
+                      onPressed: widget.isInEditMode ? null : handleAddSpliteePressed,
                     );
                   }
 
