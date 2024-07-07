@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:splity_z/split_details/utils/editable_content_change_dialog/editable_content_change_dialog.dart';
 
+enum ContentPillType {
+  string,
+  decimal,
+}
+
 class EditableContentPill<T> extends StatefulWidget {
   const EditableContentPill({
     required this.content,
@@ -14,7 +19,7 @@ class EditableContentPill<T> extends StatefulWidget {
     this.options = null,
     this.fixedSize = null,
     this.isRound = false,
-    this.keyboardType = null,
+    this.contentType = ContentPillType.string,
     this.itemLabel = null,
     super.key,
   });
@@ -27,7 +32,7 @@ class EditableContentPill<T> extends StatefulWidget {
   final List<T>? options;
   final double? fixedSize;
   final bool isRound;
-  final TextInputType? keyboardType;
+  final ContentPillType contentType;
   final String Function(T item)? itemLabel;
 
   @override
@@ -53,9 +58,19 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
   }
 
   void handleNamePillPressed() {
+    var initialValue = widget.content;
+
+    if (widget.contentType == ContentPillType.decimal) {
+      final stringContent = widget.content as String;
+      final decimalString = stringContent.replaceAll(new RegExp(r'[^0-9\.]'), '');
+      final decimalValue = double.parse(decimalString);
+
+      initialValue = decimalValue > 0 ? decimalValue.toString() as T : '' as T;
+    }
+
     Future<T?> Function(BuildContext) changeNameDialog = getEditableContentChangeDialog<T>(
-      initialValue: widget.content,
-      keyboardType: widget.keyboardType,
+      initialValue: initialValue,
+      keyboardType: widget.contentType == ContentPillType.decimal ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
       itemLabel: widget.itemLabel,
       options: widget.options,
       key: widget.key,

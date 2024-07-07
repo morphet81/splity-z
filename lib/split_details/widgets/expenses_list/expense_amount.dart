@@ -20,7 +20,7 @@ class ExpenseAmount extends StatelessWidget {
       content: formatter.format(expense.amount),
       allowEllipsisOverflow: false,
       isRound: true,
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
+      contentType: ContentPillType.decimal,
       editOnRendered: editOnRendered,
       onChanged: onAmountChanged,
     );
