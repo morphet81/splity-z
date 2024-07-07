@@ -79,6 +79,10 @@ final class Expense extends Equatable {
     );
   }
 
+  bool isBlank() {
+    return name.isEmpty;
+  }
+
   @override
   List<Object?> get props => [id, name, amount, paidBy, paidFor, manualPaidFor, expensesTypes, automaticSharing];
 }

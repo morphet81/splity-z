@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:splity_z/split_details/utils/editable_content_change_dialog/editable_content_change_dialog.dart';
@@ -43,12 +45,8 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
 
     SchedulerBinding.instance.addPostFrameCallback(
       (_) {
-        if (widget.editOnRendered && widget.content is String) {
-          final textContent = widget.content as String;
-
-          if (textContent.isEmpty) {
-            handleNamePillPressed();
-          }
+        if (widget.editOnRendered) {
+          handleNamePillPressed();
         }
       },
     );
@@ -68,6 +66,15 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
         widget.onChanged(value);
       }
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant EditableContentPill<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.editOnRendered) {
+      Timer(Duration(milliseconds: 200), handleNamePillPressed);
+    }
   }
 
   @override

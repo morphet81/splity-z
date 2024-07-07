@@ -13,6 +13,13 @@ abstract class Splitee extends Equatable {
 
   Splitee copyWith({String? name, List<ExpenseType>? expensesTypes});
 
+  bool isBlank();
+
+  @override
+  String toString() {
+    return 'Splitee($name)';
+  }
+
   @override
   List<Object?> get props => [id, name, expensesTypes];
 }
@@ -23,6 +30,10 @@ final class SpliteeImpl extends Splitee {
   SpliteeImpl.withId({required UniqueKey id, required String name, required List<ExpenseType> expensesTypes}) : super(id: id, name: name, expensesTypes: expensesTypes);
 
   SpliteeImpl.blank() : this.withId(id: UniqueKey(), name: '', expensesTypes: []);
+
+  bool isBlank() {
+    return name.isEmpty;
+  }
 
   @override
   SpliteeImpl copyWith({String? name, List<ExpenseType>? expensesTypes}) {

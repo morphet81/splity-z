@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
@@ -83,10 +85,14 @@ class _ExpenseListItemContentState extends State<ExpenseListItemContent> {
 }
 
 class _EditableInfoLine extends StatelessWidget {
-  const _EditableInfoLine({super.key, required this.split, required this.expense});
+  const _EditableInfoLine({required this.split, required this.expense});
 
   final Split split;
   final Expense expense;
+
+  bool get shouldEditName => expense.isBlank();
+  bool get shouldEditPayee => !shouldEditName && expense.paidBy.isBlank();
+  bool get shouldEditAmount => !shouldEditName && !shouldEditPayee && expense.amount == 0;
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +137,7 @@ class _EditableInfoLine extends StatelessWidget {
                     child: EditableContentPill<String>(
                       content: expense.name,
                       textAlign: Alignment.centerLeft,
+                      editOnRendered: shouldEditName,
                       onChanged: handleNameChanged,
                     ),
                   ),
@@ -150,6 +157,7 @@ class _EditableInfoLine extends StatelessWidget {
                       content: expense.paidBy,
                       textAlign: Alignment.centerLeft,
                       options: split.splitees,
+                      editOnRendered: shouldEditPayee,
                       itemLabel: paidBySelectorLabel,
                       onChanged: handledPaidByChanged,
                     ),
@@ -163,7 +171,11 @@ class _EditableInfoLine extends StatelessWidget {
           flex: 2,
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: ExpenseAmount(expense: expense, onAmountChanged: handleAmountChanged),
+            child: ExpenseAmount(
+              expense: expense,
+              editOnRendered: shouldEditAmount,
+              onAmountChanged: handleAmountChanged,
+            ),
           ),
         ),
       ],

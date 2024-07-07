@@ -19,6 +19,8 @@ class SpliteeListItemContent extends StatefulWidget {
 class _SpliteeListItemContentState extends State<SpliteeListItemContent> {
   @override
   Widget build(BuildContext context) {
+    bool shouldEditName = widget.splitee.isBlank();
+
     void Function(bool) handleSelectableIconChange(ExpenseType expenseType) {
       return (bool isSelected) {
         context.read<SplitBloc>().add(UpdateSpliteeExpenseType(
@@ -46,7 +48,7 @@ class _SpliteeListItemContentState extends State<SpliteeListItemContent> {
             EditableContentPill(
               content: widget.splitee.name,
               onChanged: handleNameChange,
-              editOnRendered: true,
+              editOnRendered: shouldEditName,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
