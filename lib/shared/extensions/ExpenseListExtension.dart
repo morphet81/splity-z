@@ -1,20 +1,25 @@
 import 'package:splity_z/shared/models/models.dart';
-import 'package:splity_z/shared/extensions/extensions.dart';
 
 extension Expenselistextension on List<Expense> {
   List<Expense> copyWithNewSplitee(Splitee splitee) {
-    return this.map((expense) {
-      final paidForSplitee = expense.paidFor.where((s) => s.id == splitee.id).firstOrNull;
-
-      if (expense.paidBy.id == splitee.id) {
+    Expense updateExpense(Expense expense) {
+      if (expense.isPaidBy(splitee)) {
         return expense.copyWith(paidBy: splitee);
-      } else if (paidForSplitee != null) {
-        return expense.copyWith(
-          paidFor: expense.paidFor.toList()..replace(paidForSplitee, splitee),
-        );
+      } else if (expense.isPaidFor(splitee)) {
+        final paidForSplitee = expense.paidForSpliteeMatching(splitee)!;
+
+        if (expense.sharesExpenseTypesWithSplitee(splitee)) {
+          return expense.copyReplacingSplitee(paidForSplitee, splitee);
+        } else {
+          return expense.copyRemovingSplitee(splitee);
+        }
+      } else if (expense.sharesExpenseTypesWithSplitee(splitee)) {
+        return expense.copyAddingSplitee(splitee);
       }
 
       return expense;
-    }).toList();
+    }
+
+    return this.map(updateExpense).toList();
   }
 }

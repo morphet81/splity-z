@@ -79,8 +79,42 @@ final class Expense extends Equatable {
     );
   }
 
+  Expense copyReplacingSplitee(Splitee oldSplitee, Splitee newSplitee) {
+    return copyWith(
+      paidFor: paidFor.toList()..replace(oldSplitee, newSplitee),
+    );
+  }
+
+  Expense copyAddingSplitee(Splitee splitee) {
+    return copyWith(
+      paidFor: paidFor.toList()..add(splitee),
+    );
+  }
+
+  Expense copyRemovingSplitee(Splitee splitee) {
+    return copyWith(
+      paidFor: paidFor.toList()..remove(splitee),
+    );
+  }
+
   bool isBlank() {
     return name.isEmpty;
+  }
+
+  bool isPaidBy(Splitee splitee) {
+    return paidBy.id == splitee.id;
+  }
+
+  Splitee? paidForSpliteeMatching(Splitee splitee) {
+    return paidFor.where((s) => s.id == splitee.id).firstOrNull;
+  }
+
+  bool isPaidFor(Splitee splitee) {
+    return paidForSpliteeMatching(splitee) != null;
+  }
+
+  bool sharesExpenseTypesWithSplitee(Splitee splitee) {
+    return expensesTypes.containsAny(splitee.expensesTypes);
   }
 
   @override
