@@ -63,16 +63,13 @@ class _ExpenseListItemContentState extends State<ExpenseListItemContent> {
                         expense: widget.expense,
                         selectedSplitees: widget.expense.paidFor,
                       ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Transform.scale(
+                Transform.scale(
                     scale: 0.8,
                     child: AutoManualShareToggle(
                       isAuto: widget.expense.automaticSharing,
                       onChanged: handleAutoSharingModeChanged,
                     ),
                   ),
-                ),
               ],
             ),
           ],
