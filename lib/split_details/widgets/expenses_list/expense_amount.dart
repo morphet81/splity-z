@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/editable_content_pill.dart';
-import 'package:universal_io/io.dart';
 
 class ExpenseAmount extends StatelessWidget {
-  const ExpenseAmount({super.key, required this.expense, required this.editOnRendered, required this.onAmountChanged});
+  const ExpenseAmount(
+      {super.key,
+      required this.expense,
+      required this.editOnRendered,
+      required this.onAmountChanged});
 
   final Expense expense;
   final bool editOnRendered;
@@ -13,10 +15,8 @@ class ExpenseAmount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat.currency(locale: Platform.localeName);
-
     return EditableContentPill<String>(
-      content: formatter.format(expense.amount),
+      content: '${expense.amount}',
       allowEllipsisOverflow: false,
       isRound: true,
       contentType: ContentPillType.decimal,
