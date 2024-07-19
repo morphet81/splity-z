@@ -1,5 +1,5 @@
-export './ListExtension.dart';
-export './SharesListExtension.dart';
-export './SpliteeListExtension.dart';
-export './ExpenseTypeListExtension.dart';
-export './ExpenseListExtension.dart';
+export 'list_extension.dart';
+export 'shares_list_extension.dart';
+export 'splitee_list_extension.dart';
+export 'expense_type_list_extension.dart';
+export 'expense_list_extension.dart';

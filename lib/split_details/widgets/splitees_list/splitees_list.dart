@@ -3,11 +3,13 @@ import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:splity_z/shared/widgets/add_item_button.dart';
+import 'package:splity_z/shared/widgets/split_bloc_undo_snack_bar.dart';
 import 'package:splity_z/split_details/widgets/splitees_list/splitee_list_item.dart';
 import 'package:provider/provider.dart';
 
 class SpliteesList extends StatefulWidget {
-  const SpliteesList({required this.split, required this.isInEditMode, super.key});
+  const SpliteesList(
+      {required this.split, required this.isInEditMode, super.key});
 
   final Split split;
   final bool isInEditMode;
@@ -25,6 +27,11 @@ class _SpliteesListState extends State<SpliteesList> {
 
   void handleAddSpliteePressed() {
     context.read<SplitBloc>().add(AddSplitee(split: widget.split));
+  }
+
+  void handleSpliteeDeletion(_) {
+    final snackBar = SplitBlocUndoSnackBar(context: context);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -50,7 +57,8 @@ class _SpliteesListState extends State<SpliteesList> {
                 itemBuilder: (context, index) {
                   if (index == widget.split.splitees.length) {
                     return AddItemButton(
-                      onPressed: widget.isInEditMode ? null : handleAddSpliteePressed,
+                      onPressed:
+                          widget.isInEditMode ? null : handleAddSpliteePressed,
                     );
                   }
 
@@ -62,6 +70,7 @@ class _SpliteesListState extends State<SpliteesList> {
                     isParentInEditMode: widget.isInEditMode,
                     isInEditMode: _spliteeItemInEditMode == splitee,
                     onEnterEditMode: _handleSpliteeItemEntersEditMode,
+                    onDelete: handleSpliteeDeletion,
                   );
                 },
                 itemCount: widget.split.splitees.length + 1,

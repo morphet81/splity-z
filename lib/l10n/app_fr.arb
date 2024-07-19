@@ -3,6 +3,7 @@
   "auto": "Auto",
   "cancel": "Annuler",
   "confirm": "Confirmer",
+  "delete": "Supprimer",
   "deleteSpliteeDialogMessage1": "Effacer ce splitee effacera également les dépenses faites par ce splitee.",
   "deleteSpliteeDialogMessage2": "Êtes-vous sûr de vouloir poursuivre?",
   "deleteSpliteeDialogTitle": "Le splitee a des dépenses",
