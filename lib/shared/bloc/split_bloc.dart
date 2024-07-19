@@ -9,6 +9,7 @@ part 'split_state.dart';
 class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
   SplitBloc() : super(SplitState.initialState) {
     on<DeleteSplit>(_onDeleteSplit);
+    on<RenameSplit>(_onRenameSplit);
     on<AddSplitee>(_onAddSplitee);
     on<DeleteSplitee>(_onDeleteSplitee);
     on<UpdateSpliteeName>(_onUpdateSpliteeName);
@@ -23,12 +24,26 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     on<UpdateExpensePaidBy>(_onUpdateExpensePaidBy);
   }
 
-  Future<void> _onDeleteSplit(DeleteSplit event, Emitter<SplitState> emit) async {
+  Future<void> _onDeleteSplit(
+      DeleteSplit event, Emitter<SplitState> emit) async {
     List<Split> newSplitsList = List.from(state.splits);
 
     newSplitsList.removeWhere((split) => split.id == event.split.id);
 
     emit(state.copyWith(splits: newSplitsList));
+  }
+
+  Future<void> _onRenameSplit(
+      RenameSplit event, Emitter<SplitState> emit) async {
+    final newSplit = event.split.copyWith(
+      name: event.splitName,
+    );
+
+    final newState = state.copyWith(
+      splits: List.from(state.splits)..replace(event.split, newSplit),
+    );
+
+    emit(newState);
   }
 
   Future<void> _onAddSplitee(AddSplitee event, Emitter<SplitState> emit) async {
@@ -45,8 +60,11 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     emit(newState);
   }
 
-  Future<void> _onDeleteSplitee(DeleteSplitee event, Emitter<SplitState> emit) async {
-    final newExpenses = event.split.expenses.where((expense) => expense.paidBy != event.splitee).toList();
+  Future<void> _onDeleteSplitee(
+      DeleteSplitee event, Emitter<SplitState> emit) async {
+    final newExpenses = event.split.expenses
+        .where((expense) => expense.paidBy != event.splitee)
+        .toList();
 
     final newSplit = event.split.copyWith(
       splitees: List.from(event.split.splitees)..remove(event.splitee),
@@ -60,23 +78,31 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     emit(newState);
   }
 
-  Future<void> _onUpdateSpliteeName(UpdateSpliteeName event, Emitter<SplitState> emit) async {
+  Future<void> _onUpdateSpliteeName(
+      UpdateSpliteeName event, Emitter<SplitState> emit) async {
     final newSplitee = event.splitee.copyWith(name: event.name);
 
-    final newSplitees = event.split.splitees.toList()..replace(event.splitee, newSplitee);
+    final newSplitees = event.split.splitees.toList()
+      ..replace(event.splitee, newSplitee);
 
     List<Expense> newExpenses = [];
 
     event.split.expenses.forEach((expense) {
-      final newPaidBy = expense.paidBy == event.splitee ? newSplitee : expense.paidBy;
-      final newPaidFor = expense.paidFor.toList()..replace(event.splitee, newSplitee);
-      final newManualPaidFor = expense.manualPaidFor == null ? null : expense.manualPaidFor;
+      final newPaidBy =
+          expense.paidBy == event.splitee ? newSplitee : expense.paidBy;
+      final newPaidFor = expense.paidFor.toList()
+        ..replace(event.splitee, newSplitee);
+      final newManualPaidFor =
+          expense.manualPaidFor == null ? null : expense.manualPaidFor;
 
       if (newManualPaidFor != null) {
         newManualPaidFor.toList().replace(event.splitee, newSplitee);
       }
 
-      newExpenses.add(expense.copyWith(paidBy: newPaidBy, paidFor: newPaidFor, manualPaidFor: newManualPaidFor));
+      newExpenses.add(expense.copyWith(
+          paidBy: newPaidBy,
+          paidFor: newPaidFor,
+          manualPaidFor: newManualPaidFor));
     });
 
     final newSplit = event.split.copyWith(
@@ -91,7 +117,8 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     emit(newState);
   }
 
-  Future<void> _onUpdateSpliteeExpenseType(UpdateSpliteeExpenseType event, Emitter<SplitState> emit) async {
+  Future<void> _onUpdateSpliteeExpenseType(
+      UpdateSpliteeExpenseType event, Emitter<SplitState> emit) async {
     List<ExpenseType> newExpenseTypes = event.splitee.expensesTypes.toList();
 
     newExpenseTypes.updateForExpenseType(event.expenseType, event.isSelected);
@@ -101,7 +128,8 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     final newExpenses = event.split.expenses.copyWithNewSplitee(newSplitee);
 
     final Split newSplit = event.split.copyWith(
-      splitees: event.split.splitees.toList()..replace(event.splitee, newSplitee),
+      splitees: event.split.splitees.toList()
+        ..replace(event.splitee, newSplitee),
       expenses: newExpenses,
     );
 
@@ -126,7 +154,8 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     emit(newState);
   }
 
-  Future<void> _onDeleteExpense(DeleteExpense event, Emitter<SplitState> emit) async {
+  Future<void> _onDeleteExpense(
+      DeleteExpense event, Emitter<SplitState> emit) async {
     final newSplit = event.split.copyWith(
       expenses: List.from(event.split.expenses)..remove(event.expense),
     );
@@ -138,11 +167,13 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     emit(newState);
   }
 
-  Future<void> _onUpdateExpenseName(UpdateExpenseName event, Emitter<SplitState> emit) async {
+  Future<void> _onUpdateExpenseName(
+      UpdateExpenseName event, Emitter<SplitState> emit) async {
     final newExpense = event.expense.copyWith(name: event.name);
 
     final newSplit = event.split.copyWith(
-      expenses: List.from(event.split.expenses)..replace(event.expense, newExpense),
+      expenses: List.from(event.split.expenses)
+        ..replace(event.expense, newExpense),
     );
 
     final newState = state.copyWith(
@@ -152,11 +183,13 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     emit(newState);
   }
 
-  Future<void> _onUpdateExpenseAmount(UpdateExpenseAmount event, Emitter<SplitState> emit) async {
+  Future<void> _onUpdateExpenseAmount(
+      UpdateExpenseAmount event, Emitter<SplitState> emit) async {
     final newExpense = event.expense.copyWith(amount: event.amount);
 
     final newSplit = event.split.copyWith(
-      expenses: List.from(event.split.expenses)..replace(event.expense, newExpense),
+      expenses: List.from(event.split.expenses)
+        ..replace(event.expense, newExpense),
     );
 
     final newState = state.copyWith(
@@ -166,20 +199,24 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     emit(newState);
   }
 
-  Future<void> _onUpdateExpenseExpenseType(UpdateExpenseExpenseType event, Emitter<SplitState> emit) async {
+  Future<void> _onUpdateExpenseExpenseType(
+      UpdateExpenseExpenseType event, Emitter<SplitState> emit) async {
     List<ExpenseType> newExpenseTypes = event.expense.expensesTypes.toList();
 
     newExpenseTypes.updateForExpenseType(event.expenseType, event.isSelected);
 
-    final newPaidFor = event.split.splitees.containingExpenseTypes(newExpenseTypes);
+    final newPaidFor =
+        event.split.splitees.containingExpenseTypes(newExpenseTypes);
 
-    final newExpense = event.expense.copyWith(expensesTypes: newExpenseTypes, paidFor: newPaidFor);
+    final newExpense = event.expense
+        .copyWith(expensesTypes: newExpenseTypes, paidFor: newPaidFor);
     final newState = _updateExpense(event.split, event.expense, newExpense);
 
     emit(newState);
   }
 
-  Future<void> _onUpdateExpenseSharingMode(UpdateExpenseSharingMode event, Emitter<SplitState> emit) async {
+  Future<void> _onUpdateExpenseSharingMode(
+      UpdateExpenseSharingMode event, Emitter<SplitState> emit) async {
     Expense newExpense;
 
     if (event.isAutoSharingEnabled) {
@@ -193,8 +230,11 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     emit(newState);
   }
 
-  Future<void> _onUpdateExpensePaidForSplitee(UpdateExpensePaidForSplitee event, Emitter<SplitState> emit) async {
-    final expense = event.split.expenses.where((expense) => expense == event.expense).firstOrNull;
+  Future<void> _onUpdateExpensePaidForSplitee(
+      UpdateExpensePaidForSplitee event, Emitter<SplitState> emit) async {
+    final expense = event.split.expenses
+        .where((expense) => expense == event.expense)
+        .firstOrNull;
 
     if (expense != null) {
       List<Splitee> newPaidFor = expense.paidFor.toList();
@@ -212,8 +252,11 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     }
   }
 
-  Future<void> _onUpdateExpensePaidBy(UpdateExpensePaidBy event, Emitter<SplitState> emit) async {
-    final expense = event.split.expenses.where((expense) => expense == event.expense).firstOrNull;
+  Future<void> _onUpdateExpensePaidBy(
+      UpdateExpensePaidBy event, Emitter<SplitState> emit) async {
+    final expense = event.split.expenses
+        .where((expense) => expense == event.expense)
+        .firstOrNull;
 
     if (expense != null) {
       final newExpense = expense.copyWith(paidBy: event.splitee);
@@ -223,7 +266,8 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     }
   }
 
-  SplitState _updateExpense(Split split, Expense oldExpense, Expense newExpense) {
+  SplitState _updateExpense(
+      Split split, Expense oldExpense, Expense newExpense) {
     final Split newSplit = split.copyWith(
       expenses: split.expenses.toList()..replace(oldExpense, newExpense),
     );

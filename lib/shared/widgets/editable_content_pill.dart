@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:splity_z/split_details/utils/editable_content_change_dialog/editable_content_change_dialog.dart';
+import 'package:splity_z/shared/widgets/editable_content_change_dialog/editable_content_change_dialog.dart';
 
 enum ContentPillType {
   string,
@@ -45,7 +45,8 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
     super.initState();
 
     if (T != String && widget.itemLabel == null) {
-      throw new Exception('If the type handled by EditableContentPill isn\'t String, you must provide a itemLabel function');
+      throw new Exception(
+          'If the type handled by EditableContentPill isn\'t String, you must provide a itemLabel function');
     }
 
     SchedulerBinding.instance.addPostFrameCallback(
@@ -62,15 +63,19 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
 
     if (widget.contentType == ContentPillType.decimal) {
       final stringContent = widget.content as String;
-      final decimalString = stringContent.replaceAll(new RegExp(r'[^0-9\.]'), '');
+      final decimalString =
+          stringContent.replaceAll(new RegExp(r'[^0-9\.]'), '');
       final decimalValue = double.parse(decimalString);
 
       initialValue = decimalValue > 0 ? decimalValue.toString() as T : '' as T;
     }
 
-    Future<T?> Function(BuildContext) changeNameDialog = getEditableContentChangeDialog<T>(
+    Future<T?> Function(BuildContext) changeNameDialog =
+        getEditableContentChangeDialog<T>(
       initialValue: initialValue,
-      keyboardType: widget.contentType == ContentPillType.decimal ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+      keyboardType: widget.contentType == ContentPillType.decimal
+          ? TextInputType.numberWithOptions(decimal: true)
+          : TextInputType.text,
       itemLabel: widget.itemLabel,
       options: widget.options,
       key: widget.key,
@@ -95,7 +100,9 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
   @override
   Widget build(BuildContext context) {
     Widget contentWidget = Text(
-      T == String ? widget.content as String : widget.itemLabel!(widget.content),
+      T == String
+          ? widget.content as String
+          : widget.itemLabel!(widget.content),
       overflow: TextOverflow.ellipsis,
       style: Theme.of(context).textTheme.titleMedium,
     );
@@ -113,8 +120,13 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
       style: OutlinedButton.styleFrom(
         backgroundColor: Theme.of(context).primaryColorLight,
         shape: widget.isRound ? CircleBorder() : null,
-        padding: EdgeInsets.only(left: 18.0, right: 18.0, top: topBottomPadding, bottom: topBottomPadding),
-        minimumSize: widget.fixedSize != null ? Size(widget.fixedSize!, 0) : null,
+        padding: EdgeInsets.only(
+            left: 18.0,
+            right: 18.0,
+            top: topBottomPadding,
+            bottom: topBottomPadding),
+        minimumSize:
+            widget.fixedSize != null ? Size(widget.fixedSize!, 0) : null,
         alignment: widget.textAlign,
       ),
       child: contentWidget,

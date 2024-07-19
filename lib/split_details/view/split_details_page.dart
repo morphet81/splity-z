@@ -43,6 +43,7 @@ class _SplitDetailsPageState extends State<SplitDetailsPage> {
           return Scaffold(
             appBar: SplityzAppBar(
               title: split!.name,
+              split: split,
               actions: [
                 IconButton(
                   icon: Icon(
