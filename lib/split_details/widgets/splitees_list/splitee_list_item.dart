@@ -90,7 +90,9 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
             child: Card.filled(
               elevation: 1,
               child: SpliteeListItemContent(
-                  split: widget.split, splitee: widget.splitee),
+                split: widget.split,
+                splitee: widget.splitee,
+              ),
             ),
           ),
         ],
@@ -99,42 +101,5 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
       onDelete: handleDeleteClick,
       confirmDisimiss: handleConfirmDismiss,
     );
-
-    // return Dismissible(
-    //   key: Key(widget.split.name),
-    //   direction: DismissDirection.startToEnd,
-    //   background: Container(
-    //     color: Colors.red,
-    //     alignment: Alignment.centerLeft,
-    //     child: Padding(
-    //       padding: const EdgeInsets.only(left: 24),
-    //       child: Text(
-    //         context.localizations.delete.toUpperCase(),
-    //         style: TextStyle(
-    //           color: context.onPrimary,
-    //           fontSize: 18,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    //   onDismissed: handleDeleteSplitee(widget.splitee),
-    //   child: DeletableListItem(
-    //     isInEditMode: widget.isParentInEditMode,
-    //     child: Flex(
-    //       direction: Axis.horizontal,
-    //       children: [
-    //         Expanded(
-    //           child: Card.filled(
-    //             elevation: 1,
-    //             child: SpliteeListItemContent(
-    //                 split: widget.split, splitee: widget.splitee),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //     onTap: handleTap,
-    //     onDelete: handleDeleteClick,
-    //   ),
-    // );
   }
 }

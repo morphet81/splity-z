@@ -7,14 +7,14 @@ class DeletableListItem extends StatefulWidget {
     required super.key,
     required this.child,
     required this.isInEditMode,
-    required this.onTap,
+    this.onTap,
     required this.onDelete,
     this.confirmDisimiss,
   });
 
   final Widget child;
   final bool isInEditMode;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final VoidCallback onDelete;
   final ConfirmDismissCallback? confirmDisimiss;
 
@@ -67,21 +67,8 @@ class _DeletableListItemState extends State<DeletableListItem>
 
     return Dismissible(
       key: widget.key!,
-      direction: DismissDirection.startToEnd,
-      background: Container(
-        color: Colors.red,
-        alignment: Alignment.centerLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 24),
-          child: Text(
-            context.localizations.delete.toUpperCase(),
-            style: TextStyle(
-              color: context.onPrimary,
-              fontSize: 18,
-            ),
-          ),
-        ),
-      ),
+      direction: DismissDirection.endToStart,
+      background: _DismissibleItemBackground(),
       onDismissed: handleSwipeDeletion,
       confirmDismiss: handleConfirmDismiss,
       child: Padding(
@@ -99,6 +86,31 @@ class _DeletableListItemState extends State<DeletableListItem>
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DismissibleItemBackground extends StatelessWidget {
+  const _DismissibleItemBackground({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 16.0),
+      child: Container(
+        color: Colors.red,
+        alignment: Alignment.centerRight,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 24),
+          child: Text(
+            context.localizations.delete.toUpperCase(),
+            style: TextStyle(
+              color: context.onPrimary,
+              fontSize: 18,
+            ),
+          ),
         ),
       ),
     );

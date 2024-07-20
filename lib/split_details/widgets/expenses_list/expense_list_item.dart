@@ -16,6 +16,12 @@ class ExpenseListItem extends StatelessWidget {
   final Expense expense;
   final bool isParentInEditMode;
 
+  void handleDeletion(BuildContext context) {
+    context
+        .read<SplitBloc>()
+        .add(DeleteExpense(split: split, expense: expense));
+  }
+
   @override
   Widget build(BuildContext context) {
     return DeletableListItem(
@@ -35,12 +41,7 @@ class ExpenseListItem extends StatelessWidget {
           ),
         ],
       ),
-      onTap: () {},
-      onDelete: () {
-        context
-            .read<SplitBloc>()
-            .add(DeleteExpense(split: split, expense: expense));
-      },
+      onDelete: () => handleDeletion(context),
     );
   }
 }
