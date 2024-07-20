@@ -21,4 +21,6 @@ extension BuildContextEntension on BuildContext {
   Color get errorColor => Theme.of(this).colorScheme.error;
 
   AppLocalizations get localizations => AppLocalizations.of(this)!;
+
+  NavigatorState get navigator => Navigator.of(this);
 }

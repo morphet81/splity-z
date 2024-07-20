@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Split;
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
@@ -17,6 +18,11 @@ class SplitsListItem extends StatefulWidget {
 }
 
 class _SplitsListItemState extends State<SplitsListItem> {
+  void handleTap() {
+    // context.go('/split/${widget.split.id}');
+    context.push('/split/${widget.split.id}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dismissible(
@@ -37,7 +43,7 @@ class _SplitsListItemState extends State<SplitsListItem> {
             ),
             isInEditMode: widget.isInEditMode,
             onDelete: () => debugPrint('on delete'),
-            onTap: () => debugPrint('on tap'),
+            onTap: handleTap,
           )
         ],
       ),

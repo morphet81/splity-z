@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Split;
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/split.dart';
@@ -16,6 +17,19 @@ class SplityzAppBar extends StatelessWidget {
   final String title;
   final Split? split;
   final List<Widget> actions;
+
+  Widget? backButton(BuildContext context) {
+    if (context.canPop()) {
+      return IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          context.pop();
+        },
+      );
+    }
+
+    return null;
+  }
 
   void handleTitleTap(BuildContext context) {
     if (split == null) {
@@ -49,6 +63,7 @@ class SplityzAppBar extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).primaryColor,
       actions: actions,
+      leading: backButton(context),
     );
   }
 }

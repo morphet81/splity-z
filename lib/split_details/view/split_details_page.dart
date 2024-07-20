@@ -23,13 +23,19 @@ class SplitDetailsPage extends StatelessWidget {
               .firstOrNull;
 
           if (split == null) {
-            GoRouter.of(context).replace('/error');
+            context.replace('/error');
           }
 
           return Scaffold(
             appBar: SplityzAppBar(
               title: split!.name,
               split: split,
+              // actions: [
+              //   IconButton(
+              //     icon: Icon(Icons.arrow_back),
+              //     onPressed: onEditButtonPressed,
+              //   )
+              // ],
             ).build(context),
             body: SplitDetails(
               split: split,
