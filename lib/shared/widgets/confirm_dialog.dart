@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Future<void> showConfirmDialog(
+Future<bool?> showConfirmDialog(
   BuildContext context, {
   required String title,
   required List<String> message,
-  required Function() onConfirm,
-  Function()? onCancel,
+  VoidCallback? onConfirm,
+  VoidCallback? onCancel,
 }) async {
   if (message.length == 0) {
     throw new Exception('Message should contain at least 1 line');
@@ -21,7 +21,7 @@ Future<void> showConfirmDialog(
         child: Text(AppLocalizations.of(context)!.deleteSpliteeDialogMessage2),
       );
 
-  return showDialog<void>(
+  return showDialog<bool?>(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
@@ -40,14 +40,14 @@ Future<void> showConfirmDialog(
             child: Text(AppLocalizations.of(context)!.cancel),
             onPressed: () {
               onCancel?.call();
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(false);
             },
           ),
           TextButton(
             child: Text(AppLocalizations.of(context)!.confirm),
             onPressed: () {
-              onConfirm();
-              Navigator.of(context).pop();
+              onConfirm?.call();
+              Navigator.of(context).pop(true);
             },
           ),
         ],

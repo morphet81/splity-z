@@ -28,6 +28,7 @@ class _SplitsListItemState extends State<SplitsListItem> {
         children: [
           SplitsListItemDeleteButton(split: widget.split),
           DeletableListItem(
+            key: Key(widget.split.name),
             child: Container(
               color: Theme.of(context).cardColor,
               child: ListTile(

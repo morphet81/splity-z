@@ -6,7 +6,11 @@ import 'package:splity_z/split_details/widgets/expenses_list/expense_list_item_c
 import 'package:provider/provider.dart';
 
 class ExpenseListItem extends StatelessWidget {
-  const ExpenseListItem({required this.split, required this.expense, required this.isParentInEditMode, super.key});
+  const ExpenseListItem(
+      {required this.split,
+      required this.expense,
+      required this.isParentInEditMode,
+      super.key});
 
   final Split split;
   final Expense expense;
@@ -15,6 +19,7 @@ class ExpenseListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DeletableListItem(
+      key: expense.id,
       isInEditMode: isParentInEditMode,
       child: Flex(
         direction: Axis.horizontal,
@@ -32,7 +37,9 @@ class ExpenseListItem extends StatelessWidget {
       ),
       onTap: () {},
       onDelete: () {
-        context.read<SplitBloc>().add(DeleteExpense(split: split, expense: expense));
+        context
+            .read<SplitBloc>()
+            .add(DeleteExpense(split: split, expense: expense));
       },
     );
   }

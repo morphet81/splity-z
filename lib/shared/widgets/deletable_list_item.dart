@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:splity_z/shared/widgets/list_item_delete_button.dart';
+import 'package:splity_z/shared/extensions/context_builder_extension.dart';
 
 class DeletableListItem extends StatefulWidget {
-  const DeletableListItem({required this.child, required this.onTap, required this.onDelete, required this.isInEditMode, super.key});
+  const DeletableListItem({
+    required super.key,
+    required this.child,
+    required this.isInEditMode,
+    required this.onTap,
+    required this.onDelete,
+    this.confirmDisimiss,
+  });
 
   final Widget child;
-  final void Function() onTap;
-  final void Function() onDelete;
   final bool isInEditMode;
+  final VoidCallback onTap;
+  final VoidCallback onDelete;
+  final ConfirmDismissCallback? confirmDisimiss;
 
   @override
   State<DeletableListItem> createState() => _DeletableListItemState();
 }
 
-class _DeletableListItemState extends State<DeletableListItem> with SingleTickerProviderStateMixin {
+class _DeletableListItemState extends State<DeletableListItem>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 350),
     vsync: this,
@@ -27,9 +37,12 @@ class _DeletableListItemState extends State<DeletableListItem> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    final slideValue = ListItemDeleteButton.DELETE_BUTTON_WIDTH / MediaQuery.of(context).size.width;
+    final slideValue = ListItemDeleteButton.DELETE_BUTTON_WIDTH /
+        MediaQuery.of(context).size.width;
 
-    final Animation<Offset> offsetAnimation = Tween<Offset>(begin: Offset.zero, end: Offset(slideValue, 0.0)).animate(CurvedAnimation(
+    final Animation<Offset> offsetAnimation =
+        Tween<Offset>(begin: Offset.zero, end: Offset(slideValue, 0.0))
+            .animate(CurvedAnimation(
       parent: _controller,
       curve: widget.isInEditMode ? Curves.fastOutSlowIn : Curves.fastOutSlowIn,
     ));
@@ -40,21 +53,53 @@ class _DeletableListItemState extends State<DeletableListItem> with SingleTicker
       _controller.reverse();
     }
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: 16.0),
-      child: Stack(
-        children: [
-          ListItemDeleteButton(
-            onPressed: widget.onDelete,
-          ),
-          SlideTransition(
-            position: offsetAnimation,
-            child: GestureDetector(
-              child: widget.child,
-              onTap: widget.onTap,
+    void handleSwipeDeletion(DismissDirection direction) {
+      widget.onDelete();
+    }
+
+    Future<bool?> handleConfirmDismiss(DismissDirection direction) async {
+      if (widget.confirmDisimiss != null) {
+        return widget.confirmDisimiss!(direction);
+      }
+
+      return true;
+    }
+
+    return Dismissible(
+      key: widget.key!,
+      direction: DismissDirection.startToEnd,
+      background: Container(
+        color: Colors.red,
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 24),
+          child: Text(
+            context.localizations.delete.toUpperCase(),
+            style: TextStyle(
+              color: context.onPrimary,
+              fontSize: 18,
             ),
           ),
-        ],
+        ),
+      ),
+      onDismissed: handleSwipeDeletion,
+      confirmDismiss: handleConfirmDismiss,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 16.0),
+        child: Stack(
+          children: [
+            ListItemDeleteButton(
+              onPressed: widget.onDelete,
+            ),
+            SlideTransition(
+              position: offsetAnimation,
+              child: GestureDetector(
+                child: widget.child,
+                onTap: widget.onTap,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

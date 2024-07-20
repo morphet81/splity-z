@@ -5,7 +5,11 @@ import 'package:splity_z/split_details/widgets/shares_list/shares_list.dart';
 import 'package:splity_z/split_details/widgets/splitees_list/splitees_list.dart';
 
 class SplitDetails extends StatelessWidget {
-  const SplitDetails({required this.split, required this.isInEditMode, super.key});
+  const SplitDetails({
+    super.key,
+    required this.split,
+    this.isInEditMode = false,
+  });
 
   final Split split;
   final bool isInEditMode;
