@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/split_details/widgets/shares_list/share_arrow.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 class SharesListItem extends StatelessWidget {
   const SharesListItem({required Share this.share, super.key});
@@ -15,7 +17,7 @@ class SharesListItem extends StatelessWidget {
           child: Text(
             share.from.name,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: context.textTheme.titleMedium,
             textAlign: TextAlign.right,
           ),
         ),
@@ -32,7 +34,7 @@ class SharesListItem extends StatelessWidget {
           child: Text(
             share.to.name,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: context.textTheme.titleMedium,
           ),
         ),
       ],

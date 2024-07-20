@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:splity_z/shared/widgets/editable_content_change_dialog/editable_content_change_dialog.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 enum ContentPillType {
   string,
@@ -104,7 +105,7 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
           ? widget.content as String
           : widget.itemLabel!(widget.content),
       overflow: TextOverflow.ellipsis,
-      style: Theme.of(context).textTheme.titleMedium,
+      style: context.textTheme.titleMedium,
     );
 
     if (!widget.allowEllipsisOverflow) {

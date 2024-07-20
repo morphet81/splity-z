@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Split;
+
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_list.dart';
 import 'package:splity_z/split_details/widgets/shares_list/shares_list.dart';

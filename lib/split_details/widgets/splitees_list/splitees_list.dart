@@ -1,11 +1,13 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart' hide Split;
+import 'package:provider/provider.dart';
+
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:splity_z/shared/widgets/add_item_button.dart';
 import 'package:splity_z/shared/widgets/split_bloc_undo_snack_bar.dart';
 import 'package:splity_z/split_details/widgets/splitees_list/splitee_list_item.dart';
-import 'package:provider/provider.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 class SpliteesList extends StatefulWidget {
   const SpliteesList(
@@ -45,7 +47,7 @@ class _SpliteesListState extends State<SpliteesList> {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
               AppLocalizations.of(context)!.spliteeListTitle,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: context.textTheme.headlineSmall,
             ),
           ),
           Center(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:splity_z/shared/widgets/list_item_delete_button.dart';
-import 'package:splity_z/shared/extensions/context_builder_extension.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 class DeletableListItem extends StatefulWidget {
   const DeletableListItem({

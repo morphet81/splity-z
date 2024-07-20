@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/split.dart';
 import 'editable_content_change_dialog/editable_content_change_dialog.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 class SplityzAppBar extends StatelessWidget {
   const SplityzAppBar({
@@ -56,9 +57,9 @@ class SplityzAppBar extends StatelessWidget {
         onTap: () => handleTitleTap(context),
         child: Text(
           title,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+          style: context.textTheme.titleLarge!.copyWith(
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
         ),
       ),
       backgroundColor: Theme.of(context).primaryColor,

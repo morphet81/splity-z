@@ -1,7 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+
 import 'package:splity_z/shared/models/models.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 class ShareArrow extends StatelessWidget {
   const ShareArrow({required Share this.share, super.key});
@@ -25,7 +26,7 @@ class ShareArrow extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 '${share.amount.toStringAsFixed(2)}',
-                style: Theme.of(context).textTheme.titleSmall,
+                style: context.textTheme.titleSmall,
               ),
             ),
           ),
@@ -63,9 +64,11 @@ class ArrowPainter extends CustomPainter {
     canvas.drawLine(a, subtractedB, paint);
     final path = Path();
 
-    path.moveTo(b.dx - arrowSize * cos(angle - arrowAngle), b.dy - arrowSize * sin(angle - arrowAngle));
+    path.moveTo(b.dx - arrowSize * cos(angle - arrowAngle),
+        b.dy - arrowSize * sin(angle - arrowAngle));
     path.lineTo(b.dx, b.dy);
-    path.lineTo(b.dx - arrowSize * cos(angle + arrowAngle), b.dy - arrowSize * sin(angle + arrowAngle));
+    path.lineTo(b.dx - arrowSize * cos(angle + arrowAngle),
+        b.dy - arrowSize * sin(angle + arrowAngle));
     path.close();
     canvas.drawPath(path, paint);
   }

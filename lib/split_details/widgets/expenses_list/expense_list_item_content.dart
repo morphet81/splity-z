@@ -8,9 +8,11 @@ import 'package:splity_z/split_details/widgets/expenses_list/expense_amount.dart
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/selectable_splitees_list.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 class ExpenseListItemContent extends StatefulWidget {
-  const ExpenseListItemContent({required this.split, required this.expense, super.key});
+  const ExpenseListItemContent(
+      {required this.split, required this.expense, super.key});
 
   final Split split;
   final Expense expense;
@@ -64,12 +66,12 @@ class _ExpenseListItemContentState extends State<ExpenseListItemContent> {
                         selectedSplitees: widget.expense.paidFor,
                       ),
                 Transform.scale(
-                    scale: 0.8,
-                    child: AutoManualShareToggle(
-                      isAuto: widget.expense.automaticSharing,
-                      onChanged: handleAutoSharingModeChanged,
-                    ),
+                  scale: 0.8,
+                  child: AutoManualShareToggle(
+                    isAuto: widget.expense.automaticSharing,
+                    onChanged: handleAutoSharingModeChanged,
                   ),
+                ),
               ],
             ),
           ],
@@ -87,7 +89,8 @@ class _EditableInfoLine extends StatelessWidget {
 
   bool get shouldEditName => expense.isBlank();
   bool get shouldEditPayee => !shouldEditName && expense.paidBy.isBlank();
-  bool get shouldEditAmount => !shouldEditName && !shouldEditPayee && expense.amount == 0;
+  bool get shouldEditAmount =>
+      !shouldEditName && !shouldEditPayee && expense.amount == 0;
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +147,7 @@ class _EditableInfoLine extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Text(
                       AppLocalizations.of(context)!.paidBy,
-                      style: Theme.of(context).textTheme.labelLarge,
+                      style: context.textTheme.labelLarge,
                     ),
                   ),
                   Expanded(

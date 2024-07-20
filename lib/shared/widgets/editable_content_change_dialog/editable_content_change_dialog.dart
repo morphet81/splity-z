@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'package:splity_z/shared/extensions/extensions.dart';
+
 Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
   required T initialValue,
   TextInputType? keyboardType = TextInputType.text,
@@ -13,7 +15,8 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
 }) {
   return (BuildContext context) {
     if (T != String && itemLabel == null) {
-      throw new Exception('If the type handled by EditableContentPill isn\'t String, you must provide a itemLabel function');
+      throw new Exception(
+          'If the type handled by EditableContentPill isn\'t String, you must provide a itemLabel function');
     }
 
     return showDialog<T?>(
@@ -55,10 +58,13 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
           }
 
           bool isInputValid() {
-            return (newName is String && validateInput(newName as String) == null) || !(newName is String);
+            return (newName is String &&
+                    validateInput(newName as String) == null) ||
+                !(newName is String);
           }
 
-          final List<TextInputFormatter> inputFormatters = keyboardType == TextInputType.number
+          final List<TextInputFormatter> inputFormatters = keyboardType ==
+                  TextInputType.number
               ? [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                 ]
@@ -69,7 +75,9 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
           if (options == null) {
             editionWidget = TextFormField(
               autofocus: true,
-              initialValue: T == String ? initialValue as String : itemLabel!(initialValue),
+              initialValue: T == String
+                  ? initialValue as String
+                  : itemLabel!(initialValue),
               keyboardType: keyboardType,
               inputFormatters: inputFormatters,
               onChanged: handleTextFormFieldChange,
@@ -78,10 +86,14 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
               validator: validateInput,
             );
           } else {
-            final optionsListHeight = options.length * Theme.of(context).textTheme.bodyMedium!.fontSize! * 3.5;
-            final maxOptionsListHeight = MediaQuery.sizeOf(context).height * 0.7;
+            final optionsListHeight =
+                options.length * context.textTheme.bodyMedium!.fontSize! * 3.5;
+            final maxOptionsListHeight =
+                MediaQuery.sizeOf(context).height * 0.7;
 
-            final optionsListPhysics = optionsListHeight < maxOptionsListHeight ? NeverScrollableScrollPhysics() : null;
+            final optionsListPhysics = optionsListHeight < maxOptionsListHeight
+                ? NeverScrollableScrollPhysics()
+                : null;
 
             editionWidget = Container(
               height: min(optionsListHeight, maxOptionsListHeight),
@@ -97,7 +109,7 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
                       },
                       child: Text(
                         itemLabel!(options[index]),
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: context.textTheme.bodyMedium,
                       ),
                     ),
                   );
@@ -116,7 +128,7 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
           List<Widget> actions = <Widget>[
             TextButton(
               style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
+                textStyle: context.textTheme.labelLarge,
               ),
               child: Text(actionButtonText),
               onPressed: isInputValid() ? handleEditingDone : null,

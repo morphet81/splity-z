@@ -20,6 +20,8 @@ extension BuildContextEntension on BuildContext {
 
   Color get errorColor => Theme.of(this).colorScheme.error;
 
+  TextTheme get textTheme => Theme.of(this).textTheme;
+
   AppLocalizations get localizations => AppLocalizations.of(this)!;
 
   NavigatorState get navigator => Navigator.of(this);

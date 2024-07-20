@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart' hide Split;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:splity_z/shared/bloc/split_bloc.dart';
-import 'package:splity_z/split_details/widgets/expenses_list/selectable_splitees_list_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../shared/models/models.dart';
+import 'package:splity_z/shared/models/models.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
+import 'package:splity_z/split_details/widgets/expenses_list/selectable_splitees_list_item.dart';
+import 'package:splity_z/shared/bloc/split_bloc.dart';
 
 class SelectableSpliteesList extends StatelessWidget {
-  const SelectableSpliteesList({required this.split, required this.expense, required this.selectedSplitees, super.key});
+  const SelectableSpliteesList(
+      {required this.split,
+      required this.expense,
+      required this.selectedSplitees,
+      super.key});
 
   final Split split;
   final Expense expense;
@@ -25,7 +30,7 @@ class SelectableSpliteesList extends StatelessWidget {
             padding: const EdgeInsets.only(right: 8.0),
             child: Text(
               AppLocalizations.of(context)!.paidFor,
-              style: Theme.of(context).textTheme.labelLarge,
+              style: context.textTheme.labelLarge,
             ),
           ),
           Padding(

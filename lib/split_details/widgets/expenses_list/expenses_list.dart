@@ -5,9 +5,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:splity_z/shared/widgets/add_item_button.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expense_list_item.dart';
 import 'package:provider/provider.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 class ExpensesList extends StatelessWidget {
-  const ExpensesList({required this.split, required this.isInEditMode, super.key});
+  const ExpensesList(
+      {required this.split, required this.isInEditMode, super.key});
 
   final Split split;
   final bool isInEditMode;
@@ -27,7 +29,7 @@ class ExpensesList extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
               AppLocalizations.of(context)!.expensesListTitle,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: context.textTheme.headlineSmall,
             ),
           ),
           Center(
@@ -43,7 +45,10 @@ class ExpensesList extends StatelessWidget {
 
                 final expense = split.expenses[index];
 
-                return ExpenseListItem(split: split, expense: expense, isParentInEditMode: isInEditMode);
+                return ExpenseListItem(
+                    split: split,
+                    expense: expense,
+                    isParentInEditMode: isInEditMode);
               },
               itemCount: split.expenses.length + 1,
             ),
