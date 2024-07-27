@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:splity_z/splits_list/view/splits_page.dart';
 import 'package:splity_z/split_details/view/split_details_page.dart';
+import 'package:splity_z/theme.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -30,31 +31,32 @@ class App extends StatelessWidget {
         Locale('en'),
         Locale('fr'),
       ],
-      theme: ThemeData(
-        colorScheme: colorScheme,
-        useMaterial3: true,
-        appBarTheme: AppBarTheme(
-          iconTheme: IconThemeData(color: colorScheme.onPrimary),
-        ),
-        fontFamily: GoogleFonts.merriweatherSans().fontFamily,
-        // textTheme: TextTheme(
-        //   displayLarge: const TextStyle(
-        //     fontSize: 72,
-        //     fontWeight: FontWeight.bold,
-        //   ),
-        //   // ···
-        //   titleLarge: GoogleFonts.roboto(
-        //     fontSize: 22,
-        //   ),
-        //   bodyMedium: GoogleFonts.merriweather(),
-        //   bodyLarge: GoogleFonts.merriweather(),
-        //   bodySmall: GoogleFonts.merriweather(),
-        //   displaySmall: GoogleFonts.pacifico(),
-        // ),
-      ),
+      theme: MaterialTheme(TextTheme()).light(),
+      // theme: ThemeData(
+      //   colorScheme: colorScheme,
+      //   useMaterial3: true,
+      //   appBarTheme: AppBarTheme(
+      //     iconTheme: IconThemeData(color: colorScheme.onPrimary),
+      //   ),
+      //   fontFamily: GoogleFonts.merriweatherSans().fontFamily,
+      //   // textTheme: TextTheme(
+      //   //   displayLarge: const TextStyle(
+      //   //     fontSize: 72,
+      //   //     fontWeight: FontWeight.bold,
+      //   //   ),
+      //   //   // ···
+      //   //   titleLarge: GoogleFonts.roboto(
+      //   //     fontSize: 22,
+      //   //   ),
+      //   //   bodyMedium: GoogleFonts.merriweather(),
+      //   //   bodyLarge: GoogleFonts.merriweather(),
+      //   //   bodySmall: GoogleFonts.merriweather(),
+      //   //   displaySmall: GoogleFonts.pacifico(),
+      //   // ),
+      // ),
       routerConfig: GoRouter(
-        // initialLocation: '/split/1',
-        initialLocation: '/split',
+        initialLocation: '/split/1',
+        // initialLocation: '/split',
         routes: [
           GoRoute(
             path: '/error',

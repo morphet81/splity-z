@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 const BUTTON_WIDTH = 70.0;
 
@@ -9,11 +10,18 @@ enum SharingMode {
 }
 
 class AutoManualShareToggle extends StatelessWidget {
-  const AutoManualShareToggle(
-      {required this.isAuto, required this.onChanged, super.key});
+  const AutoManualShareToggle({
+    super.key,
+    required this.isAuto,
+    required this.onChanged,
+  });
 
   final bool isAuto;
   final Function(bool) onChanged;
+
+  void handleSelectionChanged(Set<SharingMode> newSelection) {
+    onChanged(newSelection.first == SharingMode.auto);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +36,19 @@ class AutoManualShareToggle extends StatelessWidget {
           label: SizedBox(
             width: BUTTON_WIDTH,
             child: Text(
-              AppLocalizations.of(context)!.auto,
+              context.localizations.auto,
               textAlign: TextAlign.center,
             ),
           ),
         ),
         ButtonSegment<SharingMode>(
           value: SharingMode.manual,
-          label: Text(AppLocalizations.of(context)!.manual),
+          label: Text(context.localizations.manual),
         ),
       ],
       selected: <SharingMode>{selectedSharingMode},
       multiSelectionEnabled: false,
-      onSelectionChanged: (Set<SharingMode> newSelection) {
-        onChanged(newSelection.first == SharingMode.auto);
-      },
+      onSelectionChanged: handleSelectionChanged,
     );
   }
 }

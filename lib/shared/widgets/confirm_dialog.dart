@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 Future<bool?> showConfirmDialog(
   BuildContext context, {
@@ -18,7 +19,7 @@ Future<bool?> showConfirmDialog(
 
   Widget messageLine(messageLineText) => Padding(
         padding: EdgeInsets.only(top: 8.0),
-        child: Text(AppLocalizations.of(context)!.deleteSpliteeDialogMessage2),
+        child: Text(context.localizations.deleteSpliteeDialogMessage2),
       );
 
   return showDialog<bool?>(
@@ -37,14 +38,14 @@ Future<bool?> showConfirmDialog(
         ),
         actions: <Widget>[
           TextButton(
-            child: Text(AppLocalizations.of(context)!.cancel),
+            child: Text(context.localizations.cancel),
             onPressed: () {
               onCancel?.call();
               Navigator.of(context).pop(false);
             },
           ),
           TextButton(
-            child: Text(AppLocalizations.of(context)!.confirm),
+            child: Text(context.localizations.confirm),
             onPressed: () {
               onConfirm?.call();
               Navigator.of(context).pop(true);

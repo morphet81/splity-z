@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart' hide Split;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:splity_z/shared/widgets/editable_content_pill.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
 
 class SpliteeListItemContent extends StatefulWidget {
-  const SpliteeListItemContent({required this.split, required this.splitee, super.key});
+  const SpliteeListItemContent(
+      {required this.split, required this.splitee, super.key});
 
   final Split split;
   final Splitee splitee;
@@ -40,27 +42,21 @@ class _SpliteeListItemContentState extends State<SpliteeListItemContent> {
           ));
     }
 
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            EditableContentPill(
-              content: widget.splitee.name,
-              onChanged: handleNameChange,
-              editOnRendered: shouldEditName,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Divider(),
-            ),
-            ExpensesTypes(
-              expensesTypes: widget.splitee.expensesTypes,
-              onSelectableIconChange: handleSelectableIconChange,
-            ),
-          ],
+    return Column(
+      children: [
+        EditableContentPill(
+          content: widget.splitee.name,
+          onChanged: handleNameChange,
+          editOnRendered: shouldEditName,
         ),
-      ),
+        const SizedBox(
+          height: 12.0,
+        ),
+        ExpensesTypes(
+          expensesTypes: widget.splitee.expensesTypes,
+          onSelectableIconChange: handleSelectableIconChange,
+        ),
+      ],
     );
   }
 }

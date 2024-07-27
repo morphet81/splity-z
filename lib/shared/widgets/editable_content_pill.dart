@@ -105,7 +105,9 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
           ? widget.content as String
           : widget.itemLabel!(widget.content),
       overflow: TextOverflow.ellipsis,
-      style: context.textTheme.titleMedium,
+      style: context.textTheme.titleMedium!.copyWith(
+        color: context.colors.onSecondaryContainer,
+      ),
     );
 
     if (!widget.allowEllipsisOverflow) {
@@ -117,21 +119,33 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
 
     final topBottomPadding = widget.isRound ? 30.0 : 4.0;
 
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        backgroundColor: Theme.of(context).primaryColorLight,
-        shape: widget.isRound ? CircleBorder() : null,
-        padding: EdgeInsets.only(
+    return ElevatedButton(
+      style: ButtonStyle(
+        elevation: _EditableContentPillElevation(),
+        shape: widget.isRound ? WidgetStatePropertyAll(CircleBorder()) : null,
+        shadowColor: WidgetStatePropertyAll(context.colors.primary),
+        padding: WidgetStatePropertyAll(
+          EdgeInsets.only(
             left: 18.0,
             right: 18.0,
             top: topBottomPadding,
-            bottom: topBottomPadding),
-        minimumSize:
-            widget.fixedSize != null ? Size(widget.fixedSize!, 0) : null,
-        alignment: widget.textAlign,
+            bottom: topBottomPadding,
+          ),
+        ),
       ),
       child: contentWidget,
       onPressed: handleNamePillPressed,
     );
+  }
+}
+
+class _EditableContentPillElevation extends WidgetStateProperty<double?> {
+  @override
+  double? resolve(Set<WidgetState> states) {
+    if (states.contains(WidgetState.pressed)) {
+      return 1;
+    }
+
+    return 4;
   }
 }

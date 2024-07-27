@@ -12,15 +12,14 @@ class SplityzCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card.filled(
-      // elevation: 2,
+    return Card.outlined(
+      elevation: 4,
       margin: EdgeInsets.zero,
-      color: context.colors.primaryContainer,
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0.0),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: child,
       ),
-      child: child,
     );
   }
 }

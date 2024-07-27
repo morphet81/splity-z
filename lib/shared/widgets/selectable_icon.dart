@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 class SelectableIcon extends StatelessWidget {
-  const SelectableIcon({required this.icon, required this.isSelected, required this.onChange, super.key});
+  const SelectableIcon(
+      {required this.icon,
+      required this.isSelected,
+      required this.onChange,
+      super.key});
 
   final IconData icon;
   final bool isSelected;
@@ -15,7 +20,9 @@ class SelectableIcon extends StatelessWidget {
       },
       icon: Icon(
         icon,
-        color: isSelected ? Colors.black : Colors.grey,
+        color: isSelected
+            ? context.colors.onPrimaryContainer
+            : context.colors.onPrimaryContainer.withAlpha(120),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 import 'package:splity_z/shared/widgets/splityz_app_bar.dart';
 import 'package:splity_z/split_details/view/split_details.dart';
@@ -31,13 +32,8 @@ class SplitDetailsPage extends StatelessWidget {
             appBar: SplityzAppBar(
               title: split!.name,
               split: split,
-              // actions: [
-              //   IconButton(
-              //     icon: Icon(Icons.arrow_back),
-              //     onPressed: onEditButtonPressed,
-              //   )
-              // ],
             ).build(context),
+            backgroundColor: context.colors.surfaceContainer,
             body: SplitDetails(
               split: split,
             ),

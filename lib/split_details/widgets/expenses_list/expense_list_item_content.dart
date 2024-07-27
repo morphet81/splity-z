@@ -43,42 +43,34 @@ class _ExpenseListItemContentState extends State<ExpenseListItemContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
+    return Column(
+      children: [
+        _EditableInfoLine(expense: widget.expense, split: widget.split),
+        const SizedBox(
+          height: 12.0,
+        ),
+        Column(
           children: [
-            _EditableInfoLine(expense: widget.expense, split: widget.split),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Divider(
-                color: context.colors.primaryFixedDim,
-              ),
-            ),
-            Column(
-              children: [
-                widget.expense.automaticSharing
-                    ? ExpensesTypes(
-                        expensesTypes: widget.expense.expensesTypes,
-                        onSelectableIconChange: handleSelectableIconChange,
-                      )
-                    : SelectableSpliteesList(
-                        split: widget.split,
-                        expense: widget.expense,
-                        selectedSplitees: widget.expense.paidFor,
-                      ),
-                Transform.scale(
-                  scale: 0.8,
-                  child: AutoManualShareToggle(
-                    isAuto: widget.expense.automaticSharing,
-                    onChanged: handleAutoSharingModeChanged,
+            widget.expense.automaticSharing
+                ? ExpensesTypes(
+                    expensesTypes: widget.expense.expensesTypes,
+                    onSelectableIconChange: handleSelectableIconChange,
+                  )
+                : SelectableSpliteesList(
+                    split: widget.split,
+                    expense: widget.expense,
+                    selectedSplitees: widget.expense.paidFor,
                   ),
-                ),
-              ],
+            Transform.scale(
+              scale: 0.8,
+              child: AutoManualShareToggle(
+                isAuto: widget.expense.automaticSharing,
+                onChanged: handleAutoSharingModeChanged,
+              ),
             ),
           ],
         ),
-      ),
+      ],
     );
   }
 }
@@ -142,6 +134,9 @@ class _EditableInfoLine extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 12.0,
               ),
               Row(
                 children: [
