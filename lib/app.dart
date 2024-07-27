@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:splity_z/shared/view/view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,10 +13,10 @@ class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: Colors.green.shade800,
-      // brightness: Brightness.dark,
-    );
+    // final colorScheme = ColorScheme.fromSeed(
+    //   seedColor: Colors.green.shade800,
+    //   // brightness: Brightness.dark,
+    // );
 
     return MaterialApp.router(
       title: 'Flutter Demo',

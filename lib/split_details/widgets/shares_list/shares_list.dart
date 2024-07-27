@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide Split;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:splity_z/split_details/widgets/shares_list/shares_list_item.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';

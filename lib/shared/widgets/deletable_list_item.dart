@@ -93,7 +93,7 @@ class _DeletableListItemState extends State<DeletableListItem>
 }
 
 class _DismissibleItemBackground extends StatelessWidget {
-  const _DismissibleItemBackground({super.key});
+  const _DismissibleItemBackground();
 
   @override
   Widget build(BuildContext context) {

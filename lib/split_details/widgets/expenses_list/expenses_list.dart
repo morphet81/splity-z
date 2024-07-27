@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:splity_z/shared/widgets/add_item_button.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expense_list_item.dart';
 import 'package:provider/provider.dart';
