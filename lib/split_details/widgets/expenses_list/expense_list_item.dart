@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/deletable_list_item.dart';
+import 'package:splity_z/shared/widgets/editable_content_change_dialog/splityz_card.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expense_list_item_content.dart';
 import 'package:provider/provider.dart';
 
@@ -31,12 +32,8 @@ class ExpenseListItem extends StatelessWidget {
         direction: Axis.horizontal,
         children: [
           Expanded(
-            child: Card.filled(
-              elevation: 1,
-              child: Padding(
-                padding: EdgeInsets.zero,
-                child: ExpenseListItemContent(split: split, expense: expense),
-              ),
+            child: SplityzCard(
+              child: ExpenseListItemContent(split: split, expense: expense),
             ),
           ),
         ],

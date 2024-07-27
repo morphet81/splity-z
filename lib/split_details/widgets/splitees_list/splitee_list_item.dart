@@ -5,7 +5,6 @@ import 'package:splity_z/shared/widgets/editable_content_change_dialog/splityz_c
 
 import 'package:splity_z/split_details/widgets/splitees_list/splitee_list_item_content.dart';
 import 'package:splity_z/shared/widgets/deletable_list_item.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:splity_z/shared/widgets/confirm_dialog.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 import 'package:splity_z/shared/models/models.dart';
