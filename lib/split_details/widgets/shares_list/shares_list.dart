@@ -22,7 +22,7 @@ class SharesList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              AppLocalizations.of(context)!.sharesListTitle,
+              context.localizations.sharesListTitle,
               style: context.textTheme.headlineSmall,
             ),
           ),

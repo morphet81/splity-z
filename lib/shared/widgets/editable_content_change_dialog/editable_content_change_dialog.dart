@@ -51,7 +51,7 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
             var errorMessage = null;
 
             if (value == null || value.isEmpty) {
-              errorMessage = AppLocalizations.of(context)!.enterStringValue;
+              errorMessage = context.localizations.enterStringValue;
             }
 
             return errorMessage;
@@ -119,10 +119,10 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
             );
           }
 
-          String actionButtonText = AppLocalizations.of(context)!.confirm;
+          String actionButtonText = context.localizations.confirm;
 
           if (options != null) {
-            actionButtonText = AppLocalizations.of(context)!.cancel;
+            actionButtonText = context.localizations.cancel;
           }
 
           List<Widget> actions = <Widget>[

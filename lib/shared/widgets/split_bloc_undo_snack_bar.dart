@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:splity_z/shared/bloc/split_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+
+import 'package:splity_z/shared/bloc/split_bloc.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
 
 class SplitBlocUndoSnackBar extends SnackBar {
   SplitBlocUndoSnackBar({required BuildContext context, super.key})
       : super(
-          content: Text(AppLocalizations.of(context)!.undoLabel),
+          content: Text(context.localizations.undoLabel),
           action: SnackBarAction(
-            label: AppLocalizations.of(context)!.undo,
+            label: context.localizations.undo,
             onPressed: () {
               final splitBloc = context.read<SplitBloc>();
               splitBloc.undo();

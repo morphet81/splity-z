@@ -51,7 +51,9 @@ class _ExpenseListItemContentState extends State<ExpenseListItemContent> {
             _EditableInfoLine(expense: widget.expense, split: widget.split),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Divider(),
+              child: Divider(
+                color: context.colors.primaryFixedDim,
+              ),
             ),
             Column(
               children: [
@@ -146,8 +148,10 @@ class _EditableInfoLine extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Text(
-                      AppLocalizations.of(context)!.paidBy,
-                      style: context.textTheme.labelLarge,
+                      context.localizations.paidBy,
+                      style: context.textTheme.labelLarge!.copyWith(
+                        color: context.colors.onSecondaryContainer,
+                      ),
                     ),
                   ),
                   Expanded(

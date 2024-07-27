@@ -29,7 +29,7 @@ class SelectableSpliteesList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: Text(
-              AppLocalizations.of(context)!.paidFor,
+              context.localizations.paidFor,
               style: context.textTheme.labelLarge,
             ),
           ),

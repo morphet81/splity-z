@@ -46,7 +46,7 @@ class _SpliteesListState extends State<SpliteesList> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              AppLocalizations.of(context)!.spliteeListTitle,
+              context.localizations.spliteeListTitle,
               style: context.textTheme.headlineSmall,
             ),
           ),

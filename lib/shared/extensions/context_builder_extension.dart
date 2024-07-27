@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 extension BuildContextEntension on BuildContext {
+  ColorScheme get colors => Theme.of(this).colorScheme;
+
   Color get primaryColor => Theme.of(this).primaryColor;
 
   Color get primaryColorDark => Theme.of(this).primaryColorDark;

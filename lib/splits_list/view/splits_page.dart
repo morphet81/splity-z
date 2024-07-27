@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:splity_z/shared/extensions/extensions.dart';
 import 'package:splity_z/shared/widgets/splityz_app_bar.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:splity_z/splits_list/view/splits_list.dart';
 
 class SplitsPage extends StatefulWidget {
@@ -25,13 +26,13 @@ class _SplitsListState extends State<SplitsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SplityzAppBar(
-        title: AppLocalizations.of(context)!.appName,
+        title: context.localizations.appName,
         actions: [
           IconButton(
             icon: Icon(
               _isInEditMode ? Icons.done : Icons.edit,
             ),
-            tooltip: AppLocalizations.of(context)!.edit,
+            tooltip: context.localizations.edit,
             onPressed: onEditButtonPressed,
           )
         ],

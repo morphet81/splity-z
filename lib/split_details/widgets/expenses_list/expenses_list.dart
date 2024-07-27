@@ -28,7 +28,7 @@ class ExpensesList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              AppLocalizations.of(context)!.expensesListTitle,
+              context.localizations.expensesListTitle,
               style: context.textTheme.headlineSmall,
             ),
           ),

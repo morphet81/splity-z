@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/bloc/split_bloc.dart';
-import 'package:splity_z/shared/models/models.dart';
-import 'package:splity_z/shared/widgets/deletable_list_item.dart';
 import 'package:provider/provider.dart';
-import 'package:splity_z/shared/widgets/confirm_dialog.dart';
+import 'package:splity_z/shared/widgets/editable_content_change_dialog/splityz_card.dart';
+
 import 'package:splity_z/split_details/widgets/splitees_list/splitee_list_item_content.dart';
+import 'package:splity_z/shared/widgets/deletable_list_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:splity_z/shared/widgets/confirm_dialog.dart';
+import 'package:splity_z/shared/extensions/extensions.dart';
+import 'package:splity_z/shared/models/models.dart';
 
 class SpliteeListItem extends StatefulWidget {
   const SpliteeListItem({
@@ -69,10 +72,10 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
           0) {
         return showConfirmDialog(
           context,
-          title: AppLocalizations.of(context)!.deleteSpliteeDialogTitle,
+          title: context.localizations.deleteSpliteeDialogTitle,
           message: [
-            AppLocalizations.of(context)!.deleteSpliteeDialogMessage1,
-            AppLocalizations.of(context)!.deleteSpliteeDialogMessage2,
+            context.localizations.deleteSpliteeDialogMessage1,
+            context.localizations.deleteSpliteeDialogMessage2,
           ],
         );
       }
@@ -87,8 +90,7 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
         direction: Axis.horizontal,
         children: [
           Expanded(
-            child: Card.filled(
-              elevation: 1,
+            child: SplityzCard(
               child: SpliteeListItemContent(
                 split: widget.split,
                 splitee: widget.splitee,
