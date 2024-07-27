@@ -53,13 +53,19 @@ class _SpliteesListState extends State<SpliteesList> {
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0),
               child: ListView.builder(
+                padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   if (index == widget.split.splitees.length) {
-                    return AddItemButton(
-                      onPressed:
-                          widget.isInEditMode ? null : handleAddSpliteePressed,
+                    return Align(
+                      alignment: Alignment.center,
+                      child: AddItemButton(
+                        label: context.localizations.addSplitee,
+                        onPressed: widget.isInEditMode
+                            ? null
+                            : handleAddSpliteePressed,
+                      ),
                     );
                   }
 

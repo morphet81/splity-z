@@ -1,4 +1,6 @@
 {
+  "addExpense": "Add an expense",
+  "addSplitee": "Add a splitee",
   "appName": "SplityZ",
   "auto": "Auto",
   "cancel": "Cancel",

@@ -33,11 +33,13 @@ class ExpensesList extends StatelessWidget {
           ),
           Center(
             child: ListView.builder(
+              padding: EdgeInsets.zero,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 if (index == split.expenses.length) {
                   return AddItemButton(
+                    label: context.localizations.addExpense,
                     onPressed: isInEditMode ? null : handleAddExpensePressed,
                   );
                 }

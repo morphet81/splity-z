@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AddItemButton extends StatelessWidget {
-  const AddItemButton({super.key, required this.onPressed});
+  const AddItemButton({
+    super.key,
+    required this.label,
+    required this.onPressed,
+  });
 
+  final String label;
   final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ButtonStyle(
-        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-      ),
+    return TextButton(
       onPressed: onPressed,
-      child: Icon(
-        Icons.add_rounded,
-      ),
+      child: Text(label),
     );
   }
 }

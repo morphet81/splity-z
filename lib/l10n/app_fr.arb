@@ -1,4 +1,6 @@
 {
+  "addExpense": "Ajouter une dépense",
+  "addSplitee": "Ajouter un participant",
   "appName": "SplityZ",
   "auto": "Auto",
   "cancel": "Annuler",
