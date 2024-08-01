@@ -12,7 +12,7 @@ class SplityzCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card.outlined(
-      elevation: 4,
+      elevation: 2,
       margin: EdgeInsets.zero,
       shape: Border.all(color: context.colors.outlineVariant),
       clipBehavior: Clip.antiAlias,

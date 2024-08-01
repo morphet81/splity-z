@@ -9,55 +9,29 @@ import 'package:splity_z/shared/widgets/confirm_dialog.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 import 'package:splity_z/shared/models/models.dart';
 
-class SpliteeListItem extends StatefulWidget {
+class SpliteeListItem extends StatelessWidget {
   const SpliteeListItem({
     super.key,
     required this.split,
     required this.splitee,
-    required this.isParentInEditMode,
-    required this.isInEditMode,
-    required this.onEnterEditMode,
     required this.onDelete,
   });
 
   final Split split;
   final Splitee splitee;
-  final bool isParentInEditMode;
-  final bool isInEditMode;
-  final void Function(Splitee splitee) onEnterEditMode;
   final void Function(Splitee splitee) onDelete;
 
   @override
-  State<SpliteeListItem> createState() => _SpliteeListItemState();
-}
-
-class _SpliteeListItemState extends State<SpliteeListItem> {
-  bool _isInEditMode = false;
-
-  @override
   Widget build(BuildContext context) {
-    if (widget.isInEditMode != _isInEditMode) {
-      setState(() {
-        _isInEditMode = widget.isInEditMode;
-      });
-    }
-
     void deleteSplitee() {
       context.read<SplitBloc>().add(
             DeleteSplitee(
-              split: widget.split,
-              splitee: widget.splitee,
+              split: split,
+              splitee: splitee,
             ),
           );
 
-      widget.onDelete(widget.splitee);
-    }
-
-    void handleTap() {
-      widget.onEnterEditMode(widget.splitee);
-      setState(() {
-        _isInEditMode = true;
-      });
+      onDelete(splitee);
     }
 
     void handleDeleteClick() {
@@ -65,10 +39,10 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
     }
 
     Future<bool?> handleConfirmDismiss(DismissDirection direction) async {
-      if (widget.split.expenses
-              .where((expense) => expense.paidBy == widget.splitee)
-              .length >
-          0) {
+      final isPayee =
+          split.expenses.where((expense) => expense.paidBy == splitee).length >
+              0;
+      if (isPayee) {
         return showConfirmDialog(
           context,
           title: context.localizations.deleteSpliteeDialogTitle,
@@ -83,22 +57,20 @@ class _SpliteeListItemState extends State<SpliteeListItem> {
     }
 
     return DeletableListItem(
-      key: Key(widget.splitee.name),
-      isInEditMode: widget.isParentInEditMode,
+      key: Key(splitee.name),
       child: Flex(
         direction: Axis.horizontal,
         children: [
           Expanded(
             child: SplityzCard(
               child: SpliteeListItemContent(
-                split: widget.split,
-                splitee: widget.splitee,
+                split: split,
+                splitee: splitee,
               ),
             ),
           ),
         ],
       ),
-      onTap: handleTap,
       onDelete: handleDeleteClick,
       confirmDisimiss: handleConfirmDismiss,
     );

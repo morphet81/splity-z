@@ -9,11 +9,9 @@ class SplitDetails extends StatelessWidget {
   const SplitDetails({
     super.key,
     required this.split,
-    this.isInEditMode = false,
   });
 
   final Split split;
-  final bool isInEditMode;
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +20,9 @@ class SplitDetails extends StatelessWidget {
         children: [
           SpliteesList(
             split: split,
-            isInEditMode: isInEditMode,
           ),
           ExpensesList(
             split: split,
-            isInEditMode: isInEditMode,
           ),
           split.getShares().length > 0 ? SharesList(split: split) : Container(),
         ],

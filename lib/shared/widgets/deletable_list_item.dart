@@ -6,7 +6,7 @@ class DeletableListItem extends StatefulWidget {
   const DeletableListItem({
     required super.key,
     required this.child,
-    required this.isInEditMode,
+    this.isInEditMode = false,
     this.onTap,
     required this.onDelete,
     this.confirmDisimiss,

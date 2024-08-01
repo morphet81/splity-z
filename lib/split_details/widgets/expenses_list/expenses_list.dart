@@ -7,11 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 class ExpensesList extends StatelessWidget {
-  const ExpensesList(
-      {required this.split, required this.isInEditMode, super.key});
+  const ExpensesList({required this.split, super.key});
 
   final Split split;
-  final bool isInEditMode;
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +38,16 @@ class ExpensesList extends StatelessWidget {
                 if (index == split.expenses.length) {
                   return AddItemButton(
                     label: context.localizations.addExpense,
-                    onPressed: isInEditMode ? null : handleAddExpensePressed,
+                    onPressed: handleAddExpensePressed,
                   );
                 }
 
                 final expense = split.expenses[index];
 
                 return ExpenseListItem(
-                    split: split,
-                    expense: expense,
-                    isParentInEditMode: isInEditMode);
+                  split: split,
+                  expense: expense,
+                );
               },
               itemCount: split.expenses.length + 1,
             ),

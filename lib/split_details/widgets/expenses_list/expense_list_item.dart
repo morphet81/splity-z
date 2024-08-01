@@ -8,14 +8,10 @@ import 'package:provider/provider.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem(
-      {required this.split,
-      required this.expense,
-      required this.isParentInEditMode,
-      super.key});
+      {required this.split, required this.expense, super.key});
 
   final Split split;
   final Expense expense;
-  final bool isParentInEditMode;
 
   void handleDeletion(BuildContext context) {
     context
@@ -27,7 +23,6 @@ class ExpenseListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return DeletableListItem(
       key: expense.id,
-      isInEditMode: isParentInEditMode,
       child: Flex(
         direction: Axis.horizontal,
         children: [

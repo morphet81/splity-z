@@ -9,23 +9,15 @@ import 'package:splity_z/split_details/widgets/splitees_list/splitee_list_item.d
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 class SpliteesList extends StatefulWidget {
-  const SpliteesList(
-      {required this.split, required this.isInEditMode, super.key});
+  const SpliteesList({required this.split, super.key});
 
   final Split split;
-  final bool isInEditMode;
 
   @override
   State<SpliteesList> createState() => _SpliteesListState();
 }
 
 class _SpliteesListState extends State<SpliteesList> {
-  Splitee? _spliteeItemInEditMode;
-
-  void _handleSpliteeItemEntersEditMode(Splitee splitee) {
-    _spliteeItemInEditMode = splitee;
-  }
-
   void handleAddSpliteePressed() {
     context.read<SplitBloc>().add(AddSplitee(split: widget.split));
   }
@@ -62,9 +54,7 @@ class _SpliteesListState extends State<SpliteesList> {
                       alignment: Alignment.center,
                       child: AddItemButton(
                         label: context.localizations.addSplitee,
-                        onPressed: widget.isInEditMode
-                            ? null
-                            : handleAddSpliteePressed,
+                        onPressed: handleAddSpliteePressed,
                       ),
                     );
                   }
@@ -74,9 +64,6 @@ class _SpliteesListState extends State<SpliteesList> {
                   return SpliteeListItem(
                     split: widget.split,
                     splitee: splitee,
-                    isParentInEditMode: widget.isInEditMode,
-                    isInEditMode: _spliteeItemInEditMode == splitee,
-                    onEnterEditMode: _handleSpliteeItemEntersEditMode,
                     onDelete: handleSpliteeDeletion,
                   );
                 },
