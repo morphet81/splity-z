@@ -12,17 +12,18 @@ enum ContentPillType {
 
 class EditableContentPill<T> extends StatefulWidget {
   const EditableContentPill({
+    super.key,
     required this.content,
     required this.onChanged,
     this.textAlign = Alignment.center,
     this.allowEllipsisOverflow = true,
     this.editOnRendered = false,
-    this.options = null,
+    this.options,
     this.fixedSize = null,
     this.isRound = false,
     this.contentType = ContentPillType.string,
-    this.itemLabel = null,
-    super.key,
+    this.itemLabel,
+    this.onDismissedWithoutValue,
   });
 
   final T content;
@@ -35,6 +36,7 @@ class EditableContentPill<T> extends StatefulWidget {
   final bool isRound;
   final ContentPillType contentType;
   final String Function(T item)? itemLabel;
+  final VoidCallback? onDismissedWithoutValue;
 
   @override
   State<EditableContentPill<T>> createState() => _EditableContentPillState<T>();
@@ -47,7 +49,8 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
 
     if (T != String && widget.itemLabel == null) {
       throw new Exception(
-          'If the type handled by EditableContentPill isn\'t String, you must provide a itemLabel function');
+        'If the type handled by EditableContentPill isn\'t String, you must provide a itemLabel function',
+      );
     }
 
     SchedulerBinding.instance.addPostFrameCallback(
@@ -85,6 +88,10 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
     changeNameDialog(context).then((value) {
       if (value != null) {
         widget.onChanged(value);
+      } else {
+        if (widget.editOnRendered) {
+          widget.onDismissedWithoutValue?.call();
+        }
       }
     });
   }

@@ -23,6 +23,22 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
       builder: (BuildContext context) {
         T newName = initialValue;
 
+        String? validateInput(String? value) {
+          var errorMessage = null;
+
+          if (value == null || value.isEmpty) {
+            errorMessage = context.localizations.enterStringValue;
+          }
+
+          return errorMessage;
+        }
+
+        bool isInputValid() {
+          return (newName is String &&
+                  validateInput(newName as String) == null) ||
+              !(newName is String);
+        }
+
         return StatefulBuilder(builder: (context, setState) {
           void handleOnChanged(T value) {
             setState(
@@ -33,7 +49,11 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
           }
 
           void handleEditingDone() {
-            Navigator.pop(context, newName);
+            if (isInputValid()) {
+              Navigator.pop(context, newName);
+            } else {
+              Navigator.pop(context);
+            }
           }
 
           void handleOptionSelected(T option) {
@@ -44,22 +64,6 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
             if (T == String) {
               handleOnChanged(value as T);
             }
-          }
-
-          String? validateInput(String? value) {
-            var errorMessage = null;
-
-            if (value == null || value.isEmpty) {
-              errorMessage = context.localizations.enterStringValue;
-            }
-
-            return errorMessage;
-          }
-
-          bool isInputValid() {
-            return (newName is String &&
-                    validateInput(newName as String) == null) ||
-                !(newName is String);
           }
 
           final List<TextInputFormatter> inputFormatters = keyboardType ==
