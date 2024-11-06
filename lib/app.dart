@@ -54,7 +54,7 @@ class App extends StatelessWidget {
       //   // ),
       // ),
       routerConfig: GoRouter(
-        initialLocation: '/split/4',
+        initialLocation: '/split/2',
         // initialLocation: '/split',
         routes: [
           GoRoute(

@@ -19,7 +19,7 @@ class ExpensesList extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.only(left: 8, right: 8, bottom: 24),
       child: Center(
         child: Column(
           children: [

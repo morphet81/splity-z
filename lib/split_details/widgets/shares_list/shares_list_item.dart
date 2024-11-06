@@ -18,7 +18,7 @@ class SharesListItem extends StatelessWidget {
             share.from.name,
             overflow: TextOverflow.ellipsis,
             style: context.textTheme.titleMedium,
-            textAlign: TextAlign.right,
+            textAlign: TextAlign.center,
           ),
         ),
         Padding(
@@ -35,6 +35,7 @@ class SharesListItem extends StatelessWidget {
             share.to.name,
             overflow: TextOverflow.ellipsis,
             style: context.textTheme.titleMedium,
+            textAlign: TextAlign.center,
           ),
         ),
       ],
