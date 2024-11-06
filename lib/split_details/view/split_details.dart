@@ -44,7 +44,7 @@ class _SplitDetailsState extends State<SplitDetails> {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 12),
+              padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
               child: TabBarView(
                 children: [
                   SingleChildScrollView(

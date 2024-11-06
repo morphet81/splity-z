@@ -48,15 +48,16 @@ class SpliteeListItemContent extends StatelessWidget {
     }
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EditableContentPill(
-          content: splitee.name,
-          onChanged: handleNameChange,
-          editOnRendered: shouldEditName,
-          onDismissedWithoutValue: handleDismissedNewSpliteesWithoutName,
-        ),
-        const SizedBox(
-          height: 12.0,
+        Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: EditableContentPill(
+            content: splitee.name,
+            onChanged: handleNameChange,
+            editOnRendered: shouldEditName,
+            onDismissedWithoutValue: handleDismissedNewSpliteesWithoutName,
+          ),
         ),
         ExpensesTypes(
           expensesTypes: splitee.expensesTypes,

@@ -15,6 +15,10 @@ class SelectableIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      padding: EdgeInsets.zero,
+      style: ButtonStyle(
+        minimumSize: WidgetStatePropertyAll(Size.zero),
+      ),
       onPressed: () {
         onChange(!isSelected);
       },

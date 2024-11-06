@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:splity_z/shared/extensions/extensions.dart';
 
 class SplityzCard extends StatelessWidget {
   const SplityzCard({
@@ -12,14 +11,11 @@ class SplityzCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card.outlined(
-      elevation: 2,
+      elevation: 0,
       margin: EdgeInsets.zero,
-      shape: Border.all(color: context.colors.outlineVariant),
+      shape: Border.all(color: Colors.transparent),
       clipBehavior: Clip.antiAlias,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: child,
-      ),
+      child: child,
     );
   }
 }
