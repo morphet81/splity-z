@@ -43,6 +43,7 @@ dependencies:
   google_fonts: ^6.2.1
   replay_bloc: ^0.2.7
   universal_io: ^2.2.2
+  build_runner: ^2.4.13
 
 dev_dependencies:
   flutter_test:

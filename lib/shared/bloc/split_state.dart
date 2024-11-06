@@ -25,10 +25,19 @@ final class SplitState extends Equatable {
   List<Object?> get props => [splits, splits.length];
 
   static SplitState get initialState {
-    final splitee1 = SpliteeImpl(name: 'John Doe', expensesTypes: [...ExpenseType.values]);
-    final splitee2 = SpliteeImpl(name: 'Jane Doe', expensesTypes: [ExpenseType.Food, ExpenseType.Soft]);
-    final splitee3 = SpliteeImpl(name: 'Jack Downson', expensesTypes: [...ExpenseType.values]);
-    final splitee4 = SpliteeImpl(name: 'Andre Pourlov Droupinov Kasparov', expensesTypes: [ExpenseType.Alcohol, ExpenseType.Food, ExpenseType.Taxi]);
+    final splitee1 =
+        SpliteeImpl(name: 'John Doe', expensesTypes: [...ExpenseType.values]);
+    final splitee2 = SpliteeImpl(
+        name: 'Jane Doe', expensesTypes: [ExpenseType.Food, ExpenseType.Soft]);
+    final splitee3 = SpliteeImpl(
+        name: 'Jack Downson', expensesTypes: [...ExpenseType.values]);
+    final splitee4 = SpliteeImpl(
+        name: 'Andre Pourlov Droupinov Kasparov',
+        expensesTypes: [
+          ExpenseType.Alcohol,
+          ExpenseType.Food,
+          ExpenseType.Taxi
+        ]);
 
     final allSplitees = [splitee1, splitee2, splitee3, splitee4];
 
@@ -42,7 +51,8 @@ final class SplitState extends Equatable {
         ],
         expenses: <Expense>[
           Expense.withAutomaticSharing(
-            name: 'Reprehenderit duis do sit labore adipisicing reprehenderit nostrud proident proident officia sint et consequat est.',
+            name:
+                'Reprehenderit duis do sit labore adipisicing reprehenderit nostrud proident proident officia sint et consequat est.',
             amount: 99.99,
             paidBy: splitee1,
             expensesTypes: [ExpenseType.Alcohol, ExpenseType.Soft],
@@ -127,7 +137,13 @@ final class SplitState extends Equatable {
             paidFor: [splitee3],
           ),
         ],
-      )
+      ),
+      SplitImpl(
+        id: 4,
+        name: 'Empty',
+        splitees: <Splitee>[],
+        expenses: <Expense>[],
+      ),
     ]);
   }
 }

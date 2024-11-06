@@ -25,8 +25,7 @@ class _SplitDetailsState extends State<SplitDetails> {
       length: 2,
       child: Column(
         children: [
-          if (widget.split.getShares().length > 0)
-            SharesList(split: widget.split),
+          SharesList(split: widget.split),
           TabBar(
             tabs: [
               Tab(
