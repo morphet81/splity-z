@@ -26,17 +26,20 @@ class SharesList extends StatelessWidget {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-        vertical: 24.0,
-      ),
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: itemBuilder,
-        itemCount: splitShares.length,
+    return AnimatedSize(
+      duration: Duration(milliseconds: 300),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0,
+          vertical: 24.0,
+        ),
+        child: ListView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: itemBuilder,
+          itemCount: splitShares.length,
+        ),
       ),
     );
   }
