@@ -18,41 +18,29 @@ class ExpensesList extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              context.localizations.expensesListTitle,
-              style: context.textTheme.headlineSmall,
-            ),
-          ),
-          Center(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                if (index == split.expenses.length) {
-                  return AddItemButton(
-                    label: context.localizations.addExpense,
-                    onPressed: handleAddExpensePressed,
-                  );
-                }
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Center(
+        child: ListView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            if (index == split.expenses.length) {
+              return AddItemButton(
+                label: context.localizations.addExpense,
+                onPressed: handleAddExpensePressed,
+              );
+            }
 
-                final expense = split.expenses[index];
+            final expense = split.expenses[index];
 
-                return ExpenseListItem(
-                  split: split,
-                  expense: expense,
-                );
-              },
-              itemCount: split.expenses.length + 1,
-            ),
-          ),
-        ],
+            return ExpenseListItem(
+              split: split,
+              expense: expense,
+            );
+          },
+          itemCount: split.expenses.length + 1,
+        ),
       ),
     );
   }

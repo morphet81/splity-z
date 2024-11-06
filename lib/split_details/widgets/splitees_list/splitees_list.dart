@@ -30,48 +30,31 @@ class _SpliteesListState extends State<SpliteesList> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              context.localizations.spliteeListTitle,
-              style: context.textTheme.headlineSmall,
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  if (index == widget.split.splitees.length) {
-                    return Align(
-                      alignment: Alignment.center,
-                      child: AddItemButton(
-                        label: context.localizations.addSplitee,
-                        onPressed: handleAddSpliteePressed,
-                      ),
-                    );
-                  }
-
-                  final splitee = widget.split.splitees[index];
-
-                  return SpliteeListItem(
-                    split: widget.split,
-                    splitee: splitee,
-                    onDelete: handleSpliteeDeletion,
-                  );
-                },
-                itemCount: widget.split.splitees.length + 1,
+      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+      child: ListView.builder(
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          if (index == widget.split.splitees.length) {
+            return Align(
+              alignment: Alignment.center,
+              child: AddItemButton(
+                label: context.localizations.addSplitee,
+                onPressed: handleAddSpliteePressed,
               ),
-            ),
-          ),
-        ],
+            );
+          }
+
+          final splitee = widget.split.splitees[index];
+
+          return SpliteeListItem(
+            split: widget.split,
+            splitee: splitee,
+            onDelete: handleSpliteeDeletion,
+          );
+        },
+        itemCount: widget.split.splitees.length + 1,
       ),
     );
   }
