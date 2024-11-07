@@ -41,11 +41,13 @@ class _DeletableListItemState extends State<DeletableListItem>
         MediaQuery.of(context).size.width;
 
     final Animation<Offset> offsetAnimation =
-        Tween<Offset>(begin: Offset.zero, end: Offset(slideValue, 0.0))
-            .animate(CurvedAnimation(
-      parent: _controller,
-      curve: widget.isInEditMode ? Curves.fastOutSlowIn : Curves.fastOutSlowIn,
-    ));
+        Tween<Offset>(begin: Offset.zero, end: Offset(slideValue, 0.0)).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve:
+            widget.isInEditMode ? Curves.fastOutSlowIn : Curves.fastOutSlowIn,
+      ),
+    );
 
     if (widget.isInEditMode) {
       _controller.forward();

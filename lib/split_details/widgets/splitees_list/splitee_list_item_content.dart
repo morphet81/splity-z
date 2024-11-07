@@ -7,8 +7,11 @@ import 'package:splity_z/shared/widgets/editable_content_pill.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
 
 class SpliteeListItemContent extends StatelessWidget {
-  const SpliteeListItemContent(
-      {required this.split, required this.splitee, super.key});
+  const SpliteeListItemContent({
+    required this.split,
+    required this.splitee,
+    super.key,
+  });
 
   final Split split;
   final Splitee splitee;
@@ -41,10 +44,12 @@ class SpliteeListItemContent extends StatelessWidget {
     }
 
     void handleDismissedNewSpliteesWithoutName() {
-      context.read<SplitBloc>().add(DeleteSplitee(
-            split: split,
-            splitee: splitee,
-          ));
+      context.read<SplitBloc>().add(
+            DeleteSplitee(
+              split: split,
+              splitee: splitee,
+            ),
+          );
     }
 
     return Column(

@@ -10,8 +10,11 @@ import 'package:splity_z/split_details/widgets/expenses_list/selectable_splitees
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 class ExpenseListItemContent extends StatefulWidget {
-  const ExpenseListItemContent(
-      {required this.split, required this.expense, super.key});
+  const ExpenseListItemContent({
+    required this.split,
+    required this.expense,
+    super.key,
+  });
 
   final Split split;
   final Expense expense;
@@ -23,21 +26,25 @@ class ExpenseListItemContent extends StatefulWidget {
 class _ExpenseListItemContentState extends State<ExpenseListItemContent> {
   void Function(bool) handleSelectableIconChange(ExpenseType expenseType) {
     return (bool isSelected) {
-      context.read<SplitBloc>().add(UpdateExpenseExpenseType(
-            split: widget.split,
-            expense: widget.expense,
-            expenseType: expenseType,
-            isSelected: isSelected,
-          ));
+      context.read<SplitBloc>().add(
+            UpdateExpenseExpenseType(
+              split: widget.split,
+              expense: widget.expense,
+              expenseType: expenseType,
+              isSelected: isSelected,
+            ),
+          );
     };
   }
 
   void handleAutoSharingModeChanged(bool value) {
-    context.read<SplitBloc>().add(UpdateExpenseSharingMode(
-          split: widget.split,
-          expense: widget.expense,
-          isAutoSharingEnabled: value,
-        ));
+    context.read<SplitBloc>().add(
+          UpdateExpenseSharingMode(
+            split: widget.split,
+            expense: widget.expense,
+            isAutoSharingEnabled: value,
+          ),
+        );
   }
 
   @override
@@ -92,27 +99,33 @@ class _EditableInfoLine extends StatelessWidget {
     }
 
     void handledPaidByChanged(Splitee newPaidBy) {
-      context.read<SplitBloc>().add(UpdateExpensePaidBy(
-            split: split,
-            expense: expense,
-            splitee: newPaidBy,
-          ));
+      context.read<SplitBloc>().add(
+            UpdateExpensePaidBy(
+              split: split,
+              expense: expense,
+              splitee: newPaidBy,
+            ),
+          );
     }
 
     void handleNameChanged(String newName) {
-      context.read<SplitBloc>().add(UpdateExpenseName(
-            split: split,
-            expense: expense,
-            name: newName,
-          ));
+      context.read<SplitBloc>().add(
+            UpdateExpenseName(
+              split: split,
+              expense: expense,
+              name: newName,
+            ),
+          );
     }
 
     void handleAmountChanged(String newAmount) {
-      context.read<SplitBloc>().add(UpdateExpenseAmount(
-            split: split,
-            expense: expense,
-            amount: double.parse(newAmount),
-          ));
+      context.read<SplitBloc>().add(
+            UpdateExpenseAmount(
+              split: split,
+              expense: expense,
+              amount: double.parse(newAmount),
+            ),
+          );
     }
 
     return Row(
@@ -159,7 +172,7 @@ class _EditableInfoLine extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

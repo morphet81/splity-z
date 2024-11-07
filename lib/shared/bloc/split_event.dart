@@ -32,8 +32,11 @@ final class DeleteSplitee extends SplitEvent {
 }
 
 final class UpdateSpliteeName extends SplitEvent {
-  UpdateSpliteeName(
-      {required this.split, required this.splitee, required this.name});
+  UpdateSpliteeName({
+    required this.split,
+    required this.splitee,
+    required this.name,
+  });
 
   final Split split;
   final Splitee splitee;
@@ -41,11 +44,12 @@ final class UpdateSpliteeName extends SplitEvent {
 }
 
 final class UpdateSpliteeExpenseType extends SplitEvent {
-  UpdateSpliteeExpenseType(
-      {required this.split,
-      required this.splitee,
-      required this.expenseType,
-      required this.isSelected});
+  UpdateSpliteeExpenseType({
+    required this.split,
+    required this.splitee,
+    required this.expenseType,
+    required this.isSelected,
+  });
 
   final Split split;
   final Splitee splitee;
@@ -67,8 +71,11 @@ final class DeleteExpense extends SplitEvent {
 }
 
 final class UpdateExpenseName extends SplitEvent {
-  UpdateExpenseName(
-      {required this.split, required this.expense, required this.name});
+  UpdateExpenseName({
+    required this.split,
+    required this.expense,
+    required this.name,
+  });
 
   final Split split;
   final Expense expense;
@@ -76,8 +83,11 @@ final class UpdateExpenseName extends SplitEvent {
 }
 
 final class UpdateExpenseAmount extends SplitEvent {
-  UpdateExpenseAmount(
-      {required this.split, required this.expense, required this.amount});
+  UpdateExpenseAmount({
+    required this.split,
+    required this.expense,
+    required this.amount,
+  });
 
   final Split split;
   final Expense expense;
@@ -85,11 +95,12 @@ final class UpdateExpenseAmount extends SplitEvent {
 }
 
 final class UpdateExpenseExpenseType extends SplitEvent {
-  UpdateExpenseExpenseType(
-      {required this.split,
-      required this.expense,
-      required this.expenseType,
-      required this.isSelected});
+  UpdateExpenseExpenseType({
+    required this.split,
+    required this.expense,
+    required this.expenseType,
+    required this.isSelected,
+  });
 
   final Split split;
   final Expense expense;
@@ -98,10 +109,11 @@ final class UpdateExpenseExpenseType extends SplitEvent {
 }
 
 final class UpdateExpenseSharingMode extends SplitEvent {
-  UpdateExpenseSharingMode(
-      {required this.split,
-      required this.expense,
-      required this.isAutoSharingEnabled});
+  UpdateExpenseSharingMode({
+    required this.split,
+    required this.expense,
+    required this.isAutoSharingEnabled,
+  });
 
   final Split split;
   final Expense expense;
@@ -109,11 +121,12 @@ final class UpdateExpenseSharingMode extends SplitEvent {
 }
 
 final class UpdateExpensePaidForSplitee extends SplitEvent {
-  UpdateExpensePaidForSplitee(
-      {required this.split,
-      required this.expense,
-      required this.splitee,
-      required this.isSelected});
+  UpdateExpensePaidForSplitee({
+    required this.split,
+    required this.expense,
+    required this.splitee,
+    required this.isSelected,
+  });
 
   final Split split;
   final Expense expense;
@@ -122,8 +135,11 @@ final class UpdateExpensePaidForSplitee extends SplitEvent {
 }
 
 final class UpdateExpensePaidBy extends SplitEvent {
-  UpdateExpensePaidBy(
-      {required this.split, required this.expense, required this.splitee});
+  UpdateExpensePaidBy({
+    required this.split,
+    required this.expense,
+    required this.splitee,
+  });
 
   final Split split;
   final Expense expense;

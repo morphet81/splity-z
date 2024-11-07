@@ -7,8 +7,11 @@ import 'package:splity_z/shared/widgets/deletable_list_item.dart';
 import 'package:splity_z/splits_list/widgets/splits_list_item_delete_button.dart';
 
 class SplitsListItem extends StatefulWidget {
-  const SplitsListItem(
-      {required this.isInEditMode, required this.split, super.key});
+  const SplitsListItem({
+    required this.isInEditMode,
+    required this.split,
+    super.key,
+  });
 
   final Split split;
   final bool isInEditMode;
@@ -44,7 +47,7 @@ class _SplitsListItemState extends State<SplitsListItem> {
                 title: Text(widget.split.name),
               ),
             ),
-          )
+          ),
         ],
       ),
       onDismissed: (direction) {

@@ -30,7 +30,7 @@ class ShareArrow extends StatelessWidget {
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -64,11 +64,15 @@ class ArrowPainter extends CustomPainter {
     canvas.drawLine(a, subtractedB, paint);
     final path = Path();
 
-    path.moveTo(b.dx - arrowSize * cos(angle - arrowAngle),
-        b.dy - arrowSize * sin(angle - arrowAngle));
+    path.moveTo(
+      b.dx - arrowSize * cos(angle - arrowAngle),
+      b.dy - arrowSize * sin(angle - arrowAngle),
+    );
     path.lineTo(b.dx, b.dy);
-    path.lineTo(b.dx - arrowSize * cos(angle + arrowAngle),
-        b.dy - arrowSize * sin(angle + arrowAngle));
+    path.lineTo(
+      b.dx - arrowSize * cos(angle + arrowAngle),
+      b.dy - arrowSize * sin(angle + arrowAngle),
+    );
     path.close();
     canvas.drawPath(path, paint);
   }

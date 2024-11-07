@@ -3,12 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:splity_z/shared/models/models.dart';
 
 abstract class Splitee extends Equatable {
-  const Splitee(
-      {required this.id, required this.name, required this.expensesTypes});
+  const Splitee({
+    required this.id,
+    required this.name,
+    required this.expensesTypes,
+  });
 
-  Splitee.withoutId(
-      {required String name, required List<ExpenseType> expensesTypes})
-      : this(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
+  Splitee.withoutId({
+    required String name,
+    required List<ExpenseType> expensesTypes,
+  }) : this(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
 
   final UniqueKey id;
   final String name;
@@ -36,12 +40,16 @@ final class SpliteeImpl extends Splitee {
     required super.expensesTypes,
   });
 
-  SpliteeImpl.withoutId(
-      {required String name, required List<ExpenseType> expensesTypes})
-      : this._(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
+  SpliteeImpl.withoutId({
+    required String name,
+    required List<ExpenseType> expensesTypes,
+  }) : this._(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
 
-  const SpliteeImpl.withId(
-      {required super.id, required super.name, required super.expensesTypes});
+  const SpliteeImpl.withId({
+    required super.id,
+    required super.name,
+    required super.expensesTypes,
+  });
 
   SpliteeImpl.blank()
       : this.withId(id: UniqueKey(), name: '', expensesTypes: []);

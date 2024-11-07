@@ -4,10 +4,11 @@ import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/selectable_icon.dart';
 
 class ExpensesTypes extends StatelessWidget {
-  const ExpensesTypes(
-      {required this.expensesTypes,
-      required this.onSelectableIconChange,
-      super.key});
+  const ExpensesTypes({
+    required this.expensesTypes,
+    required this.onSelectableIconChange,
+    super.key,
+  });
 
   final List<ExpenseType> expensesTypes;
   final Function(bool) Function(ExpenseType) onSelectableIconChange;

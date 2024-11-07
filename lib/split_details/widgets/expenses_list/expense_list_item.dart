@@ -7,8 +7,11 @@ import 'package:splity_z/split_details/widgets/expenses_list/expense_list_item_c
 import 'package:provider/provider.dart';
 
 class ExpenseListItem extends StatelessWidget {
-  const ExpenseListItem(
-      {required this.split, required this.expense, super.key});
+  const ExpenseListItem({
+    required this.split,
+    required this.expense,
+    super.key,
+  });
 
   final Split split;
   final Expense expense;

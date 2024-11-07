@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 class SelectableIcon extends StatelessWidget {
-  const SelectableIcon(
-      {required this.icon,
-      required this.isSelected,
-      required this.onChange,
-      super.key});
+  const SelectableIcon({
+    required this.icon,
+    required this.isSelected,
+    required this.onChange,
+    super.key,
+  });
 
   final IconData icon;
   final bool isSelected;

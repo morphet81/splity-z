@@ -15,26 +15,27 @@ final class Expense extends Equatable {
     this.manualPaidFor,
   });
 
-  Expense.withPaidForList(
-      {required this.name,
-      required this.amount,
-      required this.paidBy,
-      required this.paidFor})
-      : id = UniqueKey(),
+  Expense.withPaidForList({
+    required this.name,
+    required this.amount,
+    required this.paidBy,
+    required this.paidFor,
+  })  : id = UniqueKey(),
         expensesTypes = [],
         automaticSharing = false,
         manualPaidFor = null;
 
-  Expense.withAutomaticSharing(
-      {required this.name,
-      required this.amount,
-      required this.paidBy,
-      required this.expensesTypes,
-      required List<Splitee> allSplitees})
-      : id = UniqueKey(),
+  Expense.withAutomaticSharing({
+    required this.name,
+    required this.amount,
+    required this.paidBy,
+    required this.expensesTypes,
+    required List<Splitee> allSplitees,
+  })  : id = UniqueKey(),
         paidFor = allSplitees
             .where(
-                (splitee) => expensesTypes.containsAny(splitee.expensesTypes))
+              (splitee) => expensesTypes.containsAny(splitee.expensesTypes),
+            )
             .toList(),
         automaticSharing = true,
         manualPaidFor = null;
@@ -145,6 +146,6 @@ final class Expense extends Equatable {
         paidFor,
         manualPaidFor,
         expensesTypes,
-        automaticSharing
+        automaticSharing,
       ];
 }

@@ -60,7 +60,7 @@ class _SplitDetailsState extends State<SplitDetails> {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

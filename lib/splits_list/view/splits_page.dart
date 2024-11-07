@@ -34,7 +34,7 @@ class _SplitsListState extends State<SplitsPage> {
             ),
             tooltip: context.localizations.edit,
             onPressed: onEditButtonPressed,
-          )
+          ),
         ],
       ).build(context),
       body: BlocProvider(

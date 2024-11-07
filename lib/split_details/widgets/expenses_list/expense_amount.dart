@@ -3,11 +3,12 @@ import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/editable_content_pill.dart';
 
 class ExpenseAmount extends StatelessWidget {
-  const ExpenseAmount(
-      {super.key,
-      required this.expense,
-      required this.editOnRendered,
-      required this.onAmountChanged});
+  const ExpenseAmount({
+    super.key,
+    required this.expense,
+    required this.editOnRendered,
+    required this.onAmountChanged,
+  });
 
   final Expense expense;
   final bool editOnRendered;
