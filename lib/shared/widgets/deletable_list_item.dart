@@ -37,7 +37,7 @@ class _DeletableListItemState extends State<DeletableListItem>
 
   @override
   Widget build(BuildContext context) {
-    final slideValue = ListItemDeleteButton.DELETE_BUTTON_WIDTH /
+    final slideValue = ListItemDeleteButton.deleteButtonWidth /
         MediaQuery.of(context).size.width;
 
     final Animation<Offset> offsetAnimation =
@@ -81,8 +81,8 @@ class _DeletableListItemState extends State<DeletableListItem>
             SlideTransition(
               position: offsetAnimation,
               child: GestureDetector(
-                child: widget.child,
                 onTap: widget.onTap,
+                child: widget.child,
               ),
             ),
           ],

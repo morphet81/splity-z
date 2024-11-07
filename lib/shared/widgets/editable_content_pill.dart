@@ -19,7 +19,7 @@ class EditableContentPill<T> extends StatefulWidget {
     this.allowEllipsisOverflow = true,
     this.editOnRendered = false,
     this.options,
-    this.fixedSize = null,
+    this.fixedSize,
     this.isRound = false,
     this.contentType = ContentPillType.string,
     this.itemLabel,
@@ -48,7 +48,7 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
     super.initState();
 
     if (T != String && widget.itemLabel == null) {
-      throw new Exception(
+      throw Exception(
         'If the type handled by EditableContentPill isn\'t String, you must provide a itemLabel function',
       );
     }
@@ -67,8 +67,7 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
 
     if (widget.contentType == ContentPillType.decimal) {
       final stringContent = widget.content as String;
-      final decimalString =
-          stringContent.replaceAll(new RegExp(r'[^0-9\.]'), '');
+      final decimalString = stringContent.replaceAll(RegExp(r'[^0-9\.]'), '');
       final decimalValue = double.parse(decimalString);
 
       initialValue = decimalValue > 0 ? decimalValue.toString() as T : '' as T;
@@ -140,8 +139,8 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
           ),
         ),
       ),
-      child: contentWidget,
       onPressed: handleNamePillPressed,
+      child: contentWidget,
     );
   }
 }

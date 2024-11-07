@@ -4,7 +4,7 @@ import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 final class Expense extends Equatable {
-  Expense({
+  const Expense({
     required this.id,
     required this.name,
     required this.amount,
@@ -12,8 +12,8 @@ final class Expense extends Equatable {
     required this.paidFor,
     required this.expensesTypes,
     required this.automaticSharing,
-    List<Splitee>? manualPaidFor,
-  }) : manualPaidFor = manualPaidFor;
+    this.manualPaidFor,
+  });
 
   Expense.withPaidForList(
       {required this.name,
@@ -81,19 +81,19 @@ final class Expense extends Equatable {
   }
 
   Expense copyWithAutomaticSharing(List<Splitee> allSplitees) {
-    final newPaidFor = allSplitees.containingExpenseTypes(this.expensesTypes);
+    final newPaidFor = allSplitees.containingExpenseTypes(expensesTypes);
 
-    return this.copyWith(
-      manualPaidFor: this.paidFor.toList(),
+    return copyWith(
+      manualPaidFor: paidFor.toList(),
       paidFor: newPaidFor,
       automaticSharing: true,
     );
   }
 
   Expense copyWithoutAutomaticSharing() {
-    return this.copyWith(
-      paidFor: this.manualPaidFor?.toList(),
-      manualExpensesTypes: this.expensesTypes.toList(),
+    return copyWith(
+      paidFor: manualPaidFor?.toList(),
+      manualExpensesTypes: expensesTypes.toList(),
       automaticSharing: false,
     );
   }

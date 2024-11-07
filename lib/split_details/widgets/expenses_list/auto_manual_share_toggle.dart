@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:splity_z/shared/extensions/extensions.dart';
 
-const BUTTON_WIDTH = 70.0;
+const buttonWidth = 70.0;
 
 enum SharingMode {
   auto,
@@ -34,7 +34,7 @@ class AutoManualShareToggle extends StatelessWidget {
         ButtonSegment<SharingMode>(
           value: SharingMode.auto,
           label: SizedBox(
-            width: BUTTON_WIDTH,
+            width: buttonWidth,
             child: Text(
               context.localizations.auto,
               textAlign: TextAlign.center,

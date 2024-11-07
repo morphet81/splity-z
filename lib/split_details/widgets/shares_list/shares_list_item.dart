@@ -5,7 +5,7 @@ import 'package:splity_z/split_details/widgets/shares_list/share_arrow.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 class SharesListItem extends StatelessWidget {
-  const SharesListItem({required Share this.share, super.key});
+  const SharesListItem({required this.share, super.key});
 
   final Share share;
 
@@ -23,7 +23,7 @@ class SharesListItem extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
+          child: SizedBox(
             width: 100,
             child: ShareArrow(
               share: share,

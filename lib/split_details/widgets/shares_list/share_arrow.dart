@@ -5,7 +5,7 @@ import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 class ShareArrow extends StatelessWidget {
-  const ShareArrow({required Share this.share, super.key});
+  const ShareArrow({required this.share, super.key});
 
   final Share share;
 
@@ -25,7 +25,7 @@ class ShareArrow extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                '${share.amount.toStringAsFixed(2)}',
+                share.amount.toStringAsFixed(2),
                 style: context.textTheme.titleSmall,
               ),
             ),

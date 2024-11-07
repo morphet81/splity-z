@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:splity_z/shared/models/models.dart';
 
-import '../../../shared/widgets/selectable_icon.dart';
+import 'package:splity_z/shared/widgets/selectable_icon.dart';
 
 class ExpensesTypes extends StatelessWidget {
   const ExpensesTypes(
@@ -21,26 +21,26 @@ class ExpensesTypes extends StatelessWidget {
         children: [
           SelectableIcon(
             icon: Icons.restaurant,
-            isSelected: expensesTypes.contains(ExpenseType.Food),
-            onChange: onSelectableIconChange(ExpenseType.Food),
+            isSelected: expensesTypes.contains(ExpenseType.food),
+            onChange: onSelectableIconChange(ExpenseType.food),
           ),
           _Spacing(),
           SelectableIcon(
             icon: Icons.local_drink,
-            isSelected: expensesTypes.contains(ExpenseType.Soft),
-            onChange: onSelectableIconChange(ExpenseType.Soft),
+            isSelected: expensesTypes.contains(ExpenseType.soft),
+            onChange: onSelectableIconChange(ExpenseType.soft),
           ),
           _Spacing(),
           SelectableIcon(
             icon: Icons.liquor,
-            isSelected: expensesTypes.contains(ExpenseType.Alcohol),
-            onChange: onSelectableIconChange(ExpenseType.Alcohol),
+            isSelected: expensesTypes.contains(ExpenseType.alcohol),
+            onChange: onSelectableIconChange(ExpenseType.alcohol),
           ),
           _Spacing(),
           SelectableIcon(
             icon: Icons.local_taxi,
-            isSelected: expensesTypes.contains(ExpenseType.Taxi),
-            onChange: onSelectableIconChange(ExpenseType.Taxi),
+            isSelected: expensesTypes.contains(ExpenseType.taxi),
+            onChange: onSelectableIconChange(ExpenseType.taxi),
           ),
         ],
       ),

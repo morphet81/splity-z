@@ -13,16 +13,14 @@ extension SharesListExtension on List<Share> {
   }
 
   List<Share> unionWithListOnPayee(List<Share> list) {
-    return this.where((share) {
+    return where((share) {
       return list.where((s) => s.to.isSameAs(share.to)).firstOrNull != null;
     }).toList();
   }
 
   List<Share> whereFromTo(Splitee from, Splitee to) {
-    return this
-        .where(
-          (share) => share.from.isSameAs(from) && share.to.isSameAs(to),
-        )
-        .toList();
+    return where(
+      (share) => share.from.isSameAs(from) && share.to.isSameAs(to),
+    ).toList();
   }
 }

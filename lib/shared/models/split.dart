@@ -3,7 +3,7 @@ import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 abstract class Split extends Equatable {
-  Split({
+  const Split({
     required this.id,
     required this.name,
     required this.splitees,
@@ -26,12 +26,12 @@ abstract class Split extends Equatable {
 }
 
 final class SplitImpl extends Split {
-  SplitImpl({
-    required int id,
-    required String name,
-    required List<Splitee> splitees,
-    required List<Expense> expenses,
-  }) : super(id: id, name: name, splitees: splitees, expenses: expenses);
+  const SplitImpl({
+    required super.id,
+    required super.name,
+    required super.splitees,
+    required super.expenses,
+  });
 
   @override
   List<Share> getShares() {
@@ -49,7 +49,7 @@ final class SplitImpl extends Split {
   List<Share> _getRawShares() {
     List<Share> shares = [];
 
-    expenses.forEach((expense) {
+    for (var expense in expenses) {
       expense.paidFor
           .where(
             _spliteeIsNotTheExpensePayer(
@@ -62,29 +62,27 @@ final class SplitImpl extends Split {
               shares,
             ),
           );
-    });
+    }
 
     return shares;
   }
 
   List<Share> _reduceTransactions(List<Share> finalShares) {
-    Map<Splitee, List<Share>> spliteesShares = Map();
+    Map<Splitee, List<Share>> spliteesShares = {};
     List<Share> updatedFinalShares = [];
 
-    splitees.forEach(
-      (splitee) {
-        spliteesShares.putIfAbsent(
-          splitee,
-          () => finalShares
-              .where(
-                (share) => share.from.isSameAs(splitee),
-              )
-              .toList(),
-        );
-      },
-    );
+    for (var splitee in splitees) {
+      spliteesShares.putIfAbsent(
+        splitee,
+        () => finalShares
+            .where(
+              (share) => share.from.isSameAs(splitee),
+            )
+            .toList(),
+      );
+    }
 
-    spliteesShares.removeWhere((splitee, shares) => shares.length == 0);
+    spliteesShares.removeWhere((splitee, shares) => shares.isEmpty);
 
     for (int i = 0; i < splitees.length; i++) {
       for (int j = i + 1; j < splitees.length; j++) {
@@ -102,14 +100,14 @@ final class SplitImpl extends Split {
         );
 
         final double firstSpliteeOwesSecondAmount =
-            firstSpliteeSharesToSecondSplitee.length > 0
+            firstSpliteeSharesToSecondSplitee.isNotEmpty
                 ? firstSpliteeSharesToSecondSplitee
                     .reduce(Share.sharesListReducer)
                     .amount
                 : 0;
 
         final double secondSpliteeOwesFirstAmount =
-            secondSpliteeSharesToFirstSplitee.length > 0
+            secondSpliteeSharesToFirstSplitee.isNotEmpty
                 ? secondSpliteeSharesToFirstSplitee
                     .reduce(Share.sharesListReducer)
                     .amount
@@ -135,16 +133,16 @@ final class SplitImpl extends Split {
   }
 
   List<Share> _superReduceTransactions(List<Share> finalShares) {
-    Map<Splitee, List<Share>> spliteesShares = Map();
+    Map<Splitee, List<Share>> spliteesShares = {};
     List<Share> updatedFinalShares = List.from(finalShares);
 
-    splitees.forEach((splitee) {
+    for (var splitee in splitees) {
       spliteesShares.putIfAbsent(
           splitee,
           () => updatedFinalShares
               .where((share) => share.from == splitee)
               .toList());
-    });
+    }
 
     for (int i = 0; i < splitees.length; i++) {
       for (int j = i + 1; j < splitees.length; j++) {

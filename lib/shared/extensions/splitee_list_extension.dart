@@ -7,7 +7,7 @@ extension SpliteeListExtension on List<Splitee> {
   }
 
   List<Splitee> containingExpenseTypes(List<ExpenseType> expenseTypes) {
-    return this.toList().where((splitee) {
+    return toList().where((splitee) {
       return splitee.expensesTypes.containsAny(expenseTypes);
     }).toList();
   }

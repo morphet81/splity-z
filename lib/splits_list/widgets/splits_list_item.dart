@@ -35,15 +35,15 @@ class _SplitsListItemState extends State<SplitsListItem> {
           SplitsListItemDeleteButton(split: widget.split),
           DeletableListItem(
             key: Key(widget.split.name),
+            isInEditMode: widget.isInEditMode,
+            onDelete: () => debugPrint('on delete'),
+            onTap: handleTap,
             child: Container(
               color: Theme.of(context).cardColor,
               child: ListTile(
                 title: Text(widget.split.name),
               ),
             ),
-            isInEditMode: widget.isInEditMode,
-            onDelete: () => debugPrint('on delete'),
-            onTap: handleTap,
           )
         ],
       ),

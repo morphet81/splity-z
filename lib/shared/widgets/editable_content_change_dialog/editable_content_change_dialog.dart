@@ -8,13 +8,13 @@ import 'package:splity_z/shared/extensions/extensions.dart';
 Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
   required T initialValue,
   TextInputType? keyboardType = TextInputType.text,
-  List<T>? options = null,
-  String Function(T item)? itemLabel = null,
+  List<T>? options,
+  String Function(T item)? itemLabel,
   Key? key,
 }) {
   return (BuildContext context) {
     if (T != String && itemLabel == null) {
-      throw new Exception(
+      throw Exception(
           'If the type handled by EditableContentPill isn\'t String, you must provide a itemLabel function');
     }
 
@@ -24,7 +24,7 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
         T newName = initialValue;
 
         String? validateInput(String? value) {
-          var errorMessage = null;
+          String? errorMessage;
 
           if (value == null || value.isEmpty) {
             errorMessage = context.localizations.enterStringValue;
@@ -36,7 +36,7 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
         bool isInputValid() {
           return (newName is String &&
                   validateInput(newName as String) == null) ||
-              !(newName is String);
+              newName is! String;
         }
 
         return StatefulBuilder(builder: (context, setState) {
@@ -98,7 +98,7 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
                 ? NeverScrollableScrollPhysics()
                 : null;
 
-            editionWidget = Container(
+            editionWidget = SizedBox(
               height: min(optionsListHeight, maxOptionsListHeight),
               width: MediaQuery.sizeOf(context).width * 0.8,
               child: ListView.builder(
@@ -133,8 +133,8 @@ Future<T?> Function(BuildContext) getEditableContentChangeDialog<T>({
               style: TextButton.styleFrom(
                 textStyle: context.textTheme.labelLarge,
               ),
-              child: Text(actionButtonText),
               onPressed: isInputValid() ? handleEditingDone : null,
+              child: Text(actionButtonText),
             ),
           ];
 

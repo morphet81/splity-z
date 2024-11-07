@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 final class SpliteeSummary extends Equatable {
-  SpliteeSummary({required this.paid, required this.owe});
+  const SpliteeSummary({required this.paid, required this.owe});
 
   final double paid;
   final double owe;

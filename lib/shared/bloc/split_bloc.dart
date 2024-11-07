@@ -87,13 +87,12 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
 
     List<Expense> newExpenses = [];
 
-    event.split.expenses.forEach((expense) {
+    for (var expense in event.split.expenses) {
       final newPaidBy =
           expense.paidBy == event.splitee ? newSplitee : expense.paidBy;
       final newPaidFor = expense.paidFor.toList()
         ..replace(event.splitee, newSplitee);
-      final newManualPaidFor =
-          expense.manualPaidFor == null ? null : expense.manualPaidFor;
+      final newManualPaidFor = expense.manualPaidFor;
 
       if (newManualPaidFor != null) {
         newManualPaidFor.toList().replace(event.splitee, newSplitee);
@@ -103,7 +102,7 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
           paidBy: newPaidBy,
           paidFor: newPaidFor,
           manualPaidFor: newManualPaidFor));
-    });
+    }
 
     final newSplit = event.split.copyWith(
       splitees: newSplitees,

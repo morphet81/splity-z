@@ -20,6 +20,6 @@ extension Expenselistextension on List<Expense> {
       return expense;
     }
 
-    return this.map(updateExpense).toList();
+    return map(updateExpense).toList();
   }
 }

@@ -39,9 +39,9 @@ class SpliteeListItem extends StatelessWidget {
     }
 
     Future<bool?> handleConfirmDismiss(DismissDirection direction) async {
-      final isPayee =
-          split.expenses.where((expense) => expense.paidBy == splitee).length >
-              0;
+      final isPayee = split.expenses
+          .where((expense) => expense.paidBy == splitee)
+          .isNotEmpty;
       if (isPayee) {
         return showConfirmDialog(
           context,
@@ -58,6 +58,8 @@ class SpliteeListItem extends StatelessWidget {
 
     return DeletableListItem(
       key: Key(splitee.name),
+      onDelete: handleDeleteClick,
+      confirmDisimiss: handleConfirmDismiss,
       child: Flex(
         direction: Axis.horizontal,
         children: [
@@ -71,8 +73,6 @@ class SpliteeListItem extends StatelessWidget {
           ),
         ],
       ),
-      onDelete: handleDeleteClick,
-      confirmDisimiss: handleConfirmDismiss,
     );
   }
 }

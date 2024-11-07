@@ -9,8 +9,8 @@ Future<bool?> showConfirmDialog(
   VoidCallback? onConfirm,
   VoidCallback? onCancel,
 }) async {
-  if (message.length == 0) {
-    throw new Exception('Message should contain at least 1 line');
+  if (message.isEmpty) {
+    throw Exception('Message should contain at least 1 line');
   }
 
   final messageFirstLine = message[0];
@@ -32,7 +32,7 @@ Future<bool?> showConfirmDialog(
           child: ListBody(
             children: <Widget>[
               Text(messageFirstLine),
-              ...message.map(messageLine).toList(),
+              ...message.map(messageLine),
             ],
           ),
         ),

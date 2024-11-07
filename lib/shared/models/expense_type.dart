@@ -1,6 +1,6 @@
 enum ExpenseType {
-  Food,
-  Soft,
-  Alcohol,
-  Taxi,
+  food,
+  soft,
+  alcohol,
+  taxi,
 }

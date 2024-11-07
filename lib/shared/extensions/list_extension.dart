@@ -1,21 +1,21 @@
 extension Listextension on List {
   void removeAll(List items) {
-    items.toList().forEach((item) => this.remove(item));
+    items.toList().forEach((item) => remove(item));
   }
 
   void replace(dynamic item, dynamic newItem) {
-    final index = this.indexOf(item);
+    final index = indexOf(item);
 
     if (index >= 0) {
-      this.removeAt(index);
-      this.insert(index, newItem);
+      removeAt(index);
+      insert(index, newItem);
     }
   }
 
   bool containsAny(List<dynamic> elements) {
     bool containsAny = false;
 
-    this.forEach((el) {
+    forEach((el) {
       if (elements.contains(el)) {
         containsAny = true;
       }

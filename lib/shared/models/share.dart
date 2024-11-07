@@ -29,11 +29,11 @@ final class Share extends Equatable {
   }
 
   int compateTo(Share share) {
-    return this.from.name.compareTo(share.from.name);
+    return from.name.compareTo(share.from.name);
   }
 
   bool isSimilarTo(Share share) {
-    return this.from == share.from && this.to == share.to;
+    return from == share.from && to == share.to;
   }
 
   static int compareShares(Share a, Share b) {
