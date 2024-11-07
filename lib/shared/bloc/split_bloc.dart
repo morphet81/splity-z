@@ -118,18 +118,28 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
   }
 
   Future<void> _onUpdateSpliteeExpenseType(
-      UpdateSpliteeExpenseType event, Emitter<SplitState> emit) async {
+    UpdateSpliteeExpenseType event,
+    Emitter<SplitState> emit,
+  ) async {
     List<ExpenseType> newExpenseTypes = event.splitee.expensesTypes.toList();
 
-    newExpenseTypes.updateForExpenseType(event.expenseType, event.isSelected);
+    newExpenseTypes.updateForExpenseType(
+      event.expenseType,
+      event.isSelected,
+    );
 
-    final newSplitee = event.splitee.copyWith(expensesTypes: newExpenseTypes);
+    final newSplitee = event.splitee.copyWith(
+      expensesTypes: newExpenseTypes,
+    );
 
     final newExpenses = event.split.expenses.copyWithNewSplitee(newSplitee);
 
     final Split newSplit = event.split.copyWith(
       splitees: event.split.splitees.toList()
-        ..replace(event.splitee, newSplitee),
+        ..replace(
+          event.splitee,
+          newSplitee,
+        ),
       expenses: newExpenses,
     );
 
@@ -203,14 +213,25 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
       UpdateExpenseExpenseType event, Emitter<SplitState> emit) async {
     List<ExpenseType> newExpenseTypes = event.expense.expensesTypes.toList();
 
-    newExpenseTypes.updateForExpenseType(event.expenseType, event.isSelected);
+    newExpenseTypes.updateForExpenseType(
+      event.expenseType,
+      event.isSelected,
+    );
 
-    final newPaidFor =
-        event.split.splitees.containingExpenseTypes(newExpenseTypes);
+    final newPaidFor = event.split.splitees.containingExpenseTypes(
+      newExpenseTypes,
+    );
 
-    final newExpense = event.expense
-        .copyWith(expensesTypes: newExpenseTypes, paidFor: newPaidFor);
-    final newState = _updateExpense(event.split, event.expense, newExpense);
+    final newExpense = event.expense.copyWith(
+      expensesTypes: newExpenseTypes,
+      paidFor: newPaidFor,
+    );
+
+    final newState = _updateExpense(
+      event.split,
+      event.expense,
+      newExpense,
+    );
 
     emit(newState);
   }

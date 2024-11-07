@@ -5,7 +5,9 @@ import 'package:splity_z/shared/models/models.dart';
 abstract class Splitee extends Equatable {
   Splitee({required this.id, required this.name, required this.expensesTypes});
 
-  Splitee.withoutId({required String name, required List<ExpenseType> expensesTypes}) : this(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
+  Splitee.withoutId(
+      {required String name, required List<ExpenseType> expensesTypes})
+      : this(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
 
   final UniqueKey id;
   final String name;
@@ -14,6 +16,8 @@ abstract class Splitee extends Equatable {
   Splitee copyWith({String? name, List<ExpenseType>? expensesTypes});
 
   bool isBlank();
+
+  bool isSameAs(Splitee splitee);
 
   @override
   String toString() {
@@ -25,11 +29,17 @@ abstract class Splitee extends Equatable {
 }
 
 final class SpliteeImpl extends Splitee {
-  SpliteeImpl({required name, required expensesTypes}) : super.withoutId(name: name, expensesTypes: expensesTypes);
+  SpliteeImpl({required name, required expensesTypes})
+      : super.withoutId(name: name, expensesTypes: expensesTypes);
 
-  SpliteeImpl.withId({required UniqueKey id, required String name, required List<ExpenseType> expensesTypes}) : super(id: id, name: name, expensesTypes: expensesTypes);
+  SpliteeImpl.withId(
+      {required UniqueKey id,
+      required String name,
+      required List<ExpenseType> expensesTypes})
+      : super(id: id, name: name, expensesTypes: expensesTypes);
 
-  SpliteeImpl.blank() : this.withId(id: UniqueKey(), name: '', expensesTypes: []);
+  SpliteeImpl.blank()
+      : this.withId(id: UniqueKey(), name: '', expensesTypes: []);
 
   bool isBlank() {
     return name.isEmpty;
@@ -37,6 +47,15 @@ final class SpliteeImpl extends Splitee {
 
   @override
   SpliteeImpl copyWith({String? name, List<ExpenseType>? expensesTypes}) {
-    return SpliteeImpl.withId(id: this.id, name: name ?? this.name, expensesTypes: expensesTypes ?? this.expensesTypes);
+    return SpliteeImpl.withId(
+      id: this.id,
+      name: name ?? this.name,
+      expensesTypes: expensesTypes ?? this.expensesTypes,
+    );
+  }
+
+  @override
+  bool isSameAs(Splitee splitee) {
+    return id == splitee.id;
   }
 }

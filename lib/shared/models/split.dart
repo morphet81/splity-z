@@ -17,7 +17,12 @@ abstract class Split extends Equatable {
 
   List<Share> getShares();
 
-  Split copyWith({int? id, String? name, List<Splitee>? splitees, List<Expense>? expenses});
+  Split copyWith({
+    int? id,
+    String? name,
+    List<Splitee>? splitees,
+    List<Expense>? expenses,
+  });
 }
 
 final class SplitImpl extends Split {
@@ -47,10 +52,15 @@ final class SplitImpl extends Split {
     expenses.forEach((expense) {
       expense.paidFor
           .where(
-            _spliteeIsNotTheExpensePayer(expense),
+            _spliteeIsNotTheExpensePayer(
+              expense,
+            ),
           )
           .forEach(
-            _addOrUpdateSpliteeShare(expense, shares),
+            _addOrUpdateSpliteeShare(
+              expense,
+              shares,
+            ),
           );
     });
 
@@ -61,9 +71,18 @@ final class SplitImpl extends Split {
     Map<Splitee, List<Share>> spliteesShares = Map();
     List<Share> updatedFinalShares = [];
 
-    splitees.forEach((splitee) {
-      spliteesShares.putIfAbsent(splitee, () => finalShares.where((share) => share.from == splitee).toList());
-    });
+    splitees.forEach(
+      (splitee) {
+        spliteesShares.putIfAbsent(
+          splitee,
+          () => finalShares
+              .where(
+                (share) => share.from.isSameAs(splitee),
+              )
+              .toList(),
+        );
+      },
+    );
 
     spliteesShares.removeWhere((splitee, shares) => shares.length == 0);
 
@@ -72,13 +91,32 @@ final class SplitImpl extends Split {
         final firstSplitee = splitees[i];
         final secondSplitee = splitees[j];
 
-        final firstSpliteeSharesToSecondSplitee = finalShares.whereFromTo(firstSplitee, secondSplitee);
-        final secondSpliteeSharesToFirstSplitee = finalShares.whereFromTo(secondSplitee, firstSplitee);
+        final firstSpliteeSharesToSecondSplitee = finalShares.whereFromTo(
+          firstSplitee,
+          secondSplitee,
+        );
 
-        final double firstSpliteeOwesSecondAmount = firstSpliteeSharesToSecondSplitee.length > 0 ? firstSpliteeSharesToSecondSplitee.reduce(Share.sharesListReducer).amount : 0;
-        final double secondSpliteeOwesFirstAmount = secondSpliteeSharesToFirstSplitee.length > 0 ? secondSpliteeSharesToFirstSplitee.reduce(Share.sharesListReducer).amount : 0;
+        final secondSpliteeSharesToFirstSplitee = finalShares.whereFromTo(
+          secondSplitee,
+          firstSplitee,
+        );
 
-        final finalBalance = firstSpliteeOwesSecondAmount - secondSpliteeOwesFirstAmount;
+        final double firstSpliteeOwesSecondAmount =
+            firstSpliteeSharesToSecondSplitee.length > 0
+                ? firstSpliteeSharesToSecondSplitee
+                    .reduce(Share.sharesListReducer)
+                    .amount
+                : 0;
+
+        final double secondSpliteeOwesFirstAmount =
+            secondSpliteeSharesToFirstSplitee.length > 0
+                ? secondSpliteeSharesToFirstSplitee
+                    .reduce(Share.sharesListReducer)
+                    .amount
+                : 0;
+
+        final finalBalance =
+            firstSpliteeOwesSecondAmount - secondSpliteeOwesFirstAmount;
 
         if (finalBalance == 0) {
           continue;
@@ -101,7 +139,11 @@ final class SplitImpl extends Split {
     List<Share> updatedFinalShares = List.from(finalShares);
 
     splitees.forEach((splitee) {
-      spliteesShares.putIfAbsent(splitee, () => updatedFinalShares.where((share) => share.from == splitee).toList());
+      spliteesShares.putIfAbsent(
+          splitee,
+          () => updatedFinalShares
+              .where((share) => share.from == splitee)
+              .toList());
     });
 
     for (int i = 0; i < splitees.length; i++) {
@@ -114,38 +156,59 @@ final class SplitImpl extends Split {
         final firstSharesItems = spliteesShares[comparedSplitees[0]];
         final secondSharesItems = spliteesShares[comparedSplitees[1]];
 
-        final firstShares = firstSharesItems!.unionWithListOnPayee(secondSharesItems!);
-        final secondShares = secondSharesItems.unionWithListOnPayee(firstSharesItems);
+        final firstShares =
+            firstSharesItems!.unionWithListOnPayee(secondSharesItems!);
+        final secondShares =
+            secondSharesItems.unionWithListOnPayee(firstSharesItems);
 
         if (firstShares.length == 2 && secondShares.length == 2) {
           firstShares.ascendingSort();
           secondShares.ascendingSort();
 
-          if (_sharesHaveSameAmountAndDifferentPayees(firstShares.first, secondShares.first)) {
+          if (_sharesHaveSameAmountAndDifferentPayees(
+              firstShares.first, secondShares.first)) {
             updatedFinalShares.removeAll([
               ...firstShares,
               ...secondShares,
             ]);
 
-            updatedFinalShares.add(firstShares.last.coppyWith(amount: firstShares.last.amount + firstShares.first.amount));
-            updatedFinalShares.add(secondShares.last.coppyWith(amount: secondShares.last.amount + secondShares.first.amount));
+            updatedFinalShares.add(firstShares.last.coppyWith(
+                amount: firstShares.last.amount + firstShares.first.amount));
+            updatedFinalShares.add(secondShares.last.coppyWith(
+                amount: secondShares.last.amount + secondShares.first.amount));
           } else {
-            final shareThatsGettingCoveredFor = firstShares.first.amount <= secondShares.first.amount ? firstShares.first : secondShares.first;
+            final shareThatsGettingCoveredFor =
+                firstShares.first.amount <= secondShares.first.amount
+                    ? firstShares.first
+                    : secondShares.first;
 
-            final isCoveredShareForFirstSplitee = shareThatsGettingCoveredFor == firstShares.first;
+            final isCoveredShareForFirstSplitee =
+                shareThatsGettingCoveredFor == firstShares.first;
 
-            final shareThatWillCover = isCoveredShareForFirstSplitee ? secondShares.first : firstShares.first;
-            final shareThatWillDecreaseAmount = isCoveredShareForFirstSplitee ? secondShares.last : firstShares.last;
-            final shareThatWillIncreaseAmount = isCoveredShareForFirstSplitee ? firstShares.last : secondShares.last;
+            final shareThatWillCover = isCoveredShareForFirstSplitee
+                ? secondShares.first
+                : firstShares.first;
+            final shareThatWillDecreaseAmount = isCoveredShareForFirstSplitee
+                ? secondShares.last
+                : firstShares.last;
+            final shareThatWillIncreaseAmount = isCoveredShareForFirstSplitee
+                ? firstShares.last
+                : secondShares.last;
 
             updatedFinalShares.removeAll([
               ...firstShares,
               ...secondShares,
             ]);
 
-            updatedFinalShares.add(shareThatWillCover.coppyWith(amount: shareThatWillCover.amount + shareThatsGettingCoveredFor.amount));
-            updatedFinalShares.add(shareThatWillDecreaseAmount.coppyWith(amount: shareThatWillDecreaseAmount.amount - shareThatsGettingCoveredFor.amount));
-            updatedFinalShares.add(shareThatWillIncreaseAmount.coppyWith(amount: shareThatWillIncreaseAmount.amount + shareThatsGettingCoveredFor.amount));
+            updatedFinalShares.add(shareThatWillCover.coppyWith(
+                amount: shareThatWillCover.amount +
+                    shareThatsGettingCoveredFor.amount));
+            updatedFinalShares.add(shareThatWillDecreaseAmount.coppyWith(
+                amount: shareThatWillDecreaseAmount.amount -
+                    shareThatsGettingCoveredFor.amount));
+            updatedFinalShares.add(shareThatWillIncreaseAmount.coppyWith(
+                amount: shareThatWillIncreaseAmount.amount +
+                    shareThatsGettingCoveredFor.amount));
           }
         }
       }
@@ -154,7 +217,8 @@ final class SplitImpl extends Split {
     return updatedFinalShares;
   }
 
-  void Function(Splitee) _addOrUpdateSpliteeShare(Expense expense, List<Share> shares) {
+  void Function(Splitee) _addOrUpdateSpliteeShare(
+      Expense expense, List<Share> shares) {
     final amountPerPayee = expense.amount / expense.paidFor.length;
 
     return (splitee) {
@@ -172,15 +236,21 @@ final class SplitImpl extends Split {
     return (splitee) => splitee != expense.paidBy;
   }
 
-  bool _sharesHaveSameAmountAndDifferentPayees(Share firstShare, Share secondShare) {
-    return firstShare.amount == secondShare.amount && firstShare.to != secondShare.to;
+  bool _sharesHaveSameAmountAndDifferentPayees(
+      Share firstShare, Share secondShare) {
+    return firstShare.amount == secondShare.amount &&
+        firstShare.to != secondShare.to;
   }
 
   @override
   List<Object?> get props => [id, name, splitees, expenses];
 
   @override
-  Split copyWith({int? id, String? name, List<Splitee>? splitees, List<Expense>? expenses}) {
+  Split copyWith(
+      {int? id,
+      String? name,
+      List<Splitee>? splitees,
+      List<Expense>? expenses}) {
     return SplitImpl(
       id: id ?? this.id,
       name: name ?? this.name,

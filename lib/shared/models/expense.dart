@@ -13,21 +13,40 @@ final class Expense extends Equatable {
     required this.expensesTypes,
     required this.automaticSharing,
     List<Splitee>? manualPaidFor,
-  }) : manualPaidFor = manualPaidFor ?? [];
+  }) : manualPaidFor = manualPaidFor;
 
-  Expense.withPaidForList({required this.name, required this.amount, required this.paidBy, required this.paidFor})
+  Expense.withPaidForList(
+      {required this.name,
+      required this.amount,
+      required this.paidBy,
+      required this.paidFor})
       : id = UniqueKey(),
         expensesTypes = [],
         automaticSharing = false,
         manualPaidFor = null;
 
-  Expense.withAutomaticSharing({required this.name, required this.amount, required this.paidBy, required this.expensesTypes, required List<Splitee> allSplitees})
+  Expense.withAutomaticSharing(
+      {required this.name,
+      required this.amount,
+      required this.paidBy,
+      required this.expensesTypes,
+      required List<Splitee> allSplitees})
       : id = UniqueKey(),
-        paidFor = allSplitees.where((splitee) => expensesTypes.containsAny(splitee.expensesTypes)).toList(),
+        paidFor = allSplitees
+            .where(
+                (splitee) => expensesTypes.containsAny(splitee.expensesTypes))
+            .toList(),
         automaticSharing = true,
         manualPaidFor = null;
 
-  Expense.blank() : this.withAutomaticSharing(name: '', amount: 0, paidBy: SpliteeImpl.blank(), expensesTypes: [], allSplitees: []);
+  Expense.blank()
+      : this.withAutomaticSharing(
+          name: '',
+          amount: 0,
+          paidBy: SpliteeImpl.blank(),
+          expensesTypes: [],
+          allSplitees: [],
+        );
 
   final UniqueKey id;
   final String name;
@@ -118,5 +137,14 @@ final class Expense extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, name, amount, paidBy, paidFor, manualPaidFor, expensesTypes, automaticSharing];
+  List<Object?> get props => [
+        id,
+        name,
+        amount,
+        paidBy,
+        paidFor,
+        manualPaidFor,
+        expensesTypes,
+        automaticSharing
+      ];
 }
