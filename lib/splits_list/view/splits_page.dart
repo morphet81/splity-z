@@ -27,6 +27,7 @@ class _SplitsListState extends State<SplitsPage> {
     return Scaffold(
       appBar: SplityzAppBar(
         title: context.localizations.appName,
+        context: context,
         actions: [
           IconButton(
             icon: Icon(
@@ -36,7 +37,7 @@ class _SplitsListState extends State<SplitsPage> {
             onPressed: onEditButtonPressed,
           ),
         ],
-      ).build(context),
+      ).build(),
       body: BlocProvider(
         create: (_) => SplitBloc(),
         child: SplitsList(

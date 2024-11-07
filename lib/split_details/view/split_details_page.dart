@@ -32,7 +32,8 @@ class SplitDetailsPage extends StatelessWidget {
             appBar: SplityzAppBar(
               title: split!.name,
               split: split,
-            ).build(context),
+              context: context,
+            ).build(),
             backgroundColor: context.colors.surfaceContainer,
             body: SplitDetails(
               split: split,
