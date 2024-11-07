@@ -30,10 +30,17 @@ abstract class Splitee extends Equatable {
 }
 
 final class SpliteeImpl extends Splitee {
-  SpliteeImpl({required name, required expensesTypes})
-      : super.withoutId(name: name, expensesTypes: expensesTypes);
+  const SpliteeImpl._({
+    required super.id,
+    required super.name,
+    required super.expensesTypes,
+  });
 
-  SpliteeImpl.withId(
+  SpliteeImpl.withoutId(
+      {required String name, required List<ExpenseType> expensesTypes})
+      : this._(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
+
+  const SpliteeImpl.withId(
       {required super.id, required super.name, required super.expensesTypes});
 
   SpliteeImpl.blank()

@@ -25,13 +25,13 @@ final class SplitState extends Equatable {
   List<Object?> get props => [splits, splits.length];
 
   static SplitState get initialState {
-    final splitee1 =
-        SpliteeImpl(name: 'John Doe', expensesTypes: [...ExpenseType.values]);
-    final splitee2 = SpliteeImpl(
+    final splitee1 = SpliteeImpl.withoutId(
+        name: 'John Doe', expensesTypes: [...ExpenseType.values]);
+    final splitee2 = SpliteeImpl.withoutId(
         name: 'Jane Doe', expensesTypes: [ExpenseType.food, ExpenseType.soft]);
-    final splitee3 = SpliteeImpl(
+    final splitee3 = SpliteeImpl.withoutId(
         name: 'Jack Downson', expensesTypes: [...ExpenseType.values]);
-    final splitee4 = SpliteeImpl(
+    final splitee4 = SpliteeImpl.withoutId(
         name: 'Andre Pourlov Droupinov Kasparov',
         expensesTypes: [
           ExpenseType.alcohol,

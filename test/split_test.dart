@@ -2,10 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:splity_z/shared/models/models.dart';
 
 void main() {
-  final john = SpliteeImpl(name: 'John Doe', expensesTypes: []);
-  final jane = SpliteeImpl(name: 'Jane Doe', expensesTypes: []);
-  final jack = SpliteeImpl(name: 'Jack Reacher', expensesTypes: []);
-  final andre = SpliteeImpl(name: 'André Rieu', expensesTypes: []);
+  final john = SpliteeImpl.withoutId(name: 'John Doe', expensesTypes: []);
+  final jane = SpliteeImpl.withoutId(name: 'Jane Doe', expensesTypes: []);
+  final jack = SpliteeImpl.withoutId(name: 'Jack Reacher', expensesTypes: []);
+  final andre = SpliteeImpl.withoutId(name: 'André Rieu', expensesTypes: []);
 
   group('Test getShares', () {
     group('Test getShares with a simple split between 3 splitees', () {
@@ -18,9 +18,18 @@ void main() {
           jack,
         ],
         expenses: <Expense>[
-          Expense.withPaidForList(name: 'First expense', amount: 30, paidBy: john, paidFor: [john, jane, jack]),
-          Expense.withPaidForList(name: 'Second expense', amount: 20, paidBy: john, paidFor: [john]),
-          Expense.withPaidForList(name: 'Third expense', amount: 15, paidBy: jack, paidFor: [john]),
+          Expense.withPaidForList(
+              name: 'First expense',
+              amount: 30,
+              paidBy: john,
+              paidFor: [john, jane, jack]),
+          Expense.withPaidForList(
+              name: 'Second expense',
+              amount: 20,
+              paidBy: john,
+              paidFor: [john]),
+          Expense.withPaidForList(
+              name: 'Third expense', amount: 15, paidBy: jack, paidFor: [john]),
         ],
       );
 
@@ -31,7 +40,9 @@ void main() {
 
       test('There is one share from John to Jack', () {
         final List<Share> shares = split.getShares();
-        final johnShare = shares.where((share) => share.from == john && share.to == jack).firstOrNull;
+        final johnShare = shares
+            .where((share) => share.from == john && share.to == jack)
+            .firstOrNull;
 
         expect(johnShare, isNotNull);
         expect(johnShare!.from, john);
@@ -40,7 +51,9 @@ void main() {
 
       test('John owes Jack 5', () {
         final List<Share> shares = split.getShares();
-        final johnShare = shares.where((share) => share.from == john && share.to == jack).firstOrNull;
+        final johnShare = shares
+            .where((share) => share.from == john && share.to == jack)
+            .firstOrNull;
 
         expect(johnShare!.amount, equals(5.0));
       });
@@ -48,7 +61,9 @@ void main() {
       test('There is one share from Jane to John', () {
         final List<Share> shares = split.getShares();
 
-        final janeShare = shares.where((share) => share.from == jane && share.to == john).firstOrNull;
+        final janeShare = shares
+            .where((share) => share.from == jane && share.to == john)
+            .firstOrNull;
 
         expect(janeShare, isNotNull);
         expect(janeShare!.from, jane);
@@ -56,7 +71,9 @@ void main() {
 
       test('Jane owes John 10', () {
         final List<Share> shares = split.getShares();
-        final janeShare = shares.where((share) => share.from == jane && share.to == john).firstOrNull;
+        final janeShare = shares
+            .where((share) => share.from == jane && share.to == john)
+            .firstOrNull;
 
         expect(janeShare!.amount, equals(10.0));
       });
@@ -64,23 +81,46 @@ void main() {
       test('Jack has nothing to pay', () {
         final List<Share> shares = split.getShares();
 
-        final jackShare = shares.where((share) => share.from == jack).firstOrNull;
+        final jackShare =
+            shares.where((share) => share.from == jack).firstOrNull;
 
         expect(jackShare, isNull);
       });
     });
 
-    group('Test getShares between 4 splitees that should simplify down to 4 shares', () {
+    group(
+        'Test getShares between 4 splitees that should simplify down to 4 shares',
+        () {
       final split = SplitImpl(
         id: 1,
         name: 'Diner at the end of the world',
         splitees: <SpliteeImpl>[john, jane, jack, andre],
         expenses: <Expense>[
-          Expense.withPaidForList(name: 'First expense', amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
-          Expense.withPaidForList(name: 'Second expense', amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
-          Expense.withPaidForList(name: 'Third expense', amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
-          Expense.withPaidForList(name: 'Fourth expense', amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
-          Expense.withPaidForList(name: 'Fifth expense', amount: 4, paidBy: andre, paidFor: [jack]), // 4 per pax
+          Expense.withPaidForList(
+              name: 'First expense',
+              amount: 56,
+              paidBy: john,
+              paidFor: [john, jane, jack, andre]), // 14 per pax
+          Expense.withPaidForList(
+              name: 'Second expense',
+              amount: 37,
+              paidBy: john,
+              paidFor: [jane, jack]), // 18.5 per pax
+          Expense.withPaidForList(
+              name: 'Third expense',
+              amount: 15,
+              paidBy: andre,
+              paidFor: [john, jane, jack]), // 5 per pax
+          Expense.withPaidForList(
+              name: 'Fourth expense',
+              amount: 18,
+              paidBy: andre,
+              paidFor: [andre, jane]), // 9 per pax
+          Expense.withPaidForList(
+              name: 'Fifth expense',
+              amount: 4,
+              paidBy: andre,
+              paidFor: [jack]), // 4 per pax
         ],
       );
 
@@ -156,23 +196,46 @@ void main() {
       test('John has nothing to pay', () {
         final List<Share> shares = split.getShares();
 
-        final johnShare = shares.where((share) => share.from == john).firstOrNull;
+        final johnShare =
+            shares.where((share) => share.from == john).firstOrNull;
 
         expect(johnShare, isNull);
       });
     });
 
-    group('Test getShares between 4 splitees do not simplify further when amounts to balance are equal and amounts to balance have the same payee', () {
+    group(
+        'Test getShares between 4 splitees do not simplify further when amounts to balance are equal and amounts to balance have the same payee',
+        () {
       final split = SplitImpl(
         id: 1,
         name: 'Diner at the end of the world',
         splitees: <SpliteeImpl>[john, jane, jack, andre],
         expenses: <Expense>[
-          Expense.withPaidForList(name: 'First expense', amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
-          Expense.withPaidForList(name: 'Second expense', amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
-          Expense.withPaidForList(name: 'Third expense', amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
-          Expense.withPaidForList(name: 'Fourth expense', amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
-          Expense.withPaidForList(name: 'Fifth expense', amount: 9, paidBy: andre, paidFor: [jack]), // 9 per pax
+          Expense.withPaidForList(
+              name: 'First expense',
+              amount: 56,
+              paidBy: john,
+              paidFor: [john, jane, jack, andre]), // 14 per pax
+          Expense.withPaidForList(
+              name: 'Second expense',
+              amount: 37,
+              paidBy: john,
+              paidFor: [jane, jack]), // 18.5 per pax
+          Expense.withPaidForList(
+              name: 'Third expense',
+              amount: 15,
+              paidBy: andre,
+              paidFor: [john, jane, jack]), // 5 per pax
+          Expense.withPaidForList(
+              name: 'Fourth expense',
+              amount: 18,
+              paidBy: andre,
+              paidFor: [andre, jane]), // 9 per pax
+          Expense.withPaidForList(
+              name: 'Fifth expense',
+              amount: 9,
+              paidBy: andre,
+              paidFor: [jack]), // 9 per pax
         ],
       );
 
@@ -248,23 +311,46 @@ void main() {
       test('John has nothing to pay', () {
         final List<Share> shares = split.getShares();
 
-        final johnShare = shares.where((share) => share.from == john).firstOrNull;
+        final johnShare =
+            shares.where((share) => share.from == john).firstOrNull;
 
         expect(johnShare, isNull);
       });
     });
 
-    group('Test getShares between 4 splitees that should simplify down to 4 shares, even when balanced splitees are inverted (jane\'s balance is less than jack\'s)', () {
+    group(
+        'Test getShares between 4 splitees that should simplify down to 4 shares, even when balanced splitees are inverted (jane\'s balance is less than jack\'s)',
+        () {
       final split = SplitImpl(
         id: 1,
         name: 'Diner at the end of the world',
         splitees: <SpliteeImpl>[john, jane, jack, andre],
         expenses: <Expense>[
-          Expense.withPaidForList(name: 'First expense', amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
-          Expense.withPaidForList(name: 'Second expense', amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
-          Expense.withPaidForList(name: 'Third expense', amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
-          Expense.withPaidForList(name: 'Fourth expense', amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
-          Expense.withPaidForList(name: 'Fifth expense', amount: 10, paidBy: andre, paidFor: [jack]), // 10 per pax
+          Expense.withPaidForList(
+              name: 'First expense',
+              amount: 56,
+              paidBy: john,
+              paidFor: [john, jane, jack, andre]), // 14 per pax
+          Expense.withPaidForList(
+              name: 'Second expense',
+              amount: 37,
+              paidBy: john,
+              paidFor: [jane, jack]), // 18.5 per pax
+          Expense.withPaidForList(
+              name: 'Third expense',
+              amount: 15,
+              paidBy: andre,
+              paidFor: [john, jane, jack]), // 5 per pax
+          Expense.withPaidForList(
+              name: 'Fourth expense',
+              amount: 18,
+              paidBy: andre,
+              paidFor: [andre, jane]), // 9 per pax
+          Expense.withPaidForList(
+              name: 'Fifth expense',
+              amount: 10,
+              paidBy: andre,
+              paidFor: [jack]), // 10 per pax
         ],
       );
 
@@ -340,25 +426,56 @@ void main() {
       test('John has nothing to pay', () {
         final List<Share> shares = split.getShares();
 
-        final johnShare = shares.where((share) => share.from == john).firstOrNull;
+        final johnShare =
+            shares.where((share) => share.from == john).firstOrNull;
 
         expect(johnShare, isNull);
       });
     });
 
-    group('Test getShares between 4 splitees simplifies further when amounts to balance are equal and amounts to balance don\'t have the same payee', () {
+    group(
+        'Test getShares between 4 splitees simplifies further when amounts to balance are equal and amounts to balance don\'t have the same payee',
+        () {
       final split = SplitImpl(
         id: 1,
         name: 'Diner at the end of the world',
         splitees: <SpliteeImpl>[john, jane, jack, andre],
         expenses: <Expense>[
-          Expense.withPaidForList(name: 'First expense', amount: 56, paidBy: john, paidFor: [john, jane, jack, andre]), // 14 per pax
-          Expense.withPaidForList(name: 'Second expense', amount: 37, paidBy: john, paidFor: [jane, jack]), // 18.5 per pax
-          Expense.withPaidForList(name: 'Third expense', amount: 15, paidBy: andre, paidFor: [john, jane, jack]), // 5 per pax
-          Expense.withPaidForList(name: 'Fourth expense', amount: 18, paidBy: andre, paidFor: [andre, jane]), // 9 per pax
-          Expense.withPaidForList(name: 'Fifth expense', amount: 20, paidBy: andre, paidFor: [jane]), // 20 per pax
-          Expense.withPaidForList(name: 'Sixth expense', amount: 27.5, paidBy: andre, paidFor: [jack]), // 20 per pax
-          Expense.withPaidForList(name: 'Seventh expense', amount: 10, paidBy: john, paidFor: [jack]), // 10 per pax
+          Expense.withPaidForList(
+              name: 'First expense',
+              amount: 56,
+              paidBy: john,
+              paidFor: [john, jane, jack, andre]), // 14 per pax
+          Expense.withPaidForList(
+              name: 'Second expense',
+              amount: 37,
+              paidBy: john,
+              paidFor: [jane, jack]), // 18.5 per pax
+          Expense.withPaidForList(
+              name: 'Third expense',
+              amount: 15,
+              paidBy: andre,
+              paidFor: [john, jane, jack]), // 5 per pax
+          Expense.withPaidForList(
+              name: 'Fourth expense',
+              amount: 18,
+              paidBy: andre,
+              paidFor: [andre, jane]), // 9 per pax
+          Expense.withPaidForList(
+              name: 'Fifth expense',
+              amount: 20,
+              paidBy: andre,
+              paidFor: [jane]), // 20 per pax
+          Expense.withPaidForList(
+              name: 'Sixth expense',
+              amount: 27.5,
+              paidBy: andre,
+              paidFor: [jack]), // 20 per pax
+          Expense.withPaidForList(
+              name: 'Seventh expense',
+              amount: 10,
+              paidBy: john,
+              paidFor: [jack]), // 10 per pax
         ],
       );
 
@@ -423,7 +540,8 @@ void main() {
       test('John has nothing to pay', () {
         final List<Share> shares = split.getShares();
 
-        final johnShare = shares.where((share) => share.from == john).firstOrNull;
+        final johnShare =
+            shares.where((share) => share.from == john).firstOrNull;
 
         expect(johnShare, isNull);
       });
