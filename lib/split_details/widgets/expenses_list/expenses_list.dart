@@ -35,7 +35,7 @@ class ExpensesList extends StatelessWidget {
   }
 }
 
-class _ExpensesList extends StatelessWidget {
+class _ExpensesList extends StatefulWidget {
   const _ExpensesList({
     required this.split,
   });
@@ -43,8 +43,42 @@ class _ExpensesList extends StatelessWidget {
   final Split split;
 
   @override
+  State<_ExpensesList> createState() => _ExpensesListState();
+}
+
+class _ExpensesListState extends State<_ExpensesList> {
+  late List<bool> areExpensesExpanded;
+
+  List<Expense> get expenses {
+    return widget.split.expenses;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    areExpensesExpanded = List<bool>.generate(expenses.length, (_) => false);
+  }
+
+  ValueChanged<bool> handleExpenseExpands(int expandedIndex) {
+    return (bool isExpanded) {
+      setState(() {
+        areExpensesExpanded = List<bool>.generate(
+          expenses.length,
+          (int index) {
+            if (expandedIndex == index) {
+              return isExpanded;
+            }
+            return false;
+          },
+        );
+      });
+    };
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (split.expenses.isEmpty) {
+    if (widget.split.expenses.isEmpty) {
       return NoItems(
         message: context.localizations.expensesListNoExpenses,
       );
@@ -55,14 +89,16 @@ class _ExpensesList extends StatelessWidget {
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        final expense = split.expenses[index];
+        final expense = expenses[index];
 
         return ExpenseListItem(
-          split: split,
+          split: widget.split,
           expense: expense,
+          isExpanded: areExpensesExpanded[index],
+          onExpandChanged: handleExpenseExpands(index),
         );
       },
-      itemCount: split.expenses.length,
+      itemCount: expenses.length,
     );
   }
 }

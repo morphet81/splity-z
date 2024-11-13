@@ -22,6 +22,7 @@ class _SplitDetailsState extends State<SplitDetails> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: 1,
       length: 2,
       child: Column(
         children: [
@@ -44,7 +45,7 @@ class _SplitDetailsState extends State<SplitDetails> {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
+              padding: const EdgeInsets.only(top: 24, left: 12, right: 12),
               child: TabBarView(
                 children: [
                   SingleChildScrollView(

@@ -7,11 +7,13 @@ class ExpandableContent extends StatefulWidget {
     required this.title,
     required this.isExpanded,
     required this.child,
+    required this.onChanged,
   });
 
   final String title;
   final Widget child;
   final bool isExpanded;
+  final ValueChanged<bool>? onChanged;
 
   @override
   State<ExpandableContent> createState() => _ExpandableContentState();
@@ -26,6 +28,14 @@ class _ExpandableContentState extends State<ExpandableContent> {
   late bool isExpanded;
   bool hasCalculatedChildSize = false;
   Size childSize = Size.zero;
+
+  bool get shouldExpand {
+    if (widget.onChanged != null) {
+      return widget.isExpanded;
+    }
+
+    return isExpanded;
+  }
 
   @override
   void initState() {
@@ -56,7 +66,11 @@ class _ExpandableContentState extends State<ExpandableContent> {
 
   void handleTitleTap() {
     setState(() {
-      isExpanded = !isExpanded;
+      if (widget.onChanged == null) {
+        isExpanded = !isExpanded;
+      } else {
+        widget.onChanged!(!isExpanded);
+      }
     });
   }
 
@@ -71,15 +85,21 @@ class _ExpandableContentState extends State<ExpandableContent> {
             children: [
               _ExpandableTitle(
                 title: widget.title,
-                isExpanded: isExpanded,
+                isExpanded: shouldExpand,
                 onTap: handleTitleTap,
               ),
-              Center(
-                child: AnimatedContainer(
-                  duration: isExpanded ? expandDuration : collapseDuration,
-                  curve: Curves.decelerate,
-                  height: isExpanded ? childSize.height : 0,
-                  child: widget.child,
+              AnimatedContainer(
+                duration: isExpanded ? expandDuration : collapseDuration,
+                curve: Curves.decelerate,
+                height: shouldExpand ? childSize.height : 0,
+                child: OverflowBox(
+                  minHeight: 0,
+                  maxHeight: double.infinity,
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: widget.child,
+                  ),
                 ),
               ),
             ],
@@ -122,7 +142,7 @@ class _ExpandableTitle extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: context.textTheme.headlineSmall,
+                style: context.textTheme.bodyLarge,
               ),
             ),
             Icon(isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down),
