@@ -12,9 +12,10 @@ class AddItemButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return TextButton.icon(
       onPressed: onPressed,
-      child: Text(label),
+      icon: const Icon(Icons.add),
+      label: Text(label),
     );
   }
 }

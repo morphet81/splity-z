@@ -23,11 +23,11 @@ class ExpensesList extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            _ExpensesList(split: split),
             AddItemButton(
               label: context.localizations.addExpense,
               onPressed: handleAddExpensePressed,
             ),
+            _ExpensesList(split: split),
           ],
         ),
       ),
@@ -74,6 +74,23 @@ class _ExpensesListState extends State<_ExpensesList> {
         );
       });
     };
+  }
+
+  @override
+  void didUpdateWidget(covariant _ExpensesList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    setState(() {
+      areExpensesExpanded = List<bool>.generate(
+        expenses.length,
+        (int index) {
+          if (areExpensesExpanded.length > index) {
+            return areExpensesExpanded[index];
+          }
+          return false;
+        },
+      );
+    });
   }
 
   @override

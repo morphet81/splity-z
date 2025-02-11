@@ -33,16 +33,13 @@ class SpliteesList extends StatelessWidget {
       padding: const EdgeInsets.only(right: 8, bottom: 24),
       child: Column(
         children: [
+          AddItemButton(
+            label: context.localizations.addSplitee,
+            onPressed: handleAddSpliteePressed(context),
+          ),
           _SpliteesList(
             split: split,
             handleSpliteeDeletion: handleSpliteeDeletion(context),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: AddItemButton(
-              label: context.localizations.addSplitee,
-              onPressed: handleAddSpliteePressed(context),
-            ),
           ),
         ],
       ),
