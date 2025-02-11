@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:replay_bloc/replay_bloc.dart';
+import 'package:splity_z/shared/models/split_state.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 import 'package:splity_z/shared/models/models.dart';
 
 part 'split_event.dart';
-part 'split_state.dart';
 
 class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
   SplitBloc() : super(SplitState.initialState) {

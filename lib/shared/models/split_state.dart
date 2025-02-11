@@ -1,11 +1,16 @@
-part of 'split_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-final class SplitState extends Equatable {
-  const SplitState({
-    this.splits = const <Split>[],
-  });
+import 'package:splity_z/shared/models/models.dart';
 
-  final List<Split> splits;
+part 'split_state.freezed.dart';
+
+@freezed
+class SplitState with _$SplitState {
+  const SplitState._();
+
+  const factory SplitState({
+    @Default(<Split>[]) List<Split> splits,
+  }) = _SplitState;
 
   Split? findSplitWithId(int splitId) {
     return splits
@@ -14,15 +19,6 @@ final class SplitState extends Equatable {
         )
         .firstOrNull;
   }
-
-  SplitState copyWith({List<Split>? splits}) {
-    return SplitState(
-      splits: splits ?? this.splits,
-    );
-  }
-
-  @override
-  List<Object?> get props => [splits, splits.length];
 
   static SplitState get initialState {
     final splitee1 = Splitee.withoutId(

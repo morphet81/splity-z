@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:splity_z/shared/models/split_state.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 import 'package:splity_z/shared/widgets/splityz_app_bar.dart';
