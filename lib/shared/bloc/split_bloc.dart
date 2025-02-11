@@ -8,7 +8,7 @@ import 'package:splity_z/shared/models/models.dart';
 part 'split_event.dart';
 
 class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
-  SplitBloc(SplitState initialState) : super(initialState) {
+  SplitBloc(super.initialState) {
     on<DeleteSplit>(_onDeleteSplit);
     on<RenameSplit>(_onRenameSplit);
     on<AddSplitee>(_onAddSplitee);
