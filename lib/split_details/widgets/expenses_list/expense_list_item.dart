@@ -35,23 +35,18 @@ class ExpenseListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return DeletableListItem(
       key: expense.id,
-      child: Flex(
-        direction: Axis.horizontal,
-        children: [
-          Expanded(
-            child: SplityzCard(
-              child: ExpandableContent(
-                title: expense.name,
-                isExpanded: isExpanded,
-                onChanged: handleExpandableChanged,
-                child: ExpenseListItemContent(
-                  split: split,
-                  expense: expense,
-                ),
-              ),
+      child: Expanded(
+        child: SplityzCard(
+          child: ExpandableContent(
+            title: expense.name,
+            isExpanded: isExpanded,
+            onChanged: handleExpandableChanged,
+            child: ExpenseListItemContent(
+              split: split,
+              expense: expense,
             ),
           ),
-        ],
+        ),
       ),
       onDelete: () => handleDeletion(context),
     );

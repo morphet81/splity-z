@@ -19,17 +19,15 @@ class ExpensesList extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8, bottom: 24),
-      child: Center(
-        child: Column(
-          children: [
-            AddItemButton(
-              label: context.localizations.addExpense,
-              onPressed: handleAddExpensePressed,
-            ),
-            _ExpensesList(split: split),
-          ],
-        ),
+      padding: const EdgeInsets.only(bottom: 24),
+      child: Column(
+        children: [
+          AddItemButton(
+            label: context.localizations.addExpense,
+            onPressed: handleAddExpensePressed,
+          ),
+          _ExpensesList(split: split),
+        ],
       ),
     );
   }
@@ -108,11 +106,14 @@ class _ExpensesListState extends State<_ExpensesList> {
       itemBuilder: (context, index) {
         final expense = expenses[index];
 
-        return ExpenseListItem(
-          split: widget.split,
-          expense: expense,
-          isExpanded: areExpensesExpanded[index],
-          onExpandChanged: handleExpenseExpands(index),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12.0),
+          child: ExpenseListItem(
+            split: widget.split,
+            expense: expense,
+            isExpanded: areExpensesExpanded[index],
+            onExpandChanged: handleExpenseExpands(index),
+          ),
         );
       },
       itemCount: expenses.length,

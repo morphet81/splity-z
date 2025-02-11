@@ -76,46 +76,43 @@ class _ExpandableContentState extends State<ExpandableContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _ExpandableTitle(
-                title: widget.title,
-                isExpanded: shouldExpand,
-                onTap: handleTitleTap,
-              ),
-              AnimatedContainer(
-                duration: isExpanded ? expandDuration : collapseDuration,
-                curve: Curves.decelerate,
-                height: shouldExpand ? childSize.height : 0,
-                child: OverflowBox(
-                  minHeight: 0,
-                  maxHeight: double.infinity,
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: widget.child,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (!hasCalculatedChildSize)
-            Positioned(
-              child: Offstage(
-                offstage: true,
-                child: Container(
-                  key: childKey,
+    return Stack(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _ExpandableTitle(
+              title: widget.title,
+              isExpanded: shouldExpand,
+              onTap: handleTitleTap,
+            ),
+            AnimatedContainer(
+              duration: isExpanded ? expandDuration : collapseDuration,
+              curve: Curves.decelerate,
+              height: shouldExpand ? childSize.height : 0,
+              child: OverflowBox(
+                minHeight: 0,
+                maxHeight: double.infinity,
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: widget.child,
                 ),
               ),
             ),
-        ],
-      ),
+          ],
+        ),
+        if (!hasCalculatedChildSize)
+          Positioned(
+            child: Offstage(
+              offstage: true,
+              child: Container(
+                key: childKey,
+                child: widget.child,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
@@ -135,8 +132,8 @@ class _ExpandableTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
             Expanded(

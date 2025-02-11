@@ -30,7 +30,7 @@ class SpliteesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 8, bottom: 24),
+      padding: const EdgeInsets.only(bottom: 24),
       child: Column(
         children: [
           AddItemButton(
@@ -71,10 +71,15 @@ class _SpliteesList extends StatelessWidget {
       itemBuilder: (context, index) {
         final splitee = split.splitees[index];
 
-        return SpliteeListItem(
-          split: split,
-          splitee: splitee,
-          onDelete: handleSpliteeDeletion,
+        return Padding(
+          padding: const EdgeInsets.only(
+            bottom: 12.0,
+          ),
+          child: SpliteeListItem(
+            split: split,
+            splitee: splitee,
+            onDelete: handleSpliteeDeletion,
+          ),
         );
       },
       itemCount: split.splitees.length,

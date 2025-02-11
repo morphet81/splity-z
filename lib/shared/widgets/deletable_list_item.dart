@@ -73,22 +73,25 @@ class _DeletableListItemState extends State<DeletableListItem>
       background: _DismissibleItemBackground(),
       onDismissed: handleSwipeDeletion,
       confirmDismiss: handleConfirmDismiss,
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 16.0),
-        child: Stack(
-          children: [
-            ListItemDeleteButton(
-              onPressed: widget.onDelete,
-            ),
-            SlideTransition(
-              position: offsetAnimation,
-              child: GestureDetector(
-                onTap: widget.onTap,
-                child: widget.child,
+      child: Stack(
+        children: [
+          ListItemDeleteButton(
+            onPressed: widget.onDelete,
+          ),
+          SlideTransition(
+            position: offsetAnimation,
+            child: GestureDetector(
+              onTap: widget.onTap,
+              child: Container(
+                padding: const EdgeInsets.only(left: 2.0, bottom: 2.0),
+                child: CustomPaint(
+                  painter: _GradientBorderPainter(),
+                  child: widget.child,
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -99,22 +102,61 @@ class _DismissibleItemBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 16.0),
-      child: Container(
-        color: Colors.red,
-        alignment: Alignment.centerRight,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 24),
-          child: Text(
-            context.localizations.delete.toUpperCase(),
-            style: TextStyle(
-              color: context.onPrimary,
-              fontSize: 18,
-            ),
+    return Container(
+      color: Colors.red,
+      alignment: Alignment.centerRight,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 24),
+        child: Text(
+          context.localizations.delete.toUpperCase(),
+          style: TextStyle(
+            color: context.onPrimary,
+            fontSize: 18,
           ),
         ),
       ),
     );
+  }
+}
+
+class _GradientBorderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Paint for the left border
+    final leftPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [Colors.grey, Colors.transparent],
+        begin: Alignment.bottomCenter,
+        end: Alignment.topCenter,
+      ).createShader(Rect.fromLTWH(0, 0, 0, size.height))
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
+
+    // Paint for the bottom border
+    final bottomPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [Colors.grey, Colors.transparent],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+      ).createShader(Rect.fromLTWH(0, size.height - 2.0, size.width, 0))
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
+
+    // Draw the left border
+    final leftPath = Path()
+      ..moveTo(0, 0)
+      ..lineTo(0, size.height);
+    canvas.drawPath(leftPath, leftPaint);
+
+    // Draw the bottom border
+    final bottomPath = Path()
+      ..moveTo(0, size.height)
+      ..lineTo(size.width, size.height);
+    canvas.drawPath(bottomPath, bottomPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
