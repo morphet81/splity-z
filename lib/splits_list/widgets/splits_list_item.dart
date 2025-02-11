@@ -39,6 +39,7 @@ class _SplitsListItemState extends State<SplitsListItem> {
           DeletableListItem(
             key: Key(widget.split.name),
             isInEditMode: widget.isInEditMode,
+            showBorder: false,
             onDelete: () => debugPrint('on delete'),
             onTap: handleTap,
             child: Container(

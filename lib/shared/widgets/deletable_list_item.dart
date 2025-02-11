@@ -7,6 +7,7 @@ class DeletableListItem extends StatefulWidget {
     required super.key,
     required this.child,
     this.isInEditMode = false,
+    this.showBorder = true,
     this.onTap,
     required this.onDelete,
     this.confirmDisimiss,
@@ -14,6 +15,7 @@ class DeletableListItem extends StatefulWidget {
 
   final Widget child;
   final bool isInEditMode;
+  final bool showBorder;
   final VoidCallback? onTap;
   final VoidCallback onDelete;
   final ConfirmDismissCallback? confirmDisimiss;
@@ -85,7 +87,7 @@ class _DeletableListItemState extends State<DeletableListItem>
               child: Container(
                 padding: const EdgeInsets.only(left: 2.0, bottom: 2.0),
                 child: CustomPaint(
-                  painter: _GradientBorderPainter(),
+                  painter: widget.showBorder ? _GradientBorderPainter() : null,
                   child: widget.child,
                 ),
               ),

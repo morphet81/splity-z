@@ -23,7 +23,7 @@ class _SplitDetailsState extends State<SplitDetails> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 2,
       child: Column(
         children: [
