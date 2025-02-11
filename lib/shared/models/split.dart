@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
+import 'package:uuid/uuid.dart';
 
 part 'split.freezed.dart';
 part 'split.g.dart';
@@ -10,11 +12,18 @@ abstract class Split with _$Split {
   const Split._();
 
   const factory Split({
-    required int id,
+    required String id,
     required String name,
     required List<Splitee> splitees,
     required List<Expense> expenses,
   }) = _Split;
+
+  factory Split.withName(String name) => Split(
+        id: Uuid().v4(),
+        name: name,
+        splitees: [],
+        expenses: [],
+      );
 
   factory Split.fromJson(Map<String, Object?> json) => _$SplitFromJson(json);
 

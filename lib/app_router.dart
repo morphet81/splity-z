@@ -15,15 +15,15 @@ class AppRouter {
         path: '/split/:splitId',
         builder: (context, state) {
           final paramSplitId = state.pathParameters['splitId'];
-          final splitId =
-              paramSplitId != null ? int.tryParse(paramSplitId) : null;
+          // final splitId =
+          //     paramSplitId != null ? int.tryParse(paramSplitId) : null;
 
-          if (splitId == null) {
+          if (paramSplitId == null) {
             return const ErrorPage();
           }
 
           return SplitDetailsPage(
-            splitId: splitId,
+            splitId: paramSplitId,
           );
         },
       ),

@@ -40,6 +40,7 @@ class _SplitsListItemState extends State<SplitsListItem> {
   void handleTap() {
     // context.go('/split/${widget.split.id}');
     context.push('/split/${widget.split.id}');
+    // context.push('/error');
   }
 
   @override

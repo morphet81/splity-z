@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' hide Split;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:splity_z/shared/models/models.dart';
+import 'package:uuid/uuid.dart';
 
 part 'split_state.freezed.dart';
 part 'split_state.g.dart';
@@ -23,7 +26,7 @@ class SplitState with _$SplitState {
 
   static SplitState get initialState {
     return SplitState(
-      splits: <Split>[],
+      splits: kReleaseMode ? <Split>[] : _devInitialState.splits,
     );
   }
 
@@ -54,7 +57,7 @@ class SplitState with _$SplitState {
     return SplitState(
       splits: <Split>[
         Split(
-          id: 1,
+          id: Uuid().v4(),
           name: 'Diner at the end of the world',
           splitees: <Splitee>[
             splitee1,
@@ -78,7 +81,7 @@ class SplitState with _$SplitState {
           ],
         ),
         Split(
-          id: 2,
+          id: Uuid().v4(),
           name: 'Cinema',
           splitees: <Splitee>[
             splitee1,
@@ -107,7 +110,7 @@ class SplitState with _$SplitState {
           ],
         ),
         Split(
-          id: 3,
+          id: Uuid().v4(),
           name: 'Diner at the end of the world',
           splitees: <Splitee>[
             splitee1,
@@ -150,7 +153,7 @@ class SplitState with _$SplitState {
           ],
         ),
         Split(
-          id: 4,
+          id: Uuid().v4(),
           name: 'Empty',
           splitees: <Splitee>[],
           expenses: <Expense>[],

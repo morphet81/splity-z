@@ -12,7 +12,7 @@ class AppPreferences {
     );
   }
 
-  static Future<SplitState?> getAppState() async {
+  static Future<SplitState> getAppState() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_AppPreferencesKey.appState.key) != null
         ? SplitState.fromJson(
@@ -20,7 +20,7 @@ class AppPreferences {
               prefs.getString(_AppPreferencesKey.appState.key)!,
             ),
           )
-        : SplitState();
+        : SplitState.initialState;
   }
 
   static Future<void> removeAppState() async {

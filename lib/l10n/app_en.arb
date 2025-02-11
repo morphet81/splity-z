@@ -45,5 +45,7 @@
   "undo": "Undo",
   "@undo": {},
   "undoLabel": "Undo deletion",
-  "@undoLabel": {}
+  "@undoLabel": {},
+  "newSplitName": "New Split",
+  "@newSplitName": {}
 }

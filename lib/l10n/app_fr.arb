@@ -45,5 +45,7 @@
   "undo": "Annuler",
   "@undo": {},
   "undoLabel": "Annuler la suppresion",
-  "@undoLabel": {}
+  "@undoLabel": {},
+  "newSplitName": "Nouveau Split",
+  "@newSplitName": {}
 }

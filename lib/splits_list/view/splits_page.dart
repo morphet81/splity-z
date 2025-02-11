@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Split;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splity_z/shared/bloc/split_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:splity_z/shared/extensions/extensions.dart';
-import 'package:splity_z/shared/models/split_state.dart';
+import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/widgets/splityz_app_bar.dart';
 import 'package:splity_z/splits_list/view/splits_list.dart';
 
@@ -21,6 +22,14 @@ class _SplitsListState extends State<SplitsPage> {
     setState(() {
       _isInEditMode = !_isInEditMode;
     });
+  }
+
+  void onCreateNewSplit() {
+    final newSplit = Split.withName(context.localizations.newSplitName);
+
+    context.read<SplitBloc>().add(AddSplit(split: newSplit));
+
+    context.push('/split/${newSplit.id}');
   }
 
   @override
@@ -46,6 +55,10 @@ class _SplitsListState extends State<SplitsPage> {
           );
         },
         bloc: context.read<SplitBloc>(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: onCreateNewSplit,
+        child: const Icon(Icons.add),
       ),
     );
   }

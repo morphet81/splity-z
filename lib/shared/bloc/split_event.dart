@@ -5,6 +5,12 @@ sealed class SplitEvent extends Equatable implements ReplayEvent {
   List<Object?> get props => [];
 }
 
+final class AddSplit extends SplitEvent {
+  AddSplit({required this.split});
+
+  final Split split;
+}
+
 final class DeleteSplit extends SplitEvent {
   DeleteSplit({required this.split});
 

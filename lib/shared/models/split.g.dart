@@ -7,7 +7,7 @@ part of 'split.dart';
 // **************************************************************************
 
 _$SplitImpl _$$SplitImplFromJson(Map<String, dynamic> json) => _$SplitImpl(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as String,
       name: json['name'] as String,
       splitees: (json['splitees'] as List<dynamic>)
           .map((e) => Splitee.fromJson(e as Map<String, dynamic>))

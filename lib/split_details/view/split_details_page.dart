@@ -11,7 +11,7 @@ import 'package:splity_z/shared/bloc/split_bloc.dart';
 class SplitDetailsPage extends StatelessWidget {
   const SplitDetailsPage({required this.splitId, super.key});
 
-  final int splitId;
+  final String splitId;
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +24,16 @@ class SplitDetailsPage extends StatelessWidget {
             .firstOrNull;
 
         if (split == null) {
-          context.replace('/error');
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.push('/error');
+          });
+
+          return Container();
         }
 
         return Scaffold(
           appBar: SplityzAppBar(
-            title: split!.name,
+            title: split.name,
             split: split,
             context: context,
           ).build(),

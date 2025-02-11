@@ -104,7 +104,7 @@ class __$$SplitStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SplitStateImpl extends _SplitState {
+class _$SplitStateImpl extends _SplitState with DiagnosticableTreeMixin {
   const _$SplitStateImpl({final List<Split> splits = const <Split>[]})
       : _splits = splits,
         super._();
@@ -122,8 +122,16 @@ class _$SplitStateImpl extends _SplitState {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SplitState(splits: $splits)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SplitState'))
+      ..add(DiagnosticsProperty('splits', splits));
   }
 
   @override

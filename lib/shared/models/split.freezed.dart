@@ -20,7 +20,7 @@ Split _$SplitFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Split {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<Splitee> get splitees => throw _privateConstructorUsedError;
   List<Expense> get expenses => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $SplitCopyWith<$Res> {
       _$SplitCopyWithImpl<$Res, Split>;
   @useResult
   $Res call(
-      {int id, String name, List<Splitee> splitees, List<Expense> expenses});
+      {String id, String name, List<Splitee> splitees, List<Expense> expenses});
 }
 
 /// @nodoc
@@ -67,7 +67,7 @@ class _$SplitCopyWithImpl<$Res, $Val extends Split>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -92,7 +92,7 @@ abstract class _$$SplitImplCopyWith<$Res> implements $SplitCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id, String name, List<Splitee> splitees, List<Expense> expenses});
+      {String id, String name, List<Splitee> splitees, List<Expense> expenses});
 }
 
 /// @nodoc
@@ -117,7 +117,7 @@ class __$$SplitImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -136,7 +136,7 @@ class __$$SplitImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SplitImpl extends _Split {
+class _$SplitImpl extends _Split with DiagnosticableTreeMixin {
   const _$SplitImpl(
       {required this.id,
       required this.name,
@@ -150,7 +150,7 @@ class _$SplitImpl extends _Split {
       _$$SplitImplFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final String name;
   final List<Splitee> _splitees;
@@ -170,8 +170,19 @@ class _$SplitImpl extends _Split {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'Split(id: $id, name: $name, splitees: $splitees, expenses: $expenses)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Split'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('splitees', splitees))
+      ..add(DiagnosticsProperty('expenses', expenses));
   }
 
   @override
@@ -212,7 +223,7 @@ class _$SplitImpl extends _Split {
 
 abstract class _Split extends Split {
   const factory _Split(
-      {required final int id,
+      {required final String id,
       required final String name,
       required final List<Splitee> splitees,
       required final List<Expense> expenses}) = _$SplitImpl;
@@ -221,7 +232,7 @@ abstract class _Split extends Split {
   factory _Split.fromJson(Map<String, dynamic> json) = _$SplitImpl.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   String get name;
   @override
