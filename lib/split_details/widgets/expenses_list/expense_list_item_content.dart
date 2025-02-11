@@ -7,7 +7,6 @@ import 'package:splity_z/split_details/widgets/expenses_list/auto_manual_share_t
 import 'package:splity_z/split_details/widgets/expenses_list/expense_amount.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_types.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/selectable_splitees_list.dart';
-import 'package:splity_z/shared/extensions/extensions.dart';
 
 class ExpenseListItemContent extends StatefulWidget {
   const ExpenseListItemContent({
