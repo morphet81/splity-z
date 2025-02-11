@@ -14,9 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+SplitState _$SplitStateFromJson(Map<String, dynamic> json) {
+  return _SplitState.fromJson(json);
+}
+
 /// @nodoc
 mixin _$SplitState {
   List<Split> get splits => throw _privateConstructorUsedError;
+
+  /// Serializes this SplitState to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of SplitState
   /// with the given fields replaced by the non-null parameter values.
@@ -96,11 +103,14 @@ class __$$SplitStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$SplitStateImpl extends _SplitState {
   const _$SplitStateImpl({final List<Split> splits = const <Split>[]})
       : _splits = splits,
         super._();
+
+  factory _$SplitStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SplitStateImplFromJson(json);
 
   final List<Split> _splits;
   @override
@@ -124,6 +134,7 @@ class _$SplitStateImpl extends _SplitState {
             const DeepCollectionEquality().equals(other._splits, _splits));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_splits));
@@ -135,11 +146,21 @@ class _$SplitStateImpl extends _SplitState {
   @pragma('vm:prefer-inline')
   _$$SplitStateImplCopyWith<_$SplitStateImpl> get copyWith =>
       __$$SplitStateImplCopyWithImpl<_$SplitStateImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SplitStateImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _SplitState extends SplitState {
   const factory _SplitState({final List<Split> splits}) = _$SplitStateImpl;
   const _SplitState._() : super._();
+
+  factory _SplitState.fromJson(Map<String, dynamic> json) =
+      _$SplitStateImpl.fromJson;
 
   @override
   List<Split> get splits;

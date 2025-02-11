@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:replay_bloc/replay_bloc.dart';
+import 'package:splity_z/shared/app_preferences.dart';
 import 'package:splity_z/shared/models/split_state.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 import 'package:splity_z/shared/models/models.dart';
@@ -7,7 +8,7 @@ import 'package:splity_z/shared/models/models.dart';
 part 'split_event.dart';
 
 class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
-  SplitBloc() : super(SplitState.initialState) {
+  SplitBloc(SplitState initialState) : super(initialState) {
     on<DeleteSplit>(_onDeleteSplit);
     on<RenameSplit>(_onRenameSplit);
     on<AddSplitee>(_onAddSplitee);
@@ -22,6 +23,19 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
     on<UpdateExpenseSharingMode>(_onUpdateExpenseSharingMode);
     on<UpdateExpensePaidForSplitee>(_onUpdateExpensePaidForSplitee);
     on<UpdateExpensePaidBy>(_onUpdateExpensePaidBy);
+  }
+
+  @override
+  void onChange(Change<SplitState> change) {
+    super.onChange(change);
+
+    AppPreferences.setAppState(change.nextState);
+  }
+
+  static Future<SplitBloc> create() async {
+    final initialState =
+        await AppPreferences.getAppState() ?? SplitState.initialState;
+    return SplitBloc(initialState);
   }
 
   Future<void> _onDeleteSplit(

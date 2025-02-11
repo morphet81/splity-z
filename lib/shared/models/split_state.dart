@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:splity_z/shared/models/models.dart';
 
 part 'split_state.freezed.dart';
+part 'split_state.g.dart';
 
 @freezed
 class SplitState with _$SplitState {
@@ -21,6 +22,12 @@ class SplitState with _$SplitState {
   }
 
   static SplitState get initialState {
+    return SplitState(
+      splits: <Split>[],
+    );
+  }
+
+  static SplitState get _devInitialState {
     final splitee1 = Splitee.withoutId(
       name: 'John Doe',
       expensesTypes: [...ExpenseType.values],
@@ -151,4 +158,7 @@ class SplitState with _$SplitState {
       ],
     );
   }
+
+  factory SplitState.fromJson(Map<String, Object?> json) =>
+      _$SplitStateFromJson(json);
 }

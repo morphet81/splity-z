@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:splity_z/shared/bloc/split_bloc.dart';
 
 import 'package:splity_z/shared/extensions/extensions.dart';
+import 'package:splity_z/shared/models/split_state.dart';
 import 'package:splity_z/shared/widgets/splityz_app_bar.dart';
-import 'package:splity_z/shared/bloc/split_bloc.dart';
 import 'package:splity_z/splits_list/view/splits_list.dart';
 
 class SplitsPage extends StatefulWidget {
@@ -38,11 +39,13 @@ class _SplitsListState extends State<SplitsPage> {
           ),
         ],
       ).build(),
-      body: BlocProvider(
-        create: (_) => SplitBloc(),
-        child: SplitsList(
-          isInEditMode: _isInEditMode,
-        ),
+      body: BlocBuilder(
+        builder: (BuildContext context, SplitState state) {
+          return SplitsList(
+            isInEditMode: _isInEditMode,
+          );
+        },
+        bloc: context.read<SplitBloc>(),
       ),
     );
   }

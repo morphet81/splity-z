@@ -15,33 +15,30 @@ class SplitDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SplitBloc>(
-      create: (_) => SplitBloc(),
-      child: BlocBuilder<SplitBloc, SplitState>(
-        builder: (context, state) {
-          final split = state.splits
-              .where(
-                (element) => element.id == splitId,
-              )
-              .firstOrNull;
+    return BlocBuilder<SplitBloc, SplitState>(
+      builder: (context, state) {
+        final split = state.splits
+            .where(
+              (element) => element.id == splitId,
+            )
+            .firstOrNull;
 
-          if (split == null) {
-            context.replace('/error');
-          }
+        if (split == null) {
+          context.replace('/error');
+        }
 
-          return Scaffold(
-            appBar: SplityzAppBar(
-              title: split!.name,
-              split: split,
-              context: context,
-            ).build(),
-            backgroundColor: context.colors.surfaceContainer,
-            body: SplitDetails(
-              split: split,
-            ),
-          );
-        },
-      ),
+        return Scaffold(
+          appBar: SplityzAppBar(
+            title: split!.name,
+            split: split,
+            context: context,
+          ).build(),
+          backgroundColor: context.colors.surfaceContainer,
+          body: SplitDetails(
+            split: split,
+          ),
+        );
+      },
     );
   }
 }
