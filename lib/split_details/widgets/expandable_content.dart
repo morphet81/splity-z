@@ -4,13 +4,13 @@ import 'package:splity_z/shared/extensions/extensions.dart';
 class ExpandableContent extends StatefulWidget {
   const ExpandableContent({
     super.key,
-    required this.title,
+    this.title,
     required this.isExpanded,
     required this.child,
     required this.onChanged,
   });
 
-  final String title;
+  final String? title;
   final Widget child;
   final bool isExpanded;
   final ValueChanged<bool>? onChanged;
@@ -22,7 +22,7 @@ class ExpandableContent extends StatefulWidget {
 class _ExpandableContentState extends State<ExpandableContent> {
   final childKey = GlobalKey();
 
-  final expandDuration = Duration(milliseconds: 200);
+  var expandDuration = Duration.zero;
   final collapseDuration = Duration(milliseconds: 300);
 
   late bool isExpanded;
@@ -49,6 +49,12 @@ class _ExpandableContentState extends State<ExpandableContent> {
       setState(() {
         hasCalculatedChildSize = true;
         childSize = childBox.size;
+      });
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (childSize != Size.zero) {
+          expandDuration = Duration(milliseconds: 200);
+        }
       });
     });
   }
@@ -81,11 +87,12 @@ class _ExpandableContentState extends State<ExpandableContent> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _ExpandableTitle(
-              title: widget.title,
-              isExpanded: shouldExpand,
-              onTap: handleTitleTap,
-            ),
+            if (widget.title != null)
+              _ExpandableTitle(
+                title: widget.title!,
+                isExpanded: shouldExpand,
+                onTap: handleTitleTap,
+              ),
             AnimatedContainer(
               duration: isExpanded ? expandDuration : collapseDuration,
               curve: Curves.decelerate,

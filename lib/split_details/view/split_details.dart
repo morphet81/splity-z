@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide Split;
 import 'package:splity_z/shared/extensions/extensions.dart';
 
 import 'package:splity_z/shared/models/models.dart';
+import 'package:splity_z/split_details/widgets/expandable_content.dart';
 import 'package:splity_z/split_details/widgets/expenses_list/expenses_list.dart';
 import 'package:splity_z/split_details/widgets/shares_list/shares_list.dart';
 import 'package:splity_z/split_details/widgets/splitees_list/splitees_list.dart';
@@ -26,7 +27,11 @@ class _SplitDetailsState extends State<SplitDetails> {
       length: 2,
       child: Column(
         children: [
-          SharesList(split: widget.split),
+          ExpandableContent(
+            isExpanded: true,
+            onChanged: (bool value) {},
+            child: SharesList(split: widget.split),
+          ),
           TabBar(
             tabs: [
               Tab(

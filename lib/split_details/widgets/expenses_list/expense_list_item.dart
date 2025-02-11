@@ -35,16 +35,14 @@ class ExpenseListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return DeletableListItem(
       key: expense.id,
-      child: Expanded(
-        child: SplityzCard(
-          child: ExpandableContent(
-            title: expense.name,
-            isExpanded: isExpanded,
-            onChanged: handleExpandableChanged,
-            child: ExpenseListItemContent(
-              split: split,
-              expense: expense,
-            ),
+      child: SplityzCard(
+        child: ExpandableContent(
+          title: expense.name,
+          isExpanded: isExpanded,
+          onChanged: handleExpandableChanged,
+          child: ExpenseListItemContent(
+            split: split,
+            expense: expense,
           ),
         ),
       ),
