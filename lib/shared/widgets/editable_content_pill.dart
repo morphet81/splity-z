@@ -14,6 +14,7 @@ class EditableContentPill<T> extends StatefulWidget {
   const EditableContentPill({
     super.key,
     required this.content,
+    this.icon,
     required this.onChanged,
     this.textAlign = Alignment.center,
     this.allowEllipsisOverflow = true,
@@ -27,6 +28,7 @@ class EditableContentPill<T> extends StatefulWidget {
   });
 
   final T content;
+  final IconData? icon;
   final void Function(T) onChanged;
   final Alignment textAlign;
   final bool allowEllipsisOverflow;
@@ -125,22 +127,32 @@ class _EditableContentPillState<T> extends State<EditableContentPill<T>> {
 
     final topBottomPadding = widget.isRound ? 30.0 : 4.0;
 
-    return ElevatedButton(
+    final buttonPadding = WidgetStatePropertyAll(
+      EdgeInsets.only(
+        left: 18.0,
+        right: 18.0,
+        top: topBottomPadding,
+        bottom: topBottomPadding,
+      ),
+    );
+
+    final icon = widget.icon != null
+        ? Icon(
+            widget.icon,
+            color: context.colors.onSecondaryContainer,
+          )
+        : null;
+
+    return ElevatedButton.icon(
       style: ButtonStyle(
         elevation: _EditableContentPillElevation(),
         shape: widget.isRound ? WidgetStatePropertyAll(CircleBorder()) : null,
         shadowColor: WidgetStatePropertyAll(context.colors.primary),
-        padding: WidgetStatePropertyAll(
-          EdgeInsets.only(
-            left: 18.0,
-            right: 18.0,
-            top: topBottomPadding,
-            bottom: topBottomPadding,
-          ),
-        ),
+        padding: buttonPadding,
       ),
       onPressed: handleNamePillPressed,
-      child: contentWidget,
+      label: contentWidget,
+      icon: icon,
     );
   }
 }

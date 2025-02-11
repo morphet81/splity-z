@@ -140,6 +140,7 @@ class _EditableInfoLine extends StatelessWidget {
                   Expanded(
                     child: EditableContentPill<String>(
                       content: expense.name,
+                      icon: Icons.description_outlined,
                       textAlign: Alignment.centerLeft,
                       editOnRendered: shouldEditName,
                       onChanged: handleNameChanged,
@@ -152,18 +153,10 @@ class _EditableInfoLine extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Text(
-                      context.localizations.paidBy,
-                      style: context.textTheme.labelLarge!.copyWith(
-                        color: context.colors.onSecondaryContainer,
-                      ),
-                    ),
-                  ),
                   Expanded(
                     child: EditableContentPill<Splitee>(
                       content: expense.paidBy,
+                      icon: Icons.person_outline,
                       textAlign: Alignment.centerLeft,
                       options: split.splitees,
                       editOnRendered: shouldEditPayee,
