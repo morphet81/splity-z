@@ -1,11 +1,11 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-final class SpliteeSummary extends Equatable {
-  const SpliteeSummary({required this.paid, required this.owe});
+part 'splitee_summary.freezed.dart';
 
-  final double paid;
-  final double owe;
-
-  @override
-  List<Object?> get props => [paid, owe];
+@Freezed(toJson: false, fromJson: false)
+class SpliteeSummary with _$SpliteeSummary {
+  const factory SpliteeSummary({
+    required double paid,
+    required double owe,
+  }) = _SpliteeSummary;
 }

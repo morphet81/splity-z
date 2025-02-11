@@ -1,39 +1,23 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 
-abstract class Split extends Equatable {
-  const Split({
-    required this.id,
-    required this.name,
-    required this.splitees,
-    required this.expenses,
-  });
+part 'split.freezed.dart';
+part 'split.g.dart';
 
-  final int id;
-  final String name;
-  final List<Splitee> splitees;
-  final List<Expense> expenses;
+@freezed
+abstract class Split with _$Split {
+  const Split._();
 
-  List<Share> getShares();
+  const factory Split({
+    required int id,
+    required String name,
+    required List<Splitee> splitees,
+    required List<Expense> expenses,
+  }) = _Split;
 
-  Split copyWith({
-    int? id,
-    String? name,
-    List<Splitee>? splitees,
-    List<Expense>? expenses,
-  });
-}
+  factory Split.fromJson(Map<String, Object?> json) => _$SplitFromJson(json);
 
-final class SplitImpl extends Split {
-  const SplitImpl({
-    required super.id,
-    required super.name,
-    required super.splitees,
-    required super.expenses,
-  });
-
-  @override
   List<Share> getShares() {
     List<Share> finalShares = _getRawShares();
 
@@ -173,12 +157,12 @@ final class SplitImpl extends Split {
             ]);
 
             updatedFinalShares.add(
-              firstShares.last.coppyWith(
+              firstShares.last.copyWith(
                 amount: firstShares.last.amount + firstShares.first.amount,
               ),
             );
             updatedFinalShares.add(
-              secondShares.last.coppyWith(
+              secondShares.last.copyWith(
                 amount: secondShares.last.amount + secondShares.first.amount,
               ),
             );
@@ -207,19 +191,19 @@ final class SplitImpl extends Split {
             ]);
 
             updatedFinalShares.add(
-              shareThatWillCover.coppyWith(
+              shareThatWillCover.copyWith(
                 amount: shareThatWillCover.amount +
                     shareThatsGettingCoveredFor.amount,
               ),
             );
             updatedFinalShares.add(
-              shareThatWillDecreaseAmount.coppyWith(
+              shareThatWillDecreaseAmount.copyWith(
                 amount: shareThatWillDecreaseAmount.amount -
                     shareThatsGettingCoveredFor.amount,
               ),
             );
             updatedFinalShares.add(
-              shareThatWillIncreaseAmount.coppyWith(
+              shareThatWillIncreaseAmount.copyWith(
                 amount: shareThatWillIncreaseAmount.amount +
                     shareThatsGettingCoveredFor.amount,
               ),
@@ -259,23 +243,5 @@ final class SplitImpl extends Split {
   ) {
     return firstShare.amount == secondShare.amount &&
         firstShare.to != secondShare.to;
-  }
-
-  @override
-  List<Object?> get props => [id, name, splitees, expenses];
-
-  @override
-  Split copyWith({
-    int? id,
-    String? name,
-    List<Splitee>? splitees,
-    List<Expense>? expenses,
-  }) {
-    return SplitImpl(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      splitees: splitees ?? this.splitees,
-      expenses: expenses ?? this.expenses,
-    );
   }
 }

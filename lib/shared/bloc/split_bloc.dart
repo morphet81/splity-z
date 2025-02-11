@@ -51,7 +51,7 @@ class SplitBloc extends ReplayBloc<SplitEvent, SplitState> {
   }
 
   Future<void> _onAddSplitee(AddSplitee event, Emitter<SplitState> emit) async {
-    final newSplitee = SpliteeImpl.blank();
+    final newSplitee = Splitee.blank();
 
     final newSplit = event.split.copyWith(
       splitees: List.from(event.split.splitees)..add(newSplitee),

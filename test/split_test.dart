@@ -2,17 +2,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:splity_z/shared/models/models.dart';
 
 void main() {
-  final john = SpliteeImpl.withoutId(name: 'John Doe', expensesTypes: []);
-  final jane = SpliteeImpl.withoutId(name: 'Jane Doe', expensesTypes: []);
-  final jack = SpliteeImpl.withoutId(name: 'Jack Reacher', expensesTypes: []);
-  final andre = SpliteeImpl.withoutId(name: 'André Rieu', expensesTypes: []);
+  final john = Splitee.withoutId(name: 'John Doe', expensesTypes: []);
+  final jane = Splitee.withoutId(name: 'Jane Doe', expensesTypes: []);
+  final jack = Splitee.withoutId(name: 'Jack Reacher', expensesTypes: []);
+  final andre = Splitee.withoutId(name: 'André Rieu', expensesTypes: []);
 
   group('Test getShares', () {
     group('Test getShares with a simple split between 3 splitees', () {
-      final split = SplitImpl(
+      final split = Split(
         id: 1,
         name: 'Diner at the end of the world',
-        splitees: <SpliteeImpl>[
+        splitees: <Splitee>[
           john,
           jane,
           jack,
@@ -97,10 +97,10 @@ void main() {
     group(
         'Test getShares between 4 splitees that should simplify down to 4 shares',
         () {
-      final split = SplitImpl(
+      final split = Split(
         id: 1,
         name: 'Diner at the end of the world',
-        splitees: <SpliteeImpl>[john, jane, jack, andre],
+        splitees: <Splitee>[john, jane, jack, andre],
         expenses: <Expense>[
           Expense.withPaidForList(
             name: 'First expense',
@@ -217,10 +217,10 @@ void main() {
     group(
         'Test getShares between 4 splitees do not simplify further when amounts to balance are equal and amounts to balance have the same payee',
         () {
-      final split = SplitImpl(
+      final split = Split(
         id: 1,
         name: 'Diner at the end of the world',
-        splitees: <SpliteeImpl>[john, jane, jack, andre],
+        splitees: <Splitee>[john, jane, jack, andre],
         expenses: <Expense>[
           Expense.withPaidForList(
             name: 'First expense',
@@ -337,10 +337,10 @@ void main() {
     group(
         'Test getShares between 4 splitees that should simplify down to 4 shares, even when balanced splitees are inverted (jane\'s balance is less than jack\'s)',
         () {
-      final split = SplitImpl(
+      final split = Split(
         id: 1,
         name: 'Diner at the end of the world',
-        splitees: <SpliteeImpl>[john, jane, jack, andre],
+        splitees: <Splitee>[john, jane, jack, andre],
         expenses: <Expense>[
           Expense.withPaidForList(
             name: 'First expense',
@@ -457,10 +457,10 @@ void main() {
     group(
         'Test getShares between 4 splitees simplifies further when amounts to balance are equal and amounts to balance don\'t have the same payee',
         () {
-      final split = SplitImpl(
+      final split = Split(
         id: 1,
         name: 'Diner at the end of the world',
-        splitees: <SpliteeImpl>[john, jane, jack, andre],
+        splitees: <Splitee>[john, jane, jack, andre],
         expenses: <Expense>[
           Expense.withPaidForList(
             name: 'First expense',

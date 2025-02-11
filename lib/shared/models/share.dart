@@ -1,27 +1,17 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:splity_z/shared/models/models.dart';
 
-final class Share extends Equatable {
-  const Share({
-    required this.from,
-    required this.to,
-    required this.amount,
-  });
+part 'share.freezed.dart';
 
-  final Splitee from;
-  final Splitee to;
-  final double amount;
+@Freezed(toJson: false, fromJson: false)
+class Share with _$Share {
+  const Share._();
 
-  Share coppyWith({Splitee? from, Splitee? to, double? amount}) {
-    return Share(
-      from: from ?? this.from,
-      to: to ?? this.to,
-      amount: amount ?? this.amount,
-    );
-  }
-
-  @override
-  List<Object?> get props => [from, to, amount];
+  const factory Share({
+    required Splitee from,
+    required Splitee to,
+    required double amount,
+  }) = _Share;
 
   @override
   String toString() {
@@ -41,6 +31,6 @@ final class Share extends Equatable {
   }
 
   static Share sharesListReducer(Share value, Share element) {
-    return value.coppyWith(amount: value.amount + element.amount);
+    return value.copyWith(amount: value.amount + element.amount);
   }
 }

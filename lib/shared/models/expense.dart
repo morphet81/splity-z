@@ -1,85 +1,73 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:splity_z/shared/models/converters/unique_key_converter.dart';
 import 'package:splity_z/shared/models/models.dart';
 import 'package:splity_z/shared/extensions/extensions.dart';
 
-final class Expense extends Equatable {
-  const Expense({
-    required this.id,
-    required this.name,
-    required this.amount,
-    required this.paidBy,
-    required this.paidFor,
-    required this.expensesTypes,
-    required this.automaticSharing,
-    this.manualPaidFor,
-  });
+part 'expense.freezed.dart';
+part 'expense.g.dart';
 
-  Expense.withPaidForList({
-    required this.name,
-    required this.amount,
-    required this.paidBy,
-    required this.paidFor,
-  })  : id = UniqueKey(),
-        expensesTypes = [],
-        automaticSharing = false,
-        manualPaidFor = null;
+@freezed
+class Expense with _$Expense {
+  const Expense._();
 
-  Expense.withAutomaticSharing({
-    required this.name,
-    required this.amount,
-    required this.paidBy,
-    required this.expensesTypes,
-    required List<Splitee> allSplitees,
-  })  : id = UniqueKey(),
-        paidFor = allSplitees
-            .where(
-              (splitee) => expensesTypes.containsAny(splitee.expensesTypes),
-            )
-            .toList(),
-        automaticSharing = true,
-        manualPaidFor = null;
-
-  Expense.blank()
-      : this.withAutomaticSharing(
-          name: '',
-          amount: 0,
-          paidBy: SpliteeImpl.blank(),
-          expensesTypes: [],
-          allSplitees: [],
-        );
-
-  final UniqueKey id;
-  final String name;
-  final double amount;
-  final Splitee paidBy;
-  final List<Splitee> paidFor;
-  final List<Splitee>? manualPaidFor;
-  final List<ExpenseType> expensesTypes;
-  final bool automaticSharing;
-
-  Expense copyWith({
-    UniqueKey? id,
-    String? name,
-    double? amount,
-    Splitee? paidBy,
-    List<Splitee>? paidFor,
+  const factory Expense({
+    @UniqueKeyConverter() required UniqueKey id,
+    required String name,
+    required double amount,
+    required Splitee paidBy,
+    required List<Splitee> paidFor,
+    required List<ExpenseType> expensesTypes,
+    required bool automaticSharing,
     List<Splitee>? manualPaidFor,
-    List<ExpenseType>? expensesTypes,
-    List<ExpenseType>? manualExpensesTypes,
-    bool? automaticSharing,
+  }) = _Expense;
+
+  factory Expense.withPaidForList({
+    required String name,
+    required double amount,
+    required Splitee paidBy,
+    required List<Splitee> paidFor,
   }) {
     return Expense(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      amount: amount ?? this.amount,
-      paidBy: paidBy ?? this.paidBy,
-      paidFor: paidFor ?? this.paidFor,
-      manualPaidFor: manualPaidFor ?? this.manualPaidFor,
-      expensesTypes: expensesTypes ?? this.expensesTypes,
-      automaticSharing: automaticSharing ?? this.automaticSharing,
+      id: UniqueKey(),
+      name: name,
+      amount: amount,
+      paidBy: paidBy,
+      paidFor: paidFor,
+      expensesTypes: [],
+      automaticSharing: false,
     );
   }
+
+  factory Expense.withAutomaticSharing({
+    required String name,
+    required double amount,
+    required Splitee paidBy,
+    required List<ExpenseType> expensesTypes,
+    required List<Splitee> allSplitees,
+  }) {
+    final paidFor = allSplitees.containingExpenseTypes(expensesTypes);
+
+    return Expense(
+      id: UniqueKey(),
+      name: name,
+      amount: amount,
+      paidBy: paidBy,
+      paidFor: paidFor,
+      expensesTypes: expensesTypes,
+      automaticSharing: true,
+    );
+  }
+
+  factory Expense.blank() => Expense(
+        id: UniqueKey(),
+        name: '',
+        amount: 0,
+        paidBy: Splitee.blank(),
+        paidFor: [],
+        expensesTypes: [],
+        automaticSharing: false,
+      );
 
   Expense copyWithAutomaticSharing(List<Splitee> allSplitees) {
     final newPaidFor = allSplitees.containingExpenseTypes(expensesTypes);
@@ -93,8 +81,7 @@ final class Expense extends Equatable {
 
   Expense copyWithoutAutomaticSharing() {
     return copyWith(
-      paidFor: manualPaidFor?.toList(),
-      manualExpensesTypes: expensesTypes.toList(),
+      paidFor: manualPaidFor?.toList() ?? [],
       automaticSharing: false,
     );
   }
@@ -137,15 +124,6 @@ final class Expense extends Equatable {
     return expensesTypes.containsAny(splitee.expensesTypes);
   }
 
-  @override
-  List<Object?> get props => [
-        id,
-        name,
-        amount,
-        paidBy,
-        paidFor,
-        manualPaidFor,
-        expensesTypes,
-        automaticSharing,
-      ];
+  factory Expense.fromJson(Map<String, Object?> json) =>
+      _$ExpenseFromJson(json);
 }

@@ -25,19 +25,19 @@ final class SplitState extends Equatable {
   List<Object?> get props => [splits, splits.length];
 
   static SplitState get initialState {
-    final splitee1 = SpliteeImpl.withoutId(
+    final splitee1 = Splitee.withoutId(
       name: 'John Doe',
       expensesTypes: [...ExpenseType.values],
     );
-    final splitee2 = SpliteeImpl.withoutId(
+    final splitee2 = Splitee.withoutId(
       name: 'Jane Doe',
       expensesTypes: [ExpenseType.food, ExpenseType.soft],
     );
-    final splitee3 = SpliteeImpl.withoutId(
+    final splitee3 = Splitee.withoutId(
       name: 'Jack Downson',
       expensesTypes: [...ExpenseType.values],
     );
-    final splitee4 = SpliteeImpl.withoutId(
+    final splitee4 = Splitee.withoutId(
       name: 'Andre Pourlov Droupinov Kasparov',
       expensesTypes: [
         ExpenseType.alcohol,
@@ -50,7 +50,7 @@ final class SplitState extends Equatable {
 
     return SplitState(
       splits: <Split>[
-        SplitImpl(
+        Split(
           id: 1,
           name: 'Diner at the end of the world',
           splitees: <Splitee>[
@@ -74,7 +74,7 @@ final class SplitState extends Equatable {
             ),
           ],
         ),
-        SplitImpl(
+        Split(
           id: 2,
           name: 'Cinema',
           splitees: <Splitee>[
@@ -103,7 +103,7 @@ final class SplitState extends Equatable {
             ),
           ],
         ),
-        SplitImpl(
+        Split(
           id: 3,
           name: 'Diner at the end of the world',
           splitees: <Splitee>[
@@ -146,7 +146,7 @@ final class SplitState extends Equatable {
             ),
           ],
         ),
-        SplitImpl(
+        Split(
           id: 4,
           name: 'Empty',
           splitees: <Splitee>[],

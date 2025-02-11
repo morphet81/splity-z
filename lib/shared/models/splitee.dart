@@ -1,75 +1,40 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:splity_z/shared/models/converters/unique_key_converter.dart';
 import 'package:splity_z/shared/models/models.dart';
 
-abstract class Splitee extends Equatable {
-  const Splitee({
-    required this.id,
-    required this.name,
-    required this.expensesTypes,
-  });
+part 'splitee.freezed.dart';
+part 'splitee.g.dart';
 
-  Splitee.withoutId({
+@freezed
+class Splitee with _$Splitee {
+  const Splitee._();
+
+  const factory Splitee({
+    @UniqueKeyConverter() required UniqueKey id,
     required String name,
     required List<ExpenseType> expensesTypes,
-  }) : this(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
+  }) = _Splitee;
 
-  final UniqueKey id;
-  final String name;
-  final List<ExpenseType> expensesTypes;
-
-  Splitee copyWith({String? name, List<ExpenseType>? expensesTypes});
-
-  bool isBlank();
-
-  bool isSameAs(Splitee splitee);
-
-  @override
-  String toString() {
-    return 'Splitee($name)';
+  bool isSameAs(Splitee splitee) {
+    return id == splitee.id;
   }
 
-  @override
-  List<Object?> get props => [id, name, expensesTypes];
-}
-
-final class SpliteeImpl extends Splitee {
-  const SpliteeImpl._({
-    required super.id,
-    required super.name,
-    required super.expensesTypes,
-  });
-
-  SpliteeImpl.withoutId({
-    required String name,
-    required List<ExpenseType> expensesTypes,
-  }) : this._(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
-
-  const SpliteeImpl.withId({
-    required super.id,
-    required super.name,
-    required super.expensesTypes,
-  });
-
-  SpliteeImpl.blank()
-      : this.withId(id: UniqueKey(), name: '', expensesTypes: []);
-
-  @override
   bool isBlank() {
     return name.isEmpty;
   }
 
-  @override
-  SpliteeImpl copyWith({String? name, List<ExpenseType>? expensesTypes}) {
-    return SpliteeImpl.withId(
-      id: id,
-      name: name ?? this.name,
-      expensesTypes: expensesTypes ?? this.expensesTypes,
-    );
+  factory Splitee.withoutId({
+    required String name,
+    required List<ExpenseType> expensesTypes,
+  }) {
+    return Splitee(id: UniqueKey(), name: name, expensesTypes: expensesTypes);
   }
 
-  @override
-  bool isSameAs(Splitee splitee) {
-    return id == splitee.id;
+  factory Splitee.blank() {
+    return Splitee(id: UniqueKey(), name: '', expensesTypes: []);
   }
+
+  factory Splitee.fromJson(Map<String, Object?> json) =>
+      _$SpliteeFromJson(json);
 }
